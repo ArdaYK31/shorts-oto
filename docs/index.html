@@ -2,40 +2,52 @@
 <html lang="tr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Atelier · Shorts Durum</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Atelier · Shorts Kontrol</title>
+  <meta name="description" content="Atelier History Shorts — durum, program ve uzaktan kontrol paneli" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #0e1a22;
       --ink-soft: #243542;
       --mist: #eef4f7;
-      --paper: rgba(255, 255, 255, 0.78);
+      --paper: rgba(255, 255, 255, 0.82);
+      --paper-solid: #f7fafc;
       --muted: #5a6f7c;
-      --line: rgba(14, 26, 34, 0.12);
+      --line: rgba(14, 26, 34, 0.1);
       --teal: #1f6f66;
       --teal-deep: #15554e;
+      --teal-soft: rgba(31, 111, 102, 0.12);
       --steel: #3d5a6c;
       --ok: #2f6b4f;
+      --ok-bg: rgba(47, 107, 79, 0.12);
       --warn: #9a6b2a;
+      --warn-bg: rgba(154, 107, 42, 0.12);
       --err: #9a3d38;
+      --err-bg: rgba(154, 61, 56, 0.1);
       --wash: #d7e4eb;
+      --shadow: 0 18px 48px rgba(14, 26, 34, 0.08);
+      --radius: 14px;
+      --tap: 52px;
+      --safe-b: env(safe-area-inset-bottom, 0px);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
       color: var(--ink);
       font-family: "Figtree", sans-serif;
       background:
-        radial-gradient(ellipse 85% 55% at 12% -8%, rgba(31, 111, 102, 0.18) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 50% at 100% 8%, rgba(61, 90, 108, 0.22) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 45% at 70% 100%, rgba(14, 26, 34, 0.08) 0%, transparent 55%),
-        linear-gradient(168deg, #c8d8e2 0%, #e8f0f4 38%, #d3e0e8 100%);
-      padding: 0 1.15rem 3.5rem;
+        radial-gradient(ellipse 90% 55% at 8% -10%, rgba(31, 111, 102, 0.2) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 45% at 100% 0%, rgba(61, 90, 108, 0.2) 0%, transparent 48%),
+        radial-gradient(ellipse 55% 40% at 60% 100%, rgba(14, 26, 34, 0.07) 0%, transparent 55%),
+        linear-gradient(168deg, #c5d6e2 0%, #e8f0f4 40%, #d2e0e9 100%);
+      padding: 0 0 calc(1.5rem + var(--safe-b));
       overflow-x: hidden;
     }
 
@@ -44,163 +56,246 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.4;
+      opacity: 0.35;
       background-image:
         repeating-linear-gradient(
           -18deg,
           transparent,
-          transparent 11px,
-          rgba(14, 26, 34, 0.018) 11px,
-          rgba(14, 26, 34, 0.018) 12px
+          transparent 12px,
+          rgba(14, 26, 34, 0.016) 12px,
+          rgba(14, 26, 34, 0.016) 13px
         );
-      animation: drift 22s linear infinite;
+      animation: drift 24s linear infinite;
     }
 
     @keyframes drift {
       from { transform: translate3d(0, 0, 0); }
-      to { transform: translate3d(-18px, 12px, 0); }
+      to { transform: translate3d(-16px, 10px, 0); }
     }
-
     @keyframes rise {
-      from { opacity: 0; transform: translateY(16px); }
+      from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes pulse {
-      0%, 100% { opacity: 0.45; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.15); }
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.12); }
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
 
-    .shell {
-      max-width: 880px;
+    .app {
+      max-width: 1080px;
       margin: 0 auto;
       position: relative;
       z-index: 1;
+      padding: 0 1rem;
     }
 
-    /* 1 — Brand + live status (one composition) */
-    .hero {
-      padding: 3rem 0 1.5rem;
-      animation: rise 0.65s ease-out both;
+    /* Top brand bar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.15rem 0 0.85rem;
+      animation: rise 0.55s ease-out both;
     }
 
     .brand {
       font-family: "Syne", sans-serif;
       font-weight: 800;
-      font-size: clamp(3.6rem, 14vw, 6.2rem);
-      line-height: 0.88;
-      letter-spacing: -0.045em;
+      font-size: clamp(1.85rem, 6vw, 2.35rem);
+      letter-spacing: -0.04em;
+      line-height: 1;
       color: var(--ink);
+      text-decoration: none;
+    }
+    .brand span { color: var(--teal); }
+
+    .top-actions {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    .brand span {
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      min-height: 42px;
+      padding: 0.55rem 0.85rem;
+      border: 1px solid rgba(14, 26, 34, 0.14);
+      background: rgba(255, 255, 255, 0.45);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .icon-btn:hover { background: rgba(255, 255, 255, 0.75); border-color: var(--ink); }
+
+    /* Hero composition */
+    .hero {
+      padding: 0.5rem 0 1.4rem;
+      animation: rise 0.65s ease-out 0.05s both;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 1.35rem;
+    }
+
+    .hero-kicker {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: var(--teal);
+      margin-bottom: 0.55rem;
     }
 
-    .tagline {
-      margin-top: 1.05rem;
-      max-width: 26rem;
+    .hero h1 {
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.65rem, 5.2vw, 2.4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      max-width: 18ch;
+    }
+
+    .hero p {
+      margin-top: 0.65rem;
+      max-width: 34rem;
       color: var(--ink-soft);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       line-height: 1.45;
       font-weight: 500;
     }
 
     .live {
-      margin-top: 1.35rem;
+      margin-top: 1.1rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.55rem 1.25rem;
+      gap: 0.5rem 1.1rem;
       align-items: center;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 600;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
       color: var(--muted);
-      border-top: 1px solid var(--line);
-      padding-top: 1rem;
     }
-
     .live .ok { color: var(--ok); }
     .live .warn { color: var(--warn); }
     .live .err { color: var(--err); }
 
     .dot {
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.48rem;
+      height: 0.48rem;
       border-radius: 50%;
       background: var(--ok);
       display: inline-block;
       margin-right: 0.35rem;
       animation: pulse 2.2s ease-in-out infinite;
     }
-
     .dot.bad { background: var(--err); }
     .dot.warn { background: var(--warn); }
 
-    .hero-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-      margin-top: 1.15rem;
+    /* Layout: sidebar + main on desktop */
+    .layout {
+      display: grid;
+      gap: 1.25rem;
+      animation: rise 0.7s ease-out 0.1s both;
     }
 
-    .btn {
+    @media (min-width: 900px) {
+      .layout {
+        grid-template-columns: 220px 1fr;
+        align-items: start;
+        gap: 1.5rem;
+      }
+      .nav-rail {
+        position: sticky;
+        top: 1rem;
+      }
+    }
+
+    .nav-rail {
+      display: flex;
+      flex-direction: row;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .nav-rail::-webkit-scrollbar { display: none; }
+
+    @media (min-width: 900px) {
+      .nav-rail {
+        flex-direction: column;
+        overflow: visible;
+        background: var(--paper);
+        border: 1px solid rgba(14, 26, 34, 0.08);
+        box-shadow: var(--shadow);
+        padding: 0.85rem;
+        backdrop-filter: blur(12px);
+      }
+    }
+
+    .nav-link {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      border: 0;
-      cursor: pointer;
+      gap: 0.5rem;
+      white-space: nowrap;
+      min-height: 44px;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.4);
+      color: var(--ink-soft);
       font-family: inherit;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      letter-spacing: 0.01em;
-      padding: 0.72rem 1.1rem;
-      transition: background 0.18s, color 0.18s, border-color 0.18s, opacity 0.18s;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
     }
-
-    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-
-    .btn-solid {
+    .nav-link:hover { background: rgba(255, 255, 255, 0.7); color: var(--ink); }
+    .nav-link.active {
       background: var(--teal);
       color: #f4fbfa;
     }
-    .btn-solid:hover:not(:disabled) { background: var(--teal-deep); }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--ink);
-      border: 1px solid rgba(14, 26, 34, 0.22);
-    }
-    .btn-ghost:hover:not(:disabled) {
-      border-color: var(--ink);
-      background: rgba(255, 255, 255, 0.35);
+    @media (min-width: 900px) {
+      .nav-link { width: 100%; background: transparent; }
+      .nav-link.active { background: var(--teal-soft); color: var(--teal-deep); }
     }
 
-    .btn-danger {
-      background: transparent;
-      color: var(--err);
-      border: 1px solid rgba(154, 61, 56, 0.35);
-    }
-    .btn-danger:hover:not(:disabled) {
-      background: rgba(154, 61, 56, 0.08);
+    .main-col { display: grid; gap: 1.25rem; min-width: 0; }
+
+    /* Panel / series surface */
+    .panel {
+      background: var(--paper);
+      border: 1px solid rgba(14, 26, 34, 0.08);
+      box-shadow: var(--shadow);
+      padding: 1.2rem 1.15rem 1.35rem;
+      backdrop-filter: blur(14px);
     }
 
-    /* Sections */
-    .stack {
-      display: grid;
-      gap: 1.75rem;
-      margin-top: 1.75rem;
-      animation: rise 0.75s ease-out 0.08s both;
+    .panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.35rem;
     }
 
-    section.block h2 {
+    .panel h2 {
       font-family: "Syne", sans-serif;
       font-weight: 700;
-      font-size: 1.35rem;
+      font-size: 1.28rem;
       letter-spacing: -0.02em;
-      margin-bottom: 0.2rem;
     }
 
     .sub {
@@ -210,120 +305,316 @@
       margin-bottom: 1rem;
     }
 
-    .divider {
-      height: 1px;
-      background: var(--line);
-      margin: 0.25rem 0 1rem;
+    /* Status chip — sparingly */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.55rem;
+      color: var(--muted);
+      background: var(--wash);
     }
+    .chip.ok { color: var(--ok); background: var(--ok-bg); }
+    .chip.warn { color: var(--warn); background: var(--warn-bg); }
+    .chip.err { color: var(--err); background: var(--err-bg); }
+    .chip.teal { color: var(--teal-deep); background: var(--teal-soft); }
 
-    /* Schedule */
-    .slots {
+    /* Series row (Faceless-like list) */
+    .series-card {
       display: grid;
-      gap: 0;
-    }
-
-    .slot {
-      display: grid;
-      grid-template-columns: 4.5rem 1fr;
       gap: 0.85rem;
+      padding: 1.05rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .series-card:first-of-type { padding-top: 0.35rem; }
+    .series-card:last-child { border-bottom: 0; padding-bottom: 0; }
+
+    .series-top {
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+    }
+
+    .series-thumb {
+      width: 56px;
+      height: 72px;
+      flex-shrink: 0;
+      background:
+        linear-gradient(145deg, rgba(31, 111, 102, 0.35), rgba(61, 90, 108, 0.45)),
+        linear-gradient(180deg, #2a4554, #1a2e38);
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.85);
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+
+    .series-body { flex: 1; min-width: 0; }
+
+    .series-title {
+      font-family: "Syne", sans-serif;
+      font-weight: 700;
+      font-size: 1.08rem;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .series-meta {
+      margin-top: 0.35rem;
+      font-size: 0.86rem;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    .series-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.65rem;
+    }
+
+    /* Slot rows */
+    .slot-row {
+      display: grid;
+      grid-template-columns: 4.2rem 1fr auto;
+      gap: 0.75rem;
+      align-items: start;
       padding: 0.95rem 0;
       border-bottom: 1px solid var(--line);
-      align-items: start;
     }
-
-    .slot:last-child { border-bottom: 0; }
+    .slot-row:last-child { border-bottom: 0; }
 
     .slot-time {
       font-family: "Syne", sans-serif;
       font-weight: 700;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       letter-spacing: -0.02em;
       line-height: 1;
+      padding-top: 0.1rem;
     }
 
-    .slot-meta {
-      font-size: 0.88rem;
+    .slot-detail { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.4; min-width: 0; }
+    .slot-detail strong { color: var(--ink); font-weight: 700; }
+
+    .countdown {
+      font-family: "Syne", sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--teal);
+      margin-top: 0.3rem;
+    }
+
+    /* Big action buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      min-height: var(--tap);
+      padding: 0.85rem 1.15rem;
+      transition: background 0.18s, color 0.18s, border-color 0.18s, opacity 0.18s, transform 0.12s;
+      text-align: center;
+      line-height: 1.25;
+    }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn:active:not(:disabled) { transform: scale(0.98); }
+
+    .btn-solid { background: var(--teal); color: #f4fbfa; width: 100%; }
+    .btn-solid:hover:not(:disabled) { background: var(--teal-deep); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid rgba(14, 26, 34, 0.2);
+      width: 100%;
+    }
+    .btn-ghost:hover:not(:disabled) {
+      border-color: var(--ink);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--err);
+      border: 1px solid rgba(154, 61, 56, 0.35);
+      width: 100%;
+    }
+    .btn-danger:hover:not(:disabled) { background: var(--err-bg); }
+
+    .btn-sm {
+      min-height: 42px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.84rem;
+      width: auto;
+    }
+
+    .actions-stack {
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 0.35rem;
+    }
+
+    .action-card {
+      border: 1px solid rgba(14, 26, 34, 0.1);
+      background: rgba(255, 255, 255, 0.55);
+      padding: 1rem;
+    }
+    .action-card.primary {
+      border-color: rgba(31, 111, 102, 0.35);
+      background: linear-gradient(160deg, rgba(31, 111, 102, 0.1), rgba(255, 255, 255, 0.55));
+    }
+    .action-label {
+      font-family: "Syne", sans-serif;
+      font-weight: 700;
+      font-size: 1.02rem;
+      margin-bottom: 0.25rem;
+    }
+    .action-help {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Wizard */
+    .wizard-steps {
+      display: grid;
+      gap: 0.85rem;
+      margin: 1rem 0;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 2.2rem 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+    .step-num {
+      width: 2.2rem;
+      height: 2.2rem;
+      display: grid;
+      place-items: center;
+      background: var(--teal);
+      color: #f4fbfa;
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+    .step-body strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+    .step-body p {
+      font-size: 0.86rem;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+    .step-body ul {
+      margin: 0.35rem 0 0 1.1rem;
+      font-size: 0.86rem;
       color: var(--ink-soft);
       line-height: 1.45;
     }
 
-    .slot-meta strong { color: var(--ink); font-weight: 700; }
-
-    .state {
-      display: inline-block;
-      font-size: 0.7rem;
+    .field { margin-bottom: 0.85rem; }
+    .field label {
+      display: block;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      margin-bottom: 0.25rem;
       color: var(--muted);
+      margin-bottom: 0.35rem;
     }
-    .state.upcoming { color: var(--steel); }
-    .state.success { color: var(--ok); }
-    .state.failed { color: var(--err); }
-    .state.skipped { color: var(--warn); }
-    .state.missed { color: var(--muted); }
-
-    .countdown {
-      font-family: "Syne", sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--teal);
-      margin-top: 0.35rem;
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.85rem 0.9rem;
+      border: 1px solid rgba(14, 26, 34, 0.18);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--ink);
+      outline: none;
+      min-height: var(--tap);
     }
-
-    /* Latest job */
-    .job-title {
-      font-family: "Syne", sans-serif;
-      font-weight: 700;
-      font-size: clamp(1.25rem, 3.5vw, 1.7rem);
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      margin: 0.35rem 0 0.55rem;
+    .field textarea {
+      min-height: 88px;
+      resize: vertical;
+      font-size: 0.92rem;
+      line-height: 1.4;
     }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--teal); }
 
-    .meta-grid {
+    .field-row {
       display: grid;
-      gap: 0.55rem 1.5rem;
-      font-size: 0.9rem;
+      gap: 0.65rem;
+    }
+    @media (min-width: 520px) {
+      .field-row { grid-template-columns: 1fr 1fr; }
     }
 
-    @media (min-width: 640px) {
-      .meta-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    .meta-grid dt {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+    .hint {
+      font-size: 0.84rem;
       color: var(--muted);
-      margin-bottom: 0.1rem;
+      line-height: 1.45;
     }
 
-    .meta-grid dd { color: var(--ink); font-weight: 500; }
-
-    .meta-grid a {
-      color: var(--teal-deep);
-      font-weight: 700;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
+    /* Status banner after dispatch */
+    .banner {
+      margin-top: 0.9rem;
+      padding: 1rem 1.05rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: none;
     }
-    .meta-grid a:hover { border-bottom-color: var(--teal-deep); }
-
-    .budget-row {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--line);
+    .banner.show { display: block; }
+    .banner.ok {
+      background: var(--ok-bg);
+      color: var(--ok);
+      border: 1px solid rgba(47, 107, 79, 0.25);
+    }
+    .banner.err {
+      background: var(--err-bg);
+      color: var(--err);
+      border: 1px solid rgba(154, 61, 56, 0.25);
+    }
+    .banner.warn {
+      background: var(--warn-bg);
+      color: var(--warn);
+      border: 1px solid rgba(154, 107, 42, 0.25);
+    }
+    .banner a {
+      color: inherit;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
+    /* Budget */
     .budget-fig {
       font-family: "Syne", sans-serif;
-      font-size: 1.65rem;
+      font-size: 1.7rem;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
-
     .bar {
       margin-top: 0.55rem;
       height: 8px;
@@ -337,18 +628,87 @@
       transition: width 0.5s ease;
     }
 
+    /* Meta grid */
+    .meta-grid {
+      display: grid;
+      gap: 0.65rem 1.25rem;
+      font-size: 0.9rem;
+    }
+    @media (min-width: 560px) {
+      .meta-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .meta-grid dt {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.12rem;
+    }
+    .meta-grid dd { color: var(--ink); font-weight: 500; word-break: break-word; }
+    .meta-grid a {
+      color: var(--teal-deep);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .meta-grid a:hover { border-bottom-color: var(--teal-deep); }
+
+    .job-title {
+      font-family: "Syne", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.15rem, 3.2vw, 1.55rem);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 0.4rem 0 0.75rem;
+    }
+
+    /* History list */
+    .hist { list-style: none; }
+    .hist li {
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+    .hist li:last-child { border-bottom: 0; }
+    .hist .when {
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+    .hist .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.35rem 0.85rem;
+      align-items: baseline;
+    }
+    .hist a {
+      color: var(--teal-deep);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .hist .fail-note {
+      margin-top: 0.3rem;
+      color: var(--err);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
     /* Errors */
     details.err-item {
       border-bottom: 1px solid var(--line);
-      padding: 0.75rem 0;
+      padding: 0.8rem 0;
     }
     details.err-item:last-child { border-bottom: 0; }
-
     details.err-item summary {
       cursor: pointer;
       list-style: none;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       display: flex;
       justify-content: space-between;
       gap: 0.75rem;
@@ -362,166 +722,122 @@
       color: var(--muted);
     }
     details.err-item[open] summary::after { content: "−"; }
-
     .err-body {
-      margin-top: 0.65rem;
-      padding: 0.85rem 0 0.25rem;
+      margin-top: 0.6rem;
       font-size: 0.88rem;
       color: var(--ink-soft);
       line-height: 1.5;
       white-space: pre-wrap;
       word-break: break-word;
     }
-
     .err-body a {
       color: var(--teal-deep);
       font-weight: 700;
       text-decoration: none;
     }
 
-    /* History */
-    .hist {
+    details.tech {
+      margin-top: 1rem;
+      border-top: 1px solid var(--line);
+      padding-top: 0.85rem;
+    }
+    details.tech > summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--muted);
       list-style: none;
-      display: grid;
-      gap: 0;
     }
-
-    .hist li {
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--line);
-      font-size: 0.9rem;
-    }
-    .hist li:last-child { border-bottom: 0; }
-
-    .hist .when {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      margin-bottom: 0.2rem;
-    }
-
-    .hist .row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 0.35rem 1rem;
-      align-items: baseline;
-    }
-
-    .hist strong { font-weight: 700; }
-    .hist a {
-      color: var(--teal-deep);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .hist .fail-note {
-      margin-top: 0.3rem;
-      color: var(--err);
-      font-size: 0.82rem;
-      line-height: 1.4;
-    }
-
-    /* Remote — interaction container (card allowed) */
-    .remote {
-      background: var(--paper);
-      border: 1px solid rgba(14, 26, 34, 0.1);
-      box-shadow: 0 20px 50px rgba(14, 26, 34, 0.08);
-      padding: 1.35rem 1.3rem 1.5rem;
-      backdrop-filter: blur(12px);
-      animation: rise 0.8s ease-out 0.12s both;
-    }
-
-    .remote h2 { margin-bottom: 0.15rem; }
-
-    .field {
-      margin-bottom: 0.9rem;
-    }
-
-    .field label {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.35rem;
-    }
-
-    .field input,
-    .field select {
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.95rem;
-      padding: 0.7rem 0.8rem;
-      border: 1px solid rgba(14, 26, 34, 0.18);
-      background: rgba(255, 255, 255, 0.85);
-      color: var(--ink);
-      outline: none;
-    }
-    .field input:focus,
-    .field select:focus {
-      border-color: var(--teal);
-    }
-
-    .actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      margin: 1rem 0 0.75rem;
-    }
-
-    .hint {
-      font-size: 0.82rem;
-      color: var(--muted);
+    details.tech > summary::-webkit-details-marker { display: none; }
+    .tech-body {
+      margin-top: 0.75rem;
+      font-size: 0.84rem;
+      color: var(--ink-soft);
       line-height: 1.45;
     }
 
-    .hint code {
-      font-family: ui-monospace, "Cascadia Code", monospace;
-      font-size: 0.78rem;
-      background: var(--wash);
-      padding: 0.1rem 0.3rem;
-    }
-
-    .toast {
-      margin-top: 0.85rem;
-      font-size: 0.88rem;
-      font-weight: 600;
-      min-height: 1.25rem;
-    }
-    .toast.ok { color: var(--ok); }
-    .toast.err { color: var(--err); }
-
-    .deep {
-      margin-top: 1.1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--line);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .foot {
-      margin-top: 2rem;
+    .empty {
+      padding: 1.25rem 0.25rem;
       color: var(--muted);
-      font-size: 0.8rem;
-      animation: rise 0.85s ease-out 0.16s both;
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.45;
     }
 
     .load-err {
-      padding: 1.25rem 0;
+      padding: 1rem;
       color: var(--err);
       font-weight: 600;
+      background: var(--err-bg);
     }
 
-    @media (max-width: 560px) {
-      .hero { padding-top: 2.2rem; }
-      .slot { grid-template-columns: 3.6rem 1fr; }
-      .remote { padding: 1.15rem 1rem 1.3rem; }
+    .foot {
+      margin-top: 1.5rem;
+      padding-bottom: 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      animation: rise 0.8s ease-out 0.15s both;
     }
+
+    /* Modal confirm */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 26, 34, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 40;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 1rem;
+      padding-bottom: calc(1rem + var(--safe-b));
+    }
+    .modal-backdrop.open { display: flex; }
+    @media (min-width: 560px) {
+      .modal-backdrop { align-items: center; }
+    }
+    .modal {
+      width: 100%;
+      max-width: 420px;
+      background: var(--paper-solid);
+      border: 1px solid rgba(14, 26, 34, 0.12);
+      box-shadow: 0 24px 60px rgba(14, 26, 34, 0.22);
+      padding: 1.35rem 1.2rem 1.2rem;
+      animation: rise 0.25s ease-out both;
+    }
+    .modal h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.45rem;
+    }
+    .modal p {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.45;
+      margin-bottom: 1.15rem;
+    }
+    .modal-actions {
+      display: grid;
+      gap: 0.55rem;
+    }
+    @media (min-width: 420px) {
+      .modal-actions { grid-template-columns: 1fr 1fr; }
+    }
+
+    .conn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .conn-pill.on { color: var(--ok); }
+    .conn-pill.off { color: var(--warn); }
+
+    .hidden { display: none !important; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before { animation: none !important; transition: none !important; }
@@ -529,71 +845,248 @@
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header class="hero">
-      <h1 class="brand">Atelier<span>.</span></h1>
-      <p class="tagline">History Shorts otomatik yayın — İstanbul saati, bulut üzerinden.</p>
-      <div class="hero-links">
-        <a class="btn btn-solid" href="https://github.com/ArdaYK31/shorts-oto/actions/workflows/shorts-schedule.yml" target="_blank" rel="noreferrer">Actions</a>
-        <a class="btn btn-ghost" id="ytChannelLink" href="https://www.youtube.com" target="_blank" rel="noreferrer">YouTube</a>
-        <a class="btn btn-ghost" href="https://github.com/ArdaYK31/shorts-oto" target="_blank" rel="noreferrer">Repo</a>
-      </div>
-      <div class="live" id="liveBar" aria-live="polite">
-        <span><span class="dot" aria-hidden="true"></span>Yükleniyor…</span>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#">Atelier<span>.</span></a>
+      <div class="top-actions">
+        <button type="button" class="icon-btn" id="btnRefresh" title="Yenile">Yenile</button>
+        <a class="icon-btn" id="ytChannelLink" href="https://www.youtube.com" target="_blank" rel="noreferrer">YouTube</a>
       </div>
     </header>
 
-    <div class="stack" id="board"></div>
-
-    <section class="remote" id="remote" aria-labelledby="remote-title">
-      <h2 id="remote-title">Uzaktan kontrol</h2>
-      <p class="sub">PC kapalıyken GitHub Actions’ı tetikle. PAT yalnızca bu tarayıcıda saklanır.</p>
-
-      <div class="field">
-        <label for="pat">GitHub PAT (actions:write)</label>
-        <input id="pat" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_… veya fine-grained token" />
-      </div>
-      <div class="field">
-        <label for="topicId">Konu id (isteğe bağlı)</label>
-        <input id="topicId" type="text" placeholder="örn. washington-refused-crown" />
-      </div>
-      <div class="field">
-        <label for="skipDate">Atla tarihi (YYYY-AA-GG)</label>
-        <input id="skipDate" type="text" placeholder="2026-07-27" />
-      </div>
-      <div class="field">
-        <label for="skipTime">Atla saati</label>
-        <select id="skipTime">
-          <option value="00:00">00:00</option>
-          <option value="08:00" selected>08:00</option>
-          <option value="16:00">16:00</option>
-        </select>
-      </div>
-
-      <div class="actions-row">
-        <button type="button" class="btn btn-solid" data-action="run_now">Şimdi çalıştır</button>
-        <button type="button" class="btn btn-ghost" data-action="preview_only">Önizleme (yükleme yok)</button>
-        <button type="button" class="btn btn-ghost" data-action="skip_slot">Slot atla</button>
-        <button type="button" class="btn btn-danger" data-action="clear_skip">Atlamayı temizle</button>
-        <button type="button" class="btn btn-ghost" id="savePat">PAT kaydet</button>
-        <button type="button" class="btn btn-danger" id="clearPat">PAT sil</button>
-      </div>
-
-      <p class="hint">
-        Minimal kapsam: fine-grained token → bu repo için <code>Actions: Read and write</code>
-        (+ skip işlemleri commit için <code>Contents: Read and write</code>).
-        Classic PAT: <code>repo</code> + <code>workflow</code>. Token asla commit edilmez; yalnızca <code>localStorage</code>.
-      </p>
-      <p class="toast" id="remoteToast" role="status"></p>
-
-      <div class="deep">
-        <a class="btn btn-ghost" href="https://github.com/ArdaYK31/shorts-oto/actions/workflows/shorts-schedule.yml" target="_blank" rel="noreferrer">Workflow (token yok)</a>
-        <a class="btn btn-ghost" href="https://github.com/ArdaYK31/shorts-oto/actions" target="_blank" rel="noreferrer">Artifact’lar</a>
-        <a class="btn btn-ghost" id="lastRunDeep" href="https://github.com/ArdaYK31/shorts-oto/actions" target="_blank" rel="noreferrer">Son koşu</a>
+    <section class="hero">
+      <div class="hero-kicker">History Shorts</div>
+      <h1>Seri kontrol paneli</h1>
+      <p>Telefonundan video üret, YouTube’a yükle veya bugünkü saati atla — kod bilgisi gerekmez.</p>
+      <div class="live" id="liveBar" aria-live="polite">
+        <span><span class="dot" aria-hidden="true"></span>Yükleniyor…</span>
       </div>
     </section>
 
+    <div class="layout">
+      <nav class="nav-rail" aria-label="Bölümler">
+        <a class="nav-link active" href="#kontrol">Kontrol</a>
+        <a class="nav-link" href="#seri">Seri</a>
+        <a class="nav-link" href="#program">Program</a>
+        <a class="nav-link" href="#gecmis">Geçmiş</a>
+        <a class="nav-link" href="#hatalar">Hatalar</a>
+      </nav>
+
+      <div class="main-col">
+        <!-- Remote control -->
+        <section class="panel" id="kontrol" aria-labelledby="kontrol-title">
+          <div class="panel-head">
+            <h2 id="kontrol-title">Uzaktan kontrol</h2>
+            <span class="chip" id="tokenChip">Bağlantı yok</span>
+          </div>
+          <p class="sub">Bilgisayar kapalıyken buradan çalıştır. Token sadece bu telefonda / bilgisayarda saklanır.</p>
+
+          <!-- Setup wizard (shown when no token) -->
+          <div id="setupWizard">
+            <div class="action-card primary">
+              <div class="action-label">İlk kurulum (bir kez)</div>
+              <p class="action-help">GitHub’dan kısa bir “anahtar” alıp buraya yapıştırıyorsun. Sonra butonlarla uzaktan yönetirsin.</p>
+
+              <div class="wizard-steps">
+                <div class="step">
+                  <div class="step-num">1</div>
+                  <div class="step-body">
+                    <strong>GitHub’a gir</strong>
+                    <p>Telefonunda veya bilgisayarında GitHub hesabınla oturum aç.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div class="step-body">
+                    <strong>Token oluştur</strong>
+                    <p>
+                      Sağ üstteki profil fotoğrafına dokun →
+                      <strong>Settings</strong> → sol alttaki
+                      <strong>Developer settings</strong> →
+                      <strong>Personal access tokens</strong> →
+                      <strong>Fine-grained tokens</strong> →
+                      <strong>Generate new token</strong>.
+                    </p>
+                    <ul>
+                      <li>Token adı: <em>Atelier panel</em> (istediğin isim)</li>
+                      <li>Repository access: <strong>Only select repositories</strong> → <strong>shorts-oto</strong></li>
+                      <li>Permissions → Repository:
+                        <ul>
+                          <li><strong>Actions</strong>: Read and write</li>
+                          <li><strong>Contents</strong>: Read and write (saat atlamak için)</li>
+                        </ul>
+                      </li>
+                      <li><strong>Generate token</strong> → çıkan yazıyı kopyala (bir daha gösterilmez)</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num">3</div>
+                  <div class="step-body">
+                    <strong>Buraya yapıştır ve kaydet</strong>
+                    <p>Aşağıdaki kutuya yapıştır. Kaydet’e bas. Sonra “Bağlantıyı dene”.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="pat">Token yapıştır</label>
+                <textarea id="pat" autocomplete="off" spellcheck="false" placeholder="github_pat_… veya ghp_… buraya yapıştır"></textarea>
+              </div>
+              <div class="actions-stack">
+                <button type="button" class="btn btn-solid" id="savePat">Kaydet</button>
+                <button type="button" class="btn btn-ghost" id="testPat">Bağlantıyı dene</button>
+              </div>
+              <p class="hint" style="margin-top:0.75rem">
+                Token’ı kimseyle paylaşma. Sadece bu telefonda / bilgisayarda saklanır; siteye veya repoya yüklenmez.
+              </p>
+            </div>
+
+            <div class="action-card" style="margin-top:0.85rem">
+              <div class="action-label">Token istemiyorsan</div>
+              <p class="action-help">GitHub’da elle de çalıştırabilirsin — 3 dokunuş.</p>
+              <ol class="hint" style="margin:0 0 0.85rem 1.1rem; line-height:1.55">
+                <li>Aşağıdaki butona bas → Actions sayfası açılır</li>
+                <li>Sağda <strong>Run workflow</strong>’a dokun</li>
+                <li>Action menüsünden seç (ör. run_now) → yeşil <strong>Run workflow</strong></li>
+              </ol>
+              <a class="btn btn-ghost" href="https://github.com/ArdaYK31/shorts-oto/actions/workflows/shorts-schedule.yml" target="_blank" rel="noreferrer">
+                GitHub Actions sayfasını aç
+              </a>
+            </div>
+          </div>
+
+          <!-- Connected controls -->
+          <div id="remoteReady" class="hidden">
+            <div class="actions-stack">
+              <div class="action-card primary">
+                <div class="action-label">Şimdi video üret ve YouTube’a yükle</div>
+                <p class="action-help">Sıradaki konuyu üretir ve YouTube Shorts’a yükler. Genelde 5–15 dakika sürer.</p>
+                <button type="button" class="btn btn-solid" data-action="run_now" data-confirm="Emin misin? Video üretilip YouTube’a yüklenecek.">
+                  Şimdi video üret ve YouTube’a yükle
+                </button>
+              </div>
+
+              <div class="action-card">
+                <div class="action-label">Sadece önizleme üret</div>
+                <p class="action-help">Videoyu üretir ama YouTube’a yüklemez. Denemek için güvenli seçenek.</p>
+                <button type="button" class="btn btn-ghost" data-action="preview_only" data-confirm="Önizleme üretilecek (YouTube’a yükleme yok). Devam?">
+                  Sadece önizleme üret (yükleme yok)
+                </button>
+              </div>
+
+              <div class="action-card">
+                <div class="action-label">Bu saati atla</div>
+                <p class="action-help">Seçtiğin gün ve saatte otomatik yayın yapılmaz (00:00 / 08:00 / 16:00).</p>
+                <div class="field-row">
+                  <div class="field" style="margin:0">
+                    <label for="skipDate">Tarih</label>
+                    <input id="skipDate" type="date" />
+                  </div>
+                  <div class="field" style="margin:0">
+                    <label for="skipTime">Saat</label>
+                    <select id="skipTime">
+                      <option value="00:00">00:00 gece</option>
+                      <option value="08:00" selected>08:00 sabah</option>
+                      <option value="16:00">16:00 öğleden sonra</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="actions-stack" style="margin-top:0.75rem">
+                  <button type="button" class="btn btn-ghost" data-action="skip_slot" data-confirm="Bu saat atlanacak — otomatik yayın yapılmayacak. Emin misin?">
+                    Bu saati atla
+                  </button>
+                  <button type="button" class="btn btn-danger btn-sm" data-action="clear_skip" data-confirm="Atlama kaldırılacak; o saatte tekrar yayınlanabilir. Tamam mı?" style="width:100%">
+                    Atlamayı geri al
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions-stack" style="margin-top:0.85rem">
+              <button type="button" class="btn btn-ghost btn-sm" id="testPatReady" style="width:100%">Bağlantıyı dene</button>
+              <button type="button" class="btn btn-danger btn-sm" id="clearPat" style="width:100%">Kayıtlı token’ı sil</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="showSetupAgain" style="width:100%">Kurulum adımlarını göster</button>
+            </div>
+          </div>
+
+          <div class="banner" id="remoteBanner" role="status"></div>
+
+          <details class="tech">
+            <summary>Teknik detay (isteğe bağlı)</summary>
+            <div class="tech-body">
+              <div class="field" style="margin-top:0.5rem">
+                <label for="topicId">Konu kimliği (boş bırak = sıradaki)</label>
+                <input id="topicId" type="text" placeholder="örn. oxford-older-aztecs" />
+              </div>
+              <p class="hint">
+                Panel, GitHub’daki otomatik işi uzaktan başlatır.
+                Token yalnızca bu cihazda tutulur. Repo:
+                <a href="https://github.com/ArdaYK31/shorts-oto" target="_blank" rel="noreferrer">ArdaYK31/shorts-oto</a>
+              </p>
+              <div id="tokenEditReady" class="hidden" style="margin-top:0.75rem">
+                <div class="field">
+                  <label for="patReady">Token güncelle</label>
+                  <textarea id="patReady" autocomplete="off" spellcheck="false" placeholder="Yeni token…"></textarea>
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm" id="savePatReady">Token’ı güncelle</button>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <!-- Series overview -->
+        <section class="panel" id="seri" aria-labelledby="seri-title">
+          <div class="panel-head">
+            <h2 id="seri-title">Aktif seri</h2>
+            <span class="chip teal" id="seriesChip">History Shorts</span>
+          </div>
+          <p class="sub">Tek pipeline: konu seç → video üret → YouTube’a yükle. Günde 3 slot.</p>
+          <div id="seriesBoard"></div>
+        </section>
+
+        <!-- Schedule -->
+        <section class="panel" id="program" aria-labelledby="program-title">
+          <div class="panel-head">
+            <h2 id="program-title">Bugünkü program</h2>
+            <span class="chip">İstanbul saati</span>
+          </div>
+          <p class="sub">00:00 · 08:00 · 16:00 — bugünün slotları ve geri sayım</p>
+          <div id="scheduleBoard"></div>
+        </section>
+
+        <!-- Latest + budget embedded in series; history -->
+        <section class="panel" id="gecmis" aria-labelledby="gecmis-title">
+          <div class="panel-head">
+            <h2 id="gecmis-title">İş geçmişi</h2>
+          </div>
+          <p class="sub">Son üretilen / yüklenen videolar</p>
+          <div id="histBoard"></div>
+        </section>
+
+        <section class="panel" id="hatalar" aria-labelledby="hatalar-title">
+          <div class="panel-head">
+            <h2 id="hatalar-title">Hatalar</h2>
+          </div>
+          <p class="sub">Bir şey bozulursa buradan ne olduğunu okuyabilirsin</p>
+          <div id="errBoard"></div>
+        </section>
+      </div>
+    </div>
+
     <p class="foot" id="meta"></p>
+  </div>
+
+  <!-- Confirm modal -->
+  <div class="modal-backdrop" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal">
+      <h3 id="confirmTitle">Emin misin?</h3>
+      <p id="confirmMsg"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="confirmCancel">Vazgeç</button>
+        <button type="button" class="btn btn-solid" id="confirmOk">Evet, devam</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -603,8 +1096,13 @@
     const RAW_LATEST = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/logs/latest.json`;
     const RAW_JOBS = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/logs/jobs.jsonl`;
     const DISPATCH_URL = `https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/${WORKFLOW_FILE}/dispatches`;
+    const WORKFLOW_META = `https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/${WORKFLOW_FILE}`;
+    const ACTIONS_URL = `https://github.com/${OWNER}/${REPO}/actions/workflows/${WORKFLOW_FILE}`;
     const PAT_KEY = "atelier_gh_pat";
     const TZ = "Europe/Istanbul";
+
+    let pendingAction = null;
+    let lastRunUrl = ACTIONS_URL;
 
     const fmt = (iso) => {
       if (!iso) return "—";
@@ -626,21 +1124,34 @@
       const h = Math.floor(sec / 3600);
       const m = Math.floor((sec % 3600) / 60);
       const s = Math.floor(sec % 60);
-      if (h > 0) return `${h}sa ${m}dk`;
-      if (m > 0) return `${m}dk ${s}sn`;
-      return `${s}sn`;
+      if (h > 0) return `${h} sa ${m} dk`;
+      if (m > 0) return `${m} dk ${s} sn`;
+      return `${s} sn`;
     };
 
     const stateLabel = (st) => ({
-      upcoming: "yaklaşıyor",
-      success: "başarılı",
-      failed: "hata",
-      skipped: "atlandı",
-      missed: "kaçırıldı",
-      rendered: "önizleme",
-      dry_run: "dry-run",
-      preview: "önizleme",
+      upcoming: "Bekliyor",
+      success: "Başarılı",
+      uploaded: "Yüklendi",
+      failed: "Hata",
+      skipped: "Atlandı",
+      skipped_slot: "Atlandı",
+      missed: "Kaçırıldı",
+      rendered: "Önizleme hazır",
+      dry_run: "Deneme",
+      preview: "Önizleme",
+      rendering: "Üretiliyor",
+      queued: "Sırada",
     }[st] || st || "—");
+
+    const stateChip = (st) => {
+      const s = String(st || "");
+      if (s === "uploaded" || s === "success") return "ok";
+      if (s.includes("fail") || s === "failed") return "err";
+      if (s === "skipped" || s === "skipped_slot" || s === "missed") return "warn";
+      if (s === "upcoming" || s === "queued" || s === "rendering") return "teal";
+      return "";
+    };
 
     const ytFromJob = (j) => {
       if (!j) return null;
@@ -654,6 +1165,40 @@
       else localStorage.removeItem(PAT_KEY);
     };
 
+    const getToken = () =>
+      (document.getElementById("pat").value || document.getElementById("patReady")?.value || loadPat()).trim();
+
+    function syncTokenUI() {
+      const has = !!loadPat();
+      const wizard = document.getElementById("setupWizard");
+      const ready = document.getElementById("remoteReady");
+      const chip = document.getElementById("tokenChip");
+      const edit = document.getElementById("tokenEditReady");
+      if (has) {
+        wizard.classList.add("hidden");
+        ready.classList.remove("hidden");
+        edit?.classList.remove("hidden");
+        chip.textContent = "Bağlı";
+        chip.className = "chip ok";
+        const t = loadPat();
+        document.getElementById("pat").value = t;
+        const pr = document.getElementById("patReady");
+        if (pr) pr.value = t;
+      } else {
+        wizard.classList.remove("hidden");
+        ready.classList.add("hidden");
+        edit?.classList.add("hidden");
+        chip.textContent = "Bağlantı yok";
+        chip.className = "chip warn";
+      }
+    }
+
+    function showBanner(type, html) {
+      const el = document.getElementById("remoteBanner");
+      el.className = "banner show " + type;
+      el.innerHTML = html;
+    }
+
     function terminalJobs(jobs) {
       const keep = new Set(["uploaded", "failed", "rendered", "dry_run", "skipped_slot", "preview"]);
       return (jobs || []).filter((j) => keep.has(String(j.status || "")) || j.error);
@@ -664,7 +1209,7 @@
       const seen = new Set();
       const push = (j) => {
         if (!j) return;
-        const msg = j.error || (String(j.status || "") === "failed" ? "failed" : null);
+        const msg = j.error || (String(j.status || "") === "failed" ? "Başarısız oldu" : null);
         if (!msg) return;
         const key = (j.updated_at || j.ts || "") + "|" + (j.topic_id || "") + "|" + msg;
         if (seen.has(key)) return;
@@ -692,6 +1237,16 @@
       return out.slice(0, 8);
     }
 
+    function platLabel(plats) {
+      plats = plats || {};
+      const parts = [];
+      if (plats.youtube) parts.push("YouTube ✓");
+      else parts.push("YouTube —");
+      if (plats.instagram) parts.push("IG ✓");
+      if (plats.tiktok) parts.push("TikTok ✓");
+      return parts.join(" · ");
+    }
+
     function render(data, jobsExtra) {
       const latest = data.latest_job || (data.recent_jobs || [])[0] || null;
       const spent = Number(data.budget?.spent_usd || 0);
@@ -702,90 +1257,94 @@
       }));
       const next = data.next_slot || slots.find((s) => s.state === "upcoming") || null;
       const yt = data.youtube_url || ytFromJob(latest) || ytFromJob(data.last_success);
-      const runUrl = data.last_run_url || latest?.run_url || `https://github.com/${OWNER}/${REPO}/actions`;
+      const runUrl = data.last_run_url || latest?.run_url || ACTIONS_URL;
+      lastRunUrl = runUrl;
       const failed = latest && (String(latest.status || "").includes("fail") || latest.error);
       const liveClass = failed ? "err" : "ok";
       const dotClass = failed ? "bad" : "";
 
       document.getElementById("liveBar").innerHTML = [
-        `<span class="${liveClass}"><span class="dot ${dotClass}" aria-hidden="true"></span>${failed ? "Son koşu hata" : "Autopilot açık"}</span>`,
-        `<span>${esc(data.privacy || "public")}</span>`,
-        `<span>${esc(data.timezone || TZ)}</span>`,
+        `<span class="${liveClass}"><span class="dot ${dotClass}" aria-hidden="true"></span>${failed ? "Son işte sorun var" : "Otomatik yayın açık"}</span>`,
         next?.at ? `<span>Sonraki: ${esc(fmt(next.at))}</span>` : "",
-        data.next_topic ? `<span>Sıradaki konu: ${esc(data.next_topic.title || data.next_topic.id)}</span>` : "",
+        data.next_topic ? `<span>Sırada: ${esc(data.next_topic.title || data.next_topic.id)}</span>` : "",
       ].filter(Boolean).join("");
 
       if (yt) document.getElementById("ytChannelLink").href = yt;
-      document.getElementById("lastRunDeep").href = runUrl;
 
-      const scheduleHtml = `
-        <section class="block" aria-labelledby="sch-title">
-          <h2 id="sch-title">Bugünkü program</h2>
-          <p class="sub">00:00 · 08:00 · 16:00 Europe/Istanbul — atlanan slotlar ve son sonuçlar</p>
-          <div class="slots">
-            ${slots.map((s) => {
-              const r = s.result;
-              const detail = r
-                ? `<strong>${esc(r.title || r.topic_id || "—")}</strong>${r.error ? " · " + esc(String(r.error).slice(0, 120)) : ""}`
-                : (s.skipped ? "Bu slot atlanacak / atlandı" : (s.state === "upcoming" ? "Bekleniyor" : "Kayıt yok"));
-              return `<div class="slot">
-                <div class="slot-time">${esc(s.time)}</div>
-                <div class="slot-meta">
-                  <div class="state ${esc(s.state)}">${esc(stateLabel(s.state))}</div>
-                  <div>${detail}</div>
-                  ${s.state === "upcoming" ? `<div class="countdown" data-cd="${Number(s.countdown_sec) || 0}">${esc(fmtCountdown(s.countdown_sec))}</div>` : ""}
-                </div>
-              </div>`;
-            }).join("")}
-          </div>
-        </section>`;
-
-      const plats = latest?.platforms || {};
-      const platLine = ["youtube", "instagram", "tiktok"]
-        .map((k) => `${k}: ${plats[k] ? "ok" : "—"}`)
-        .join(" · ");
-
-      const latestHtml = `
-        <section class="block" aria-labelledby="job-title">
-          <h2 id="job-title">Son iş</h2>
-          <p class="sub">Konu, platformlar, bütçe ve bağlantılar</p>
-          ${latest ? `
-            <div class="state ${failed ? "failed" : (String(latest.status) === "uploaded" ? "success" : "")}">${esc(latest.status || "—")}</div>
-            <p class="job-title">${esc(latest.title || latest.topic_id || "—")}</p>
-            <dl class="meta-grid">
-              <div><dt>Konu</dt><dd>${esc(latest.topic_id || "—")}</dd></div>
-              <div><dt>Zaman</dt><dd>${esc(fmt(latest.updated_at || latest.ts))}</dd></div>
-              <div><dt>Platformlar</dt><dd>${esc(platLine)}</dd></div>
-              <div><dt>YouTube</dt><dd>${yt ? `<a href="${esc(yt)}" target="_blank" rel="noreferrer">${esc(yt)}</a>` : "—"}</dd></div>
-              <div><dt>Actions</dt><dd><a href="${esc(runUrl)}" target="_blank" rel="noreferrer">Koşu kaydı →</a></dd></div>
-              <div><dt>Sıradaki konu</dt><dd>${esc(data.next_topic?.title || data.next_topic?.id || "—")}</dd></div>
-            </dl>
-            <div class="budget-row">
-              <div class="sub" style="margin-bottom:0.25rem">fal bütçe · ${esc(data.budget?.month || "")} · ${esc(data.budget?.provider || "fal")}</div>
-              <div class="budget-fig">$${spent.toFixed(2)} <span style="font-size:0.95rem;color:var(--muted);font-weight:600">/ $${cap.toFixed(0)}</span></div>
-              <div class="sub" style="margin:0.25rem 0 0">${esc(data.budget?.images_generated || 0)} görsel · %${pct}</div>
-              <div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+      const conn = data.platforms_connected || {};
+      const seriesHtml = `
+        <div class="series-card">
+          <div class="series-top">
+            <div class="series-thumb" aria-hidden="true">HS</div>
+            <div class="series-body">
+              <div class="series-title">History Shorts · Atelier</div>
+              <div class="series-meta">
+                Günde 3 video · ${esc(data.timezone || "Europe/Istanbul")} ·
+                Gizlilik: ${esc(data.privacy === "public" ? "Herkese açık" : (data.privacy || "—"))}
+              </div>
+              <div class="series-stats">
+                <span class="chip ${conn.youtube ? "ok" : "warn"}">${conn.youtube ? "YouTube bağlı" : "YouTube yok"}</span>
+                <span class="chip ${conn.fal ? "ok" : "warn"}">${conn.fal ? "Görsel AI açık" : "Görsel AI yok"}</span>
+                ${failed
+                  ? `<span class="chip err">Son iş: hata</span>`
+                  : `<span class="chip ${stateChip(latest?.status)}">${esc(stateLabel(latest?.status || "bekliyor"))}</span>`}
+              </div>
             </div>
-          ` : `<p class="sub">Henüz iş yok.</p>`}
-        </section>`;
+          </div>
+          ${latest ? `
+            <div>
+              <div class="chip ${stateChip(latest.status)}">${esc(stateLabel(latest.status))}</div>
+              <p class="job-title">${esc(latest.title || latest.topic_id || "—")}</p>
+              <dl class="meta-grid">
+                <div><dt>Zaman</dt><dd>${esc(fmt(latest.updated_at || latest.ts))}</dd></div>
+                <div><dt>Platformlar</dt><dd>${esc(platLabel(latest.platforms))}</dd></div>
+                <div><dt>YouTube</dt><dd>${yt ? `<a href="${esc(yt)}" target="_blank" rel="noreferrer">Videoyu aç</a>` : "Henüz link yok"}</dd></div>
+                <div><dt>İlerlemeyi izle</dt><dd><a href="${esc(runUrl)}" target="_blank" rel="noreferrer">GitHub’da izle</a></dd></div>
+                <div><dt>Sıradaki konu</dt><dd>${esc(data.next_topic?.title || data.next_topic?.id || "—")}</dd></div>
+              </dl>
+              <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line)">
+                <div class="sub" style="margin-bottom:0.2rem">Aylık görsel bütçesi · ${esc(data.budget?.month || "")}</div>
+                <div class="budget-fig">$${spent.toFixed(2)} <span style="font-size:0.95rem;color:var(--muted);font-weight:600">/ $${cap.toFixed(0)}</span></div>
+                <div class="sub" style="margin:0.25rem 0 0">${esc(data.budget?.images_generated || 0)} görsel · %${pct} kullanıldı</div>
+                <div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+              </div>
+            </div>
+          ` : `<p class="empty">Henüz iş yok. Yukarıdan “Şimdi video üret” ile başlayabilirsin.</p>`}
+        </div>`;
+      document.getElementById("seriesBoard").innerHTML = seriesHtml;
+
+      document.getElementById("scheduleBoard").innerHTML = `
+        <div class="slots">
+          ${slots.map((s) => {
+            const r = s.result;
+            const detail = r
+              ? `<strong>${esc(r.title || r.topic_id || "—")}</strong>${r.error ? "<br>" + esc(String(r.error).slice(0, 140)) : ""}`
+              : (s.skipped ? "Bu saat atlandı / atlanacak" : (s.state === "upcoming" ? "Bekleniyor" : "Kayıt yok"));
+            return `<div class="slot-row">
+              <div class="slot-time">${esc(s.time)}</div>
+              <div class="slot-detail">
+                <span class="chip ${stateChip(s.state)}" style="margin-bottom:0.35rem">${esc(stateLabel(s.state))}</span>
+                <div>${detail}</div>
+                ${s.state === "upcoming" ? `<div class="countdown" data-cd="${Number(s.countdown_sec) || 0}">${esc(fmtCountdown(s.countdown_sec))}</div>` : ""}
+              </div>
+              <div></div>
+            </div>`;
+          }).join("")}
+        </div>`;
 
       const errors = collectErrors(data, jobsExtra);
-      const errHtml = `
-        <section class="block" aria-labelledby="err-title">
-          <h2 id="err-title">Hata ayrıntıları</h2>
-          <p class="sub">Genişletilebilir mesaj, zaman ve Actions bağlantısı</p>
-          ${errors.length ? errors.map((e) => `
+      document.getElementById("errBoard").innerHTML = errors.length
+        ? errors.map((e) => `
             <details class="err-item">
               <summary>
-                <span>${esc((e.title || e.topic_id || "Hata").toString().slice(0, 64))}</span>
+                <span>${esc((e.title || e.topic_id || "Hata").toString().slice(0, 72))}</span>
                 <span style="color:var(--muted);font-size:0.78rem;font-weight:600">${esc(fmt(e.ts))}</span>
               </summary>
               <div class="err-body">${esc(e.message)}
-${e.run_url ? `\n<a href="${esc(e.run_url)}" target="_blank" rel="noreferrer">Actions koşusu →</a>` : `\n<a href="${esc(runUrl)}" target="_blank" rel="noreferrer">Actions →</a>`}
+${e.run_url || runUrl ? `\n<a href="${esc(e.run_url || runUrl)}" target="_blank" rel="noreferrer">GitHub’da izle →</a>` : ""}
               </div>
-            </details>
-          `).join("") : `<p class="sub">Kayıtlı hata yok.</p>`}
-        </section>`;
+            </details>`).join("")
+        : `<p class="empty">Kayıtlı hata yok. Her şey yolunda görünüyor.</p>`;
 
       const hist = terminalJobs([...(data.recent_jobs || []), ...(jobsExtra || [])]);
       const dedup = [];
@@ -798,31 +1357,25 @@ ${e.run_url ? `\n<a href="${esc(e.run_url)}" target="_blank" rel="noreferrer">Ac
         if (dedup.length >= 16) break;
       }
 
-      const histHtml = `
-        <section class="block" aria-labelledby="hist-title">
-          <h2 id="hist-title">İş geçmişi</h2>
-          <p class="sub">logs/jobs.jsonl — son sonuçlar</p>
-          <ul class="hist">
-            ${dedup.length ? dedup.map((j) => {
-              const link = ytFromJob(j);
-              return `<li>
-                <div class="when">${esc(fmt(j.updated_at || j.ts))}</div>
-                <div class="row">
-                  <strong>${esc(j.title || j.topic_id || "—")}</strong>
-                  <span class="state ${String(j.status) === "uploaded" ? "success" : (j.error || j.status === "failed" ? "failed" : "")}">${esc(j.status || "—")}</span>
-                </div>
-                ${link ? `<div><a href="${esc(link)}" target="_blank" rel="noreferrer">Shorts →</a>${j.run_url ? ` · <a href="${esc(j.run_url)}" target="_blank" rel="noreferrer">Run</a>` : ""}</div>` : (j.run_url ? `<div><a href="${esc(j.run_url)}" target="_blank" rel="noreferrer">Run →</a></div>` : "")}
-                ${j.error ? `<div class="fail-note">${esc(String(j.error).slice(0, 220))}</div>` : ""}
-              </li>`;
-            }).join("") : `<li class="sub">Geçmiş boş.</li>`}
-          </ul>
-        </section>`;
+      document.getElementById("histBoard").innerHTML = `
+        <ul class="hist">
+          ${dedup.length ? dedup.map((j) => {
+            const link = ytFromJob(j);
+            return `<li>
+              <div class="when">${esc(fmt(j.updated_at || j.ts))}</div>
+              <div class="row">
+                <strong>${esc(j.title || j.topic_id || "—")}</strong>
+                <span class="chip ${stateChip(j.status)}">${esc(stateLabel(j.status))}</span>
+              </div>
+              ${link ? `<div style="margin-top:0.25rem"><a href="${esc(link)}" target="_blank" rel="noreferrer">YouTube’da aç</a>${j.run_url ? ` · <a href="${esc(j.run_url)}" target="_blank" rel="noreferrer">GitHub</a>` : ""}</div>` : (j.run_url ? `<div style="margin-top:0.25rem"><a href="${esc(j.run_url)}" target="_blank" rel="noreferrer">GitHub’da izle</a></div>` : "")}
+              ${j.error ? `<div class="fail-note">${esc(String(j.error).slice(0, 220))}</div>` : ""}
+            </li>`;
+          }).join("") : `<li class="empty">Geçmiş boş.</li>`}
+        </ul>`;
 
-      document.getElementById("board").innerHTML = scheduleHtml + latestHtml + errHtml + histHtml;
       document.getElementById("meta").textContent =
-        "Güncellendi " + fmt(data.updated_at) + " · logs/latest.json · 30 sn’de bir yenilenir";
+        "Son güncelleme: " + fmt(data.updated_at) + " · her 30 sn’de yenilenir";
 
-      // live countdown tick from rendered values
       tickCountdowns();
     }
 
@@ -837,7 +1390,7 @@ ${e.run_url ? `\n<a href="${esc(e.run_url)}" target="_blank" rel="noreferrer">Ac
 
     async function fetchJson(url) {
       const r = await fetch(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now(), { cache: "no-store" });
-      if (!r.ok) throw new Error("HTTP " + r.status);
+      if (!r.ok) throw new Error("Durum alınamadı (" + r.status + ")");
       return r.json();
     }
 
@@ -864,23 +1417,61 @@ ${e.run_url ? `\n<a href="${esc(e.run_url)}" target="_blank" rel="noreferrer">Ac
         const [data, jobs] = await Promise.all([fetchJson(RAW_LATEST), fetchJobsJsonl()]);
         render(data, jobs);
       } catch (e) {
-        document.getElementById("board").innerHTML =
-          `<p class="load-err">Durum yüklenemedi: ${esc(e.message || e)}. <a href="https://github.com/${OWNER}/${REPO}/actions">Actions</a></p>`;
+        document.getElementById("seriesBoard").innerHTML =
+          `<p class="load-err">Durum yüklenemedi: ${esc(e.message || e)}. İnternetini kontrol et veya biraz sonra Yenile’ye bas.</p>`;
         document.getElementById("liveBar").innerHTML =
           `<span class="warn"><span class="dot warn" aria-hidden="true"></span>Çevrimdışı</span>`;
       }
     }
 
-    async function dispatch(action) {
-      const toast = document.getElementById("remoteToast");
-      const token = (document.getElementById("pat").value || loadPat()).trim();
+    async function testConnection() {
+      const token = getToken();
       if (!token) {
-        toast.className = "toast err";
-        toast.textContent = "Önce PAT yapıştırıp kaydedin (veya Actions sayfasından manuel çalıştırın).";
+        showBanner("err", "Önce token yapıştırıp Kaydet’e bas.");
+        return;
+      }
+      showBanner("warn", "Bağlantı deneniyor…");
+      try {
+        const r = await fetch(WORKFLOW_META, {
+          headers: {
+            Accept: "application/vnd.github+json",
+            Authorization: "Bearer " + token,
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        });
+        if (r.ok) {
+          const meta = await r.json();
+          savePat(token);
+          syncTokenUI();
+          showBanner("ok",
+            `Bağlantı tamam · iş akışı görüldü: <strong>${esc(meta.name || "ChronoShorts")}</strong>. Artık alttaki büyük butonları kullanabilirsin.`
+          );
+        } else if (r.status === 401 || r.status === 403) {
+          showBanner("err",
+            "Token geçersiz veya yetkisi yetersiz. Actions: Read and write (+ Contents: Read and write) verdiğinden emin ol."
+          );
+        } else if (r.status === 404) {
+          showBanner("err",
+            "Repo veya iş akışı bulunamadı. Token’ın shorts-oto reposuna eriştiğinden emin ol."
+          );
+        } else {
+          const body = await r.text();
+          showBanner("err", "Hata " + r.status + ": " + esc((body || r.statusText).slice(0, 160)));
+        }
+      } catch (e) {
+        showBanner("err", "Bağlantı kurulamadı: " + esc(e.message || e));
+      }
+    }
+
+    async function dispatch(action) {
+      const token = getToken();
+      if (!token) {
+        showBanner("err", "Token yok. Yukarıdaki kurulum adımlarını tamamla veya “GitHub Actions sayfasını aç”.");
+        document.getElementById("setupWizard").classList.remove("hidden");
         return;
       }
       savePat(token);
-      document.getElementById("pat").value = token;
+      syncTokenUI();
 
       const inputs = { action };
       const topic = document.getElementById("topicId").value.trim();
@@ -889,14 +1480,12 @@ ${e.run_url ? `\n<a href="${esc(e.run_url)}" target="_blank" rel="noreferrer">Ac
         inputs.skip_date = document.getElementById("skipDate").value.trim();
         inputs.skip_time = document.getElementById("skipTime").value;
         if (action === "skip_slot" && (!inputs.skip_date || !inputs.skip_time)) {
-          toast.className = "toast err";
-          toast.textContent = "Slot atlamak için tarih ve saat gerekli.";
+          showBanner("err", "Saat atlamak için tarih ve saat seç.");
           return;
         }
       }
 
-      toast.className = "toast";
-      toast.textContent = "Tetikleniyor…";
+      showBanner("warn", "İstek gönderiliyor…");
 
       try {
         const r = await fetch(DISPATCH_URL, {
@@ -910,43 +1499,119 @@ ${e.run_url ? `\n<a href="${esc(e.run_url)}" target="_blank" rel="noreferrer">Ac
           body: JSON.stringify({ ref: "main", inputs }),
         });
         if (r.status === 204 || r.ok) {
-          toast.className = "toast ok";
-          toast.textContent = "Workflow tetiklendi: " + action + " — Actions’ta izleyin.";
+          const msg = action === "run_now"
+            ? "İş kuyruğa alındı — 5–15 dk sürebilir. Video YouTube’a yüklenecek."
+            : action === "preview_only"
+              ? "Önizleme kuyruğa alındı — 5–15 dk sürebilir (yükleme yok)."
+              : action === "skip_slot"
+                ? "Saat atlama isteği alındı. Birkaç saniye içinde program güncellenir."
+                : "Atlama kaldırma isteği alındı.";
+          showBanner("ok",
+            `${msg}<br><a href="${esc(ACTIONS_URL)}" target="_blank" rel="noreferrer">GitHub’da izle</a>`
+          );
+          setTimeout(load, 8000);
         } else {
           const body = await r.text();
-          toast.className = "toast err";
-          toast.textContent = "Hata " + r.status + ": " + (body || r.statusText).slice(0, 180);
+          let friendly = "İstek reddedildi (" + r.status + ").";
+          if (r.status === 401 || r.status === 403) {
+            friendly = "Yetki yok. Token’ı silip yeniden oluştur; Actions yazma izni ver.";
+          }
+          showBanner("err", friendly + " " + esc((body || "").slice(0, 120)) +
+            `<br><a href="${esc(ACTIONS_URL)}" target="_blank" rel="noreferrer">Elle çalıştırmayı dene</a>`);
         }
       } catch (e) {
-        toast.className = "toast err";
-        toast.textContent = String(e.message || e);
+        showBanner("err", "Gönderilemedi: " + esc(e.message || e));
       }
     }
 
-    // Init PAT field + defaults
+    function openConfirm(action, message) {
+      pendingAction = action;
+      document.getElementById("confirmMsg").textContent = message || "Devam etmek istiyor musun?";
+      document.getElementById("confirmModal").classList.add("open");
+    }
+    function closeConfirm() {
+      pendingAction = null;
+      document.getElementById("confirmModal").classList.remove("open");
+    }
+
+    // Init
     (() => {
       const pat = loadPat();
-      if (pat) document.getElementById("pat").value = pat;
+      if (pat) {
+        document.getElementById("pat").value = pat;
+        document.getElementById("patReady").value = pat;
+      }
       const today = new Date().toLocaleDateString("en-CA", { timeZone: TZ });
       document.getElementById("skipDate").value = today;
+      syncTokenUI();
     })();
 
     document.getElementById("savePat").addEventListener("click", () => {
       const v = document.getElementById("pat").value.trim();
+      if (!v) {
+        showBanner("err", "Önce token’ı kutuya yapıştır.");
+        return;
+      }
       savePat(v);
-      const toast = document.getElementById("remoteToast");
-      toast.className = "toast ok";
-      toast.textContent = v ? "PAT bu tarayıcıya kaydedildi." : "PAT silindi.";
+      syncTokenUI();
+      showBanner("ok", "Kaydedildi — sadece bu telefonda / bilgisayarda. Şimdi “Bağlantıyı dene”.");
     });
+
+    document.getElementById("savePatReady").addEventListener("click", () => {
+      const v = document.getElementById("patReady").value.trim();
+      savePat(v);
+      document.getElementById("pat").value = v;
+      syncTokenUI();
+      showBanner(v ? "ok" : "warn", v ? "Token güncellendi." : "Token silindi.");
+    });
+
     document.getElementById("clearPat").addEventListener("click", () => {
       savePat("");
       document.getElementById("pat").value = "";
-      const toast = document.getElementById("remoteToast");
-      toast.className = "toast ok";
-      toast.textContent = "PAT silindi.";
+      document.getElementById("patReady").value = "";
+      syncTokenUI();
+      showBanner("ok", "Token silindi. İstersen kurulum adımlarından yeniden ekle.");
     });
+
+    document.getElementById("showSetupAgain").addEventListener("click", () => {
+      document.getElementById("setupWizard").classList.remove("hidden");
+      document.getElementById("setupWizard").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    document.getElementById("testPat").addEventListener("click", testConnection);
+    document.getElementById("testPatReady").addEventListener("click", testConnection);
+    document.getElementById("btnRefresh").addEventListener("click", () => {
+      load();
+      showBanner("ok", "Yenilendi.");
+      setTimeout(() => {
+        const b = document.getElementById("remoteBanner");
+        if (b.textContent === "Yenilendi.") b.classList.remove("show");
+      }, 2000);
+    });
+
     document.querySelectorAll("[data-action]").forEach((btn) => {
-      btn.addEventListener("click", () => dispatch(btn.getAttribute("data-action")));
+      btn.addEventListener("click", () => {
+        openConfirm(btn.getAttribute("data-action"), btn.getAttribute("data-confirm"));
+      });
+    });
+
+    document.getElementById("confirmCancel").addEventListener("click", closeConfirm);
+    document.getElementById("confirmOk").addEventListener("click", () => {
+      const a = pendingAction;
+      closeConfirm();
+      if (a) dispatch(a);
+    });
+    document.getElementById("confirmModal").addEventListener("click", (e) => {
+      if (e.target.id === "confirmModal") closeConfirm();
+    });
+
+    // Nav active state
+    const navLinks = document.querySelectorAll(".nav-link");
+    navLinks.forEach((a) => {
+      a.addEventListener("click", () => {
+        navLinks.forEach((x) => x.classList.remove("active"));
+        a.classList.add("active");
+      });
     });
 
     load();

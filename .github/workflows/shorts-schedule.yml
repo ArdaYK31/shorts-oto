@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "Panel action (run_now / preview_only / skip_slot / clear_skip)"
+        description: "Ne yapmak istiyorsun? run_now=üret+YouTube | preview_only=sadece önizleme | skip_slot=saati atla | clear_skip=atlamayı kaldır"
         type: choice
         options:
           - run_now
@@ -28,23 +28,23 @@ on:
           - clear_skip
         default: run_now
       dry_run:
-        description: "Dry-run only (no render/upload) — legacy"
+        description: "Sadece deneme (üretim/yükleme yok) — eski seçenek"
         type: boolean
         default: false
       skip_upload:
-        description: "Render but skip all uploads — legacy (prefer preview_only)"
+        description: "Üret ama yükleme (eski; preview_only tercih et)"
         type: boolean
         default: false
       topic_id:
-        description: "Optional topic id override"
+        description: "İsteğe bağlı konu kimliği (boş = sıradaki)"
         required: false
         type: string
       skip_date:
-        description: "For skip_slot/clear_skip — YYYY-MM-DD (Istanbul)"
+        description: "Atla/geri al için tarih — YYYY-AA-GG (İstanbul)"
         required: false
         type: string
       skip_time:
-        description: "For skip_slot/clear_skip — HH:MM e.g. 08:00"
+        description: "Atla/geri al için saat — 00:00 / 08:00 / 16:00"
         required: false
         type: string
 
