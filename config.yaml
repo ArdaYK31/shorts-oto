@@ -7,7 +7,7 @@
   width: 1080
   height: 1920
   fps: 30
-  max_duration_sec: 58
+  max_duration_sec: 58  # Shorts soft max (≤60s); assemble/upload warn if over
 
 paths:
   topics: topics

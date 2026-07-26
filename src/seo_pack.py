@@ -10,6 +10,8 @@ from config_loader import load_config
 # ChronoShorts-style: keyword-forward hook titles, capped for YouTube
 TITLE_SOFT_MAX = 70
 TITLE_HARD_MAX = 100
+SHORTS_HASHTAG = "#Shorts"
+_SHORTS_TITLE_SUFFIX = f" {SHORTS_HASHTAG}"
 
 
 def _clamp_title(title: str, limit: int = TITLE_SOFT_MAX) -> str:
@@ -18,6 +20,34 @@ def _clamp_title(title: str, limit: int = TITLE_SOFT_MAX) -> str:
         return title
     cut = title[: limit - 1].rsplit(" ", 1)[0]
     return (cut or title[:limit]).rstrip(".,;:") + "…"
+
+
+def ensure_shorts_title(title: str, hard_max: int = TITLE_HARD_MAX) -> str:
+    """Append #Shorts to title end (YouTube Shorts convention)."""
+    title = re.sub(r"\s+", " ", (title or "").strip())
+    if not title:
+        return SHORTS_HASHTAG[:hard_max]
+    if re.search(r"#shorts\b", title, re.I):
+        return title[:hard_max]
+    room = max(8, hard_max - len(_SHORTS_TITLE_SUFFIX))
+    base = _clamp_title(title, min(TITLE_SOFT_MAX, room))
+    if len(base) > room:
+        base = _clamp_title(base, room)
+    return (base.rstrip(" .—-") + _SHORTS_TITLE_SUFFIX)[:hard_max]
+
+
+def ensure_shorts_description(description: str) -> str:
+    """Put #Shorts at the very start of the description (and keep hashtag block)."""
+    desc = (description or "").strip()
+    if not desc:
+        return SHORTS_HASHTAG
+    if re.match(r"(?i)^#shorts\b", desc):
+        return desc
+    # Already somewhere — still promote to first line for Shorts feed signal
+    if re.search(r"(?i)#shorts\b", desc):
+        body = re.sub(r"(?i)\s*#shorts\b", "", desc, count=1).strip()
+        return f"{SHORTS_HASHTAG}\n\n{body}".strip()
+    return f"{SHORTS_HASHTAG}\n\n{desc}"
 
 
 def _hook_from_script(narration: str) -> str:
@@ -52,12 +82,14 @@ def _build_title(topic: dict[str, Any], hook: str) -> str:
             base = f"{hook.rstrip('.')} | {primary}"
         else:
             base = hook
-    title = _clamp_title(base, TITLE_SOFT_MAX)
+    # Leave room for trailing " #Shorts"
+    room = TITLE_HARD_MAX - len(_SHORTS_TITLE_SUFFIX)
+    title = _clamp_title(base, min(TITLE_SOFT_MAX, room))
     if primary and primary.lower() not in title.lower() and len(title) < 55:
-        candidate = _clamp_title(f"{title} — {primary}", TITLE_SOFT_MAX)
-        if len(candidate) <= TITLE_SOFT_MAX:
+        candidate = _clamp_title(f"{title} — {primary}", min(TITLE_SOFT_MAX, room))
+        if len(candidate) <= min(TITLE_SOFT_MAX, room):
             title = candidate
-    return title[:TITLE_HARD_MAX]
+    return ensure_shorts_title(title, TITLE_HARD_MAX)
 
 
 def _default_tags(keywords: list[str], defaults: list[str]) -> list[str]:
@@ -122,15 +154,17 @@ def build_description(
     topic: dict[str, Any],
     hashtags: list[str],
 ) -> str:
-    """SEO description: strong first lines, context, CTA, #Shorts."""
+    """SEO description: #Shorts first, then hook/context/CTA/hashtags."""
     target = (topic.get("keywords") or ["American history"])[0]
     topic_line = topic.get("topic") or target
     context = _context_blurb(narration, hook)
     hash_line = " ".join(hashtags)
-    if "#Shorts" not in hash_line and "shorts" not in hash_line.lower():
-        hash_line = "#Shorts " + hash_line
+    if not re.search(r"(?i)#shorts\b", hash_line):
+        hash_line = f"{SHORTS_HASHTAG} {hash_line}".strip()
 
     lines = [
+        SHORTS_HASHTAG,
+        "",
         hook,
         "",
         context,
@@ -142,11 +176,7 @@ def build_description(
         "",
         hash_line,
     ]
-    desc = "\n".join(lines)
-    # Ensure #Shorts somewhere (YouTube Shorts discovery)
-    if "#Shorts" not in desc and "#shorts" not in desc.lower():
-        desc = desc.rstrip() + "\n\n#Shorts"
-    return desc
+    return ensure_shorts_description("\n".join(lines))
 
 
 def build_seo_pack(

@@ -38,11 +38,11 @@ def _hashtag_list(seo: dict[str, Any], limit: int = 12) -> list[str]:
 
 
 def youtube_fields(seo: dict[str, Any]) -> tuple[str, str, list[str]]:
-    title = (seo.get("title") or "").strip()[:100]
-    description = (seo.get("description") or "").strip()
+    from seo_pack import ensure_shorts_description, ensure_shorts_title
+
+    title = ensure_shorts_title((seo.get("title") or "").strip())
+    description = ensure_shorts_description((seo.get("description") or "").strip())
     tags = [str(t).strip() for t in (seo.get("tags") or []) if str(t).strip()]
-    if "#Shorts" not in description and "#shorts" not in description.lower():
-        description = description.rstrip() + "\n\n#Shorts"
     return title, description, tags
 
 
