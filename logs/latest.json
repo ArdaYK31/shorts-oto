@@ -13,11 +13,61 @@
     "2026-07-27T08:00:00+03:00",
     "2026-07-27T16:00:00+03:00"
   ],
+  "next_slot": {
+    "time": null,
+    "at": "2026-07-27T00:00:00+03:00",
+    "state": "upcoming",
+    "countdown_sec": 14395
+  },
+  "today_slots": [
+    {
+      "time": "00:00",
+      "at": "2026-07-26T00:00:00+03:00",
+      "state": "missed",
+      "skipped": false,
+      "countdown_sec": 0,
+      "result": null
+    },
+    {
+      "time": "08:00",
+      "at": "2026-07-26T08:00:00+03:00",
+      "state": "skipped",
+      "skipped": true,
+      "countdown_sec": 0,
+      "result": null
+    },
+    {
+      "time": "16:00",
+      "at": "2026-07-26T16:00:00+03:00",
+      "state": "failed",
+      "skipped": false,
+      "countdown_sec": 0,
+      "result": {
+        "status": "failed",
+        "topic_id": "us-armed-saddam",
+        "title": "Did You Know? The US Once Backed Saddam Hussein",
+        "error": "RuntimeError(\"Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'\")",
+        "links": null,
+        "platforms": {},
+        "updated_at": "2026-07-26T17:42:48.306036+03:00",
+        "run_url": null
+      }
+    }
+  ],
+  "skip_slots": {
+    "dates": {
+      "2026-07-26": [
+        "08:00"
+      ]
+    },
+    "timezone": "Europe/Istanbul",
+    "note": "Skip only listed Istanbul wall-clock slots; other times and future days run normally."
+  },
   "platforms_connected": {
     "youtube": true,
     "instagram": false,
     "tiktok": false,
-    "fal": true
+    "fal": false
   },
   "budget": {
     "month": "2026-07",
@@ -44,6 +94,36 @@
     },
     "ts": "2026-07-26T19:45:48.943432+03:00",
     "updated_at": "2026-07-26T19:45:48.943432+03:00"
+  },
+  "last_error": {
+    "message": "RuntimeError(\"Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'\")",
+    "topic_id": "us-armed-saddam",
+    "title": "Did You Know? The US Once Backed Saddam Hussein",
+    "status": "failed",
+    "ts": "2026-07-26T17:42:48.306036+03:00",
+    "run_url": null
+  },
+  "last_success": {
+    "topic_id": "us-armed-saddam",
+    "title": "Did You Know? The US Once Backed Saddam Hussein",
+    "ts": "2026-07-26T19:45:48.943432+03:00",
+    "links": {
+      "youtube": "https://youtu.be/_dlnMgEGjC4",
+      "instagram": null,
+      "tiktok": null
+    },
+    "platforms": {
+      "youtube": "_dlnMgEGjC4",
+      "instagram": null,
+      "tiktok": null
+    },
+    "run_url": null
+  },
+  "last_run_url": null,
+  "youtube_url": "https://youtu.be/_dlnMgEGjC4",
+  "next_topic": {
+    "id": "cleopatra-not-egyptian",
+    "title": "Cleopatra Wasn't Egyptian — And Lived Closer to iPhones"
   },
   "recent_jobs": [
     {
@@ -225,5 +305,8 @@
     }
   ],
   "actions_url": "https://github.com/ArdaYK31/shorts-oto/actions",
-  "updated_at": "2026-07-26T19:45:48.943432+03:00"
+  "artifacts_url": "https://github.com/ArdaYK31/shorts-oto/actions",
+  "repo_url": "https://github.com/ArdaYK31/shorts-oto",
+  "panel_url": "https://ardayk31.github.io/shorts-oto/",
+  "updated_at": "2026-07-26T20:00:04.386931+03:00"
 }

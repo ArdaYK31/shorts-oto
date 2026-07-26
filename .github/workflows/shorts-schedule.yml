@@ -2,10 +2,8 @@
 # Europe/Istanbul (GMT+3): 00:00 / 08:00 / 16:00
 # UTC crons: 21:00 previous day | 05:00 | 13:00
 #
-# Each run: Docker render once → SEO → upload IMMEDIATELY (no human Approve / no review queue)
-# YouTube public + Instagram Reels + TikTok when secrets exist.
-# Images: fal.ai Flux Schnell via FAL_KEY (budget ~$30/mo); Pollinations if key missing.
-# Do NOT add GitHub Environment protection rules that require manual approval.
+# Panel remote (workflow_dispatch action):
+#   run_now | preview_only | skip_slot | clear_skip
 # Secrets never committed. Missing IG/TT secrets → skip those platforms gracefully.
 
 name: ChronoShorts Schedule
@@ -20,28 +18,91 @@ on:
     - cron: "0 13 * * *"
   workflow_dispatch:
     inputs:
+      action:
+        description: "Panel action (run_now / preview_only / skip_slot / clear_skip)"
+        type: choice
+        options:
+          - run_now
+          - preview_only
+          - skip_slot
+          - clear_skip
+        default: run_now
       dry_run:
-        description: "Dry-run only (no render/upload)"
+        description: "Dry-run only (no render/upload) — legacy"
         type: boolean
         default: false
       skip_upload:
-        description: "Render but skip all uploads"
+        description: "Render but skip all uploads — legacy (prefer preview_only)"
         type: boolean
         default: false
       topic_id:
         description: "Optional topic id override"
         required: false
         type: string
+      skip_date:
+        description: "For skip_slot/clear_skip — YYYY-MM-DD (Istanbul)"
+        required: false
+        type: string
+      skip_time:
+        description: "For skip_slot/clear_skip — HH:MM e.g. 08:00"
+        required: false
+        type: string
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: chronoshorts-schedule
   cancel-in-progress: false
 
 jobs:
+  # Lightweight path: panel skip controls (no Docker)
+  panel-skip:
+    if: >
+      github.event_name == 'workflow_dispatch' &&
+      (inputs.action == 'skip_slot' || inputs.action == 'clear_skip')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Apply skip / clear
+        env:
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+          python src/panel_remote.py \
+            --action "${{ inputs.action }}" \
+            --skip-date "${{ inputs.skip_date }}" \
+            --skip-time "${{ inputs.skip_time }}"
+
+      - name: Persist skip_slots + latest.json
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add logs/skip_slots.json logs/latest.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No skip state changes to commit"
+          else
+            git commit -m "chore(panel): ${{ inputs.action }} schedule skip [skip ci]"
+            git push
+          fi
+
   produce-and-upload:
+    if: >
+      github.event_name != 'workflow_dispatch' ||
+      (inputs.action != 'skip_slot' && inputs.action != 'clear_skip')
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
@@ -99,12 +160,18 @@ jobs:
           TIKTOK_MODE: ${{ secrets.TIKTOK_MODE }}
           FAL_KEY: ${{ secrets.FAL_KEY }}
           IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SERVER_URL: ${{ github.server_url }}
         run: |
           set -euo pipefail
           ARGS=()
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ACTION="${{ inputs.action }}"
             if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS+=(--dry-run); fi
-            if [ "${{ inputs.skip_upload }}" = "true" ]; then ARGS+=(--skip-upload); fi
+            if [ "${{ inputs.skip_upload }}" = "true" ] || [ "$ACTION" = "preview_only" ]; then
+              ARGS+=(--skip-upload)
+            fi
             if [ -n "${{ inputs.topic_id }}" ]; then ARGS+=(--topic-id "${{ inputs.topic_id }}"); fi
           fi
           mkdir -p .cache/huggingface .cache/torch logs out topics/used
@@ -118,6 +185,9 @@ jobs:
             -e TIKTOK_MODE \
             -e FAL_KEY \
             -e IMAGE_API_KEY \
+            -e GITHUB_RUN_ID \
+            -e GITHUB_REPOSITORY \
+            -e GITHUB_SERVER_URL \
             -e ESPEAK_DATA_PATH=/usr/lib/x86_64-linux-gnu/espeak-ng-data \
             -e HF_HOME=/root/.cache/huggingface \
             -v "$PWD/credentials:/app/credentials" \
@@ -139,6 +209,7 @@ jobs:
             logs/jobs.jsonl
             logs/budget.json
             logs/schedule.log
+            logs/skip_slots.json
           if-no-files-found: warn
 
       - name: Upload preview mp4 artifact
