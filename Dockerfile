@@ -40,6 +40,7 @@ COPY topics ./topics
 COPY scenarios ./scenarios
 COPY prompts ./prompts
 COPY bgm ./bgm
+COPY assets ./assets
 COPY scripts/.gitkeep scripts/
 COPY audio/.gitkeep audio/
 COPY media ./media
