@@ -13,3 +13,6 @@
 [2026-07-26 05:17:44 +0300] SKIP instagram: missing credentials
 [2026-07-26 05:17:44 +0300] SKIP tiktok: missing credentials
 [2026-07-26 05:17:44 +0300] DONE topic=stanislav-petrov autopilot=true results={"youtube": "_LRfwnuL6Fk", "instagram": null, "tiktok": null}
+[2026-07-26 05:57:02 +0300] CLAIMED unique topic=washington-refused-crown title='The Man Who Was Offered a Crown and Said No' path=/app/topics/used/washington-refused-crown.json (each cron slot must upload a DIFFERENT Short)
+[2026-07-26 05:57:02 +0300] START topic=washington-refused-crown title='The Man Who Was Offered a Crown and Said No' autopilot auto_upload=True require_approval=False
+[2026-07-26 06:02:49 +0300] FAIL topic=washington-refused-crown error=[quality_gates] FAILED: Duration 92.1s > max 60.0s

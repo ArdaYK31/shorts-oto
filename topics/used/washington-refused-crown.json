@@ -1,0 +1,24 @@
+{
+  "id": "washington-refused-crown",
+  "title": "The Man Who Was Offered a Crown and Said No",
+  "topic": "George Washington refused monarchical power and stepped down after two terms",
+  "language": "en",
+  "keywords": [
+    "George Washington",
+    "presidency",
+    "American republic"
+  ],
+  "search_queries": [
+    "George Washington portrait",
+    "Mount Vernon",
+    "Constitutional Convention"
+  ],
+  "wikimedia_titles": [
+    "Gilbert Stuart Williamstown Portrait of George Washington.jpg",
+    "Washington Resigning His Commission.jpg"
+  ],
+  "pd_fallback_urls": [],
+  "scenario_id": "refused-power",
+  "provider": "template",
+  "script_file": "washington-refused-crown.txt"
+}
