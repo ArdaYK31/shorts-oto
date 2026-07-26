@@ -33,21 +33,33 @@ script:
 
 tts:
   provider: kokoro
-  # am_fenrir: deeper/fuller than am_michael (A/B vs adam/puck/daniel); + FFmpeg post in tts.py
-  voice: am_fenrir
-  speed: 0.98
+  # ChronoShorts: clear US male documentary narrator (not ultra-deep gravel)
+  # A/B: am_michael, am_onyx; deeper drama: am_fenrir @ 1.0
+  voice: am_adam
+  speed: 1.05
   lang: en-us
-  kokoro_onnx_voice: am_fenrir
+  kokoro_onnx_voice: am_adam
   kokoro_onnx_model: "C:/kokoro-models/kokoro-v1.0.onnx"
   kokoro_onnx_voices: "C:/kokoro-models/voices-v1.0.bin"
   edge_voice: en-US-ChristopherNeural
   edge_rate: "+5%"
 
 media:
+  # ChronoShorts match: AI painterly stills (see STYLE_GUIDE_CHRONOSHORTS.md)
+  # wikimedia | ai_local | ai_api — default ai_local ($0; Pollinations fallback if no Diffusers)
+  provider: ai_local
+  style_prompt_file: prompts/image_style.txt
+  ai_local:
+    model: stabilityai/sd-turbo
+    steps: 4
+    guidance: 0.0
+    allow_free_api_fallback: true  # Pollinations HTTP if torch/diffusers missing
+  ai_api:
+    backend: pollinations  # $0 no key; paid backends not wired yet
   image_count: 12
-  seconds_per_image: 3.5  # target cut; hard max 5s enforced in assemble/captions
-  ken_burns_zoom: 1.08
-  user_agent: "yt-history-shorts/0.2 (local automation; educational)"
+  seconds_per_image: 3.0  # ChronoShorts ~3s cuts; hard max 5s in assemble/captions
+  ken_burns_zoom: 1.06
+  user_agent: "yt-history-shorts/0.3 (local automation; educational)"
   score_enabled: true
   min_width: 700
   min_height: 500
@@ -61,19 +73,23 @@ captions:
   whisper_model: base.en
   whisper_device: cpu
   whisper_compute_type: int8
-  words_per_line: 4
-  font_size: 68
-  margin_v: 380
+  # ChronoShorts: 1 centered word, white + thick black outline
+  words_per_line: 1
+  font_name: Arial
+  font_size: 96
+  alignment: 5  # ASS middle-center
+  margin_v: 0
   primary_color: "&H00FFFFFF"
-  highlight_color: "&H0000FFFF"
+  highlight_color: "&H00FFFFFF"  # no yellow karaoke flash
   outline_color: "&H00000000"
-  outline: 5
+  outline: 7
+  shadow: 0
   bold: true
-  # Cold-open: big hook caption ~2s, then karaoke
-  hook_seconds: 2.0
-  hook_font_size: 92
-  hook_margin_v: 700
-  hook_color: "&H0000D7FF"
+  # ChronoShorts jumps straight into center words (no long cold-open banner)
+  hook_seconds: 0
+  hook_font_size: 104
+  hook_margin_v: 0
+  hook_color: "&H00FFFFFF"
 
 assemble:
   crf: 17

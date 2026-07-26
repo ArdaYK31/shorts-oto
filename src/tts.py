@@ -41,24 +41,26 @@ def _synthesize_kokoro(text: str, out_wav: Path, voice: str, speed: float, lang:
     sf.write(str(out_wav), audio_out, sample_rate)
 
 
-def _synthesize_kokoro_onnx(text: str, out_wav: Path, voice: str, model: str, voices: str) -> None:
+def _synthesize_kokoro_onnx(
+    text: str, out_wav: Path, voice: str, model: str, voices: str, speed: float = 1.0
+) -> None:
     from kokoro_onnx import Kokoro
 
     kokoro = Kokoro(model, voices)
-    samples, sample_rate = kokoro.create(text, voice=voice, speed=1.0, lang="en_us")
+    samples, sample_rate = kokoro.create(text, voice=voice, speed=float(speed), lang="en_us")
     out_wav.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(out_wav), samples, sample_rate)
 
 
 def _narration_post_filter() -> str:
-    """Fuller 'tok' / radio-doc tone: gentle compress, body shelf, presence, de-ess, loudnorm."""
+    """ChronoShorts-tuned: clear US doc narrator — mild body, strong presence, de-ess, loudnorm."""
     return (
-        "acompressor=threshold=-20dB:ratio=2.8:attack=8:release=120:makeup=3:knee=6,"
-        "lowshelf=f=160:width_type=q:width=0.7:g=4.5,"
-        "equalizer=f=3200:width_type=h:width=1400:g=2.8,"
-        "highshelf=f=7000:width_type=q:width=0.7:g=-5,"
-        "equalizer=f=90:width_type=h:width=60:g=-2,"
-        "loudnorm=I=-16:TP=-1.5:LRA=11"
+        "acompressor=threshold=-18dB:ratio=3.2:attack=6:release=100:makeup=2.5:knee=5,"
+        "lowshelf=f=140:width_type=q:width=0.7:g=2.5,"
+        "equalizer=f=3200:width_type=h:width=1600:g=3.2,"
+        "highshelf=f=7500:width_type=q:width=0.7:g=-4,"
+        "equalizer=f=90:width_type=h:width=60:g=-1.5,"
+        "loudnorm=I=-16:TP=-1.5:LRA=9"
     )
 
 
@@ -96,7 +98,7 @@ def _post_process_narration(raw_wav: Path, out_mp3: Path) -> None:
         processed_wav.unlink(missing_ok=True)
     except OSError:
         pass
-    print(f"[tts] Post-FX: compressor + lowshelf(160Hz) + presence(3.2k) + de-ess + loudnorm")
+    print(f"[tts] Post-FX: ChronoShorts EQ (compress + mild lowshelf + presence 3.2k + de-ess + loudnorm)")
 
 
 def synthesize(script_path: Path | None = None) -> Path:
@@ -116,16 +118,17 @@ def synthesize(script_path: Path | None = None) -> Path:
     wav_path = audio_dir / f"{script_path.stem}.wav"
     out_path = audio_dir / f"{script_path.stem}.mp3"
     provider = cfg["tts"]["provider"]
-    voice = cfg["tts"].get("voice", "am_fenrir")
+    voice = cfg["tts"].get("voice", "am_adam")
+    speed = float(cfg["tts"].get("speed", 1.05))
 
     if provider == "kokoro":
-        print(f"[tts] Kokoro voice={voice} ESPEAK_DATA_PATH={os.environ.get('ESPEAK_DATA_PATH')}")
+        print(f"[tts] Kokoro voice={voice} speed={speed} ESPEAK_DATA_PATH={os.environ.get('ESPEAK_DATA_PATH')}")
         try:
             _synthesize_kokoro(
                 text,
                 wav_path,
                 voice=voice,
-                speed=float(cfg["tts"].get("speed", 1.0)),
+                speed=speed,
                 lang=str(cfg["tts"].get("lang", "en-us")),
             )
         except Exception as exc:  # noqa: BLE001
@@ -138,9 +141,10 @@ def synthesize(script_path: Path | None = None) -> Path:
                 voice=cfg["tts"].get("kokoro_onnx_voice") or voice,
                 model=model,
                 voices=voices,
+                speed=speed,
             )
     elif provider == "kokoro_onnx":
-        print("[tts] Using kokoro-onnx")
+        print(f"[tts] Using kokoro-onnx voice={voice} speed={speed}")
         model = cfg["tts"].get("kokoro_onnx_model") or r"C:\kokoro-models\kokoro-v1.0.onnx"
         voices = cfg["tts"].get("kokoro_onnx_voices") or r"C:\kokoro-models\voices-v1.0.bin"
         _synthesize_kokoro_onnx(
@@ -149,6 +153,7 @@ def synthesize(script_path: Path | None = None) -> Path:
             voice=cfg["tts"].get("kokoro_onnx_voice") or voice,
             model=model,
             voices=voices,
+            speed=speed,
         )
     else:
         raise SystemExit(

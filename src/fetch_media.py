@@ -180,6 +180,27 @@ def fetch_media(meta_path: Path | None = None) -> list[Path]:
     meta: dict[str, Any] = json.loads(meta_path.read_text(encoding="utf-8"))
     stem = meta["id"]
     need = int(cfg["media"]["image_count"])
+    provider = str(cfg["media"].get("provider", "ai_local")).lower().strip()
+
+    # ChronoShorts look = AI painterly stills (local Diffusers or free Pollinations)
+    if provider in {"ai_local", "ai_api"}:
+        try:
+            from generate_images import generate_ai_stills, process_ai_to_vertical
+
+            print(f"[media] provider={provider} (ChronoShorts AI illustration path)")
+            raws = generate_ai_stills(meta, need)
+            processed = process_ai_to_vertical(raws, stem, need)
+            if len(processed) >= 4:
+                manifest = proc_dir / f"{stem}.images.json"
+                manifest.write_text(
+                    json.dumps([p.name for p in processed], indent=2), encoding="utf-8"
+                )
+                print(f"[media] Ready {len(processed)} AI scenes")
+                return processed
+            print(f"[media] AI path only got {len(processed)} — falling back to Wikimedia")
+        except Exception as exc:  # noqa: BLE001
+            print(f"[media] AI provider failed ({exc}); falling back to Wikimedia PD")
+
     ua = cfg["media"]["user_agent"]
     w, h = int(cfg["project"]["width"]), int(cfg["project"]["height"])
     score_enabled = bool(cfg["media"].get("score_enabled", True))
@@ -189,6 +210,7 @@ def fetch_media(meta_path: Path | None = None) -> list[Path]:
     hard_min_w = int(cfg["media"].get("hard_min_width", 600))
     hard_min_h = int(cfg["media"].get("hard_min_height", 450))
 
+    print("[media] provider=wikimedia (PD / LOC archival)")
     session = _session(ua)
     scored: list[tuple[float, Path, str]] = []
     seen_fp: set[str] = set()

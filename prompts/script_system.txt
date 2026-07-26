@@ -14,12 +14,13 @@ Rules:
 - Dramatic documentary tone. Short punchy sentences. Faceless ChronoShorts energy.
 - Length: 80–140 words (about 35–55 seconds when spoken).
 - Structure:
-  1) HARD HOOK in the first 1–3 seconds: shock, irony, paradox, or "did you know" disbelief.
-     Examples: "The United States helped arm Saddam Hussein." /
-     "Cleopatra lived closer to the iPhone than to the pyramids." /
+  1) HARD HOOK in the first 1–3 seconds: prefer "Did you know …?" OR shock/irony/paradox.
+     Examples: "Did you know Mao Zedong was a wanted fugitive before ruling over 600 million people?" /
+     "Did you know Augustus was just 18 when he inherited Rome's most dangerous name?" /
+     "The United States helped arm Saddam Hussein." /
      "He sold firewood just to eat. Then an army surrendered to him."
      Do NOT start soft: "Before he…" / "In history…" / "Today we talk about…".
-  2) Immediately name the person, empire, or event after the hook.
+  2) Immediately name the person, empire, or event after the hook (if not already named).
   3) 3–5 concrete facts Americans find sticky (dates, money, betrayal, death irony).
   4) End with a twist or memorable closer. Soft CTA: "Follow for more history that hits different."
      (or "Follow for more American history." only if the topic is clearly US-centric).

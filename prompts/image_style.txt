@@ -1,0 +1,12 @@
+STYLE PREFIX (always prepend; do not omit):
+cinematic historical illustration, semi-realistic painterly digital art, visible soft brushstrokes, dramatic cinematic lighting, rich atmospheric depth, muted earthy color grading with selective warm accents, concept-art quality, highly detailed textures, epic documentary mood, vertical 9:16 composition, no modern logos, no watermarks, no UI text, no captions on the image
+
+NEGATIVE (avoid):
+photorealistic stock photo, blurry, lowres, anime, cartoon, chibi, plastic skin, deformed hands, extra fingers, text, letters, watermark, logo, frame border, collage, split screen, selfie, smartphone, neon cyberpunk, purple glow
+
+SCENE RULES:
+- One clear historical subject or moment per image
+- Period-accurate clothing, architecture, and props
+- Prefer medium/full shots with a strong focal character
+- Lighting: chiaroscuro, torch/lantern warmth OR bright daylight with deep shadows
+- Keep faces recognizable for famous figures when the topic names them

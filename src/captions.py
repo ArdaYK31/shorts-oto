@@ -328,11 +328,15 @@ def _write_header(cfg: dict, karaoke: bool = True) -> str:
 
     font_size = int(cfg["captions"]["font_size"])
 
+    font_name = str(cfg["captions"].get("font_name", "Arial"))
+
     hook_size = int(cfg["captions"].get("hook_font_size", max(font_size + 22, 90)))
 
     margin_v = int(cfg["captions"]["margin_v"])
 
     hook_margin_v = int(cfg["captions"].get("hook_margin_v", 720))
+
+    alignment = int(cfg["captions"].get("alignment", 2))
 
     primary = cfg["captions"]["primary_color"]
 
@@ -343,6 +347,8 @@ def _write_header(cfg: dict, karaoke: bool = True) -> str:
     outline_c = cfg["captions"]["outline_color"]
 
     outline = int(cfg["captions"]["outline"])
+
+    shadow = int(cfg["captions"].get("shadow", 2))
 
     bold = -1 if cfg["captions"]["bold"] else 0
 
@@ -362,9 +368,9 @@ WrapStyle: 0
 
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 
-Style: Default,Arial,{font_size},{primary},{secondary},{outline_c},&H80000000,{bold},0,0,0,100,100,0,0,1,{outline},2,2,80,120,{margin_v},1
+Style: Default,{font_name},{font_size},{primary},{secondary},{outline_c},&H80000000,{bold},0,0,0,100,100,0,0,1,{outline},{shadow},{alignment},40,40,{margin_v},1
 
-Style: Hook,Arial,{hook_size},{hook_color},{secondary},{outline_c},&H80000000,-1,0,0,0,100,100,0,0,1,{outline + 1},3,2,60,90,{hook_margin_v},1
+Style: Hook,{font_name},{hook_size},{hook_color},{secondary},{outline_c},&H80000000,-1,0,0,0,100,100,0,0,1,{outline + 1},{shadow},{alignment},40,40,{hook_margin_v},1
 
 [Events]
 
@@ -386,13 +392,19 @@ def write_ass_rough(script_path: Path, audio_path: Path, out_path: Path, cfg: di
 
     beats = _beats_from_script(script_path, duration)
 
-    hook_text = _first_sentence(text)
+    hook_seconds = float(cfg["captions"].get("hook_seconds", 2.0))
 
-    hook_end = min(float(cfg["captions"].get("hook_seconds", 2.0)), duration * 0.25)
+    hook_text = _first_sentence(text) if hook_seconds > 0 else ""
 
-    if beats:
+    hook_end = 0.0
 
-        hook_end = min(max(hook_end, float(beats[0]["end"]) * 0.55), float(beats[0]["end"]))
+    if hook_seconds > 0 and hook_text:
+
+        hook_end = min(hook_seconds, duration * 0.25)
+
+        if beats:
+
+            hook_end = min(max(hook_end, float(beats[0]["end"]) * 0.55), float(beats[0]["end"]))
 
     beats_path = out_path.parent / f"{out_path.stem}.beats.json"
 
@@ -404,7 +416,7 @@ def write_ass_rough(script_path: Path, audio_path: Path, out_path: Path, cfg: di
 
     n = len(chunks)
 
-    lead = hook_end if hook_text else 0.15
+    lead = hook_end if hook_text else 0.0
 
     usable = max(duration - lead, 0.5)
 
@@ -412,11 +424,11 @@ def write_ass_rough(script_path: Path, audio_path: Path, out_path: Path, cfg: di
 
     events: list[str] = []
 
-    if hook_text:
+    if hook_text and hook_end > 0:
 
         events.append(
 
-            f"Dialogue: 1,0:00:00.00,{_ass_timestamp(hook_end)},Hook,,0,0,0,,{_ass_escape(hook_text)}"
+            f"Dialogue: 1,0:00:00.00,{_ass_timestamp(hook_end)},Hook,,0,0,0,,{_ass_escape(hook_text.upper())}"
 
         )
 
@@ -428,7 +440,7 @@ def write_ass_rough(script_path: Path, audio_path: Path, out_path: Path, cfg: di
 
         events.append(
 
-            f"Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},Default,,0,0,0,,{_ass_escape(chunk)}"
+            f"Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},Default,,0,0,0,,{_ass_escape(chunk.upper())}"
 
         )
 
@@ -538,9 +550,17 @@ def write_ass_whisper(audio_path: Path, out_path: Path, cfg: dict, script_path: 
 
     hook_seconds = float(cfg["captions"].get("hook_seconds", 2.0))
 
-    first_end = float(beats[0]["end"]) if beats else timed_words[min(5, len(timed_words) - 1)][2]
+    if hook_seconds <= 0:
 
-    hook_end = min(max(hook_seconds, 1.2), first_end, duration * 0.3)
+        hook_text = ""
+
+        hook_end = 0.0
+
+    else:
+
+        first_end = float(beats[0]["end"]) if beats else timed_words[min(5, len(timed_words) - 1)][2]
+
+        hook_end = min(max(hook_seconds, 1.2), first_end, duration * 0.3)
 
     beats_path = out_path.parent / f"{out_path.stem}.beats.json"
 
@@ -552,11 +572,11 @@ def write_ass_whisper(audio_path: Path, out_path: Path, cfg: dict, script_path: 
 
     events: list[str] = []
 
-    if hook_text:
+    if hook_text and hook_end > 0:
 
         events.append(
 
-            f"Dialogue: 1,0:00:00.00,{_ass_timestamp(hook_end)},Hook,,0,0,0,,{_ass_escape(hook_text)}"
+            f"Dialogue: 1,0:00:00.00,{_ass_timestamp(hook_end)},Hook,,0,0,0,,{_ass_escape(hook_text.upper())}"
 
         )
 
@@ -596,7 +616,7 @@ def write_ass_whisper(audio_path: Path, out_path: Path, cfg: dict, script_path: 
 
                 dur_cs = max(int(round((w_end - prev_end) * 100)), 1)
 
-            parts.append(f"{{\\k{dur_cs}}}{_ass_escape(word)}")
+            parts.append(f"{{\\k{dur_cs}}}{_ass_escape(word.upper())}")
 
         events.append(
 

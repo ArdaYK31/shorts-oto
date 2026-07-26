@@ -31,6 +31,7 @@ media/raw/*
 !media/raw/.gitkeep
 media/processed/*
 !media/processed/.gitkeep
+media/style_refs/
 captions/*
 !captions/.gitkeep
 out/*

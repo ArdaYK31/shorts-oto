@@ -60,14 +60,15 @@ Pipeline tetikleme: Queue/Series içinden `Generate` → `python src/run_pipelin
 
 | Parça | Araç |
 |-------|------|
-| TTS | Kokoro **`am_fenrir`** (daha dolgun/derin male EN; A/B: michael/adam/puck/daniel) |
-| Narration post | FFmpeg: soft compressor → lowshelf ~160Hz → presence ~3.2kHz → de-ess → loudnorm |
-| Captions | faster-whisper karaoke + ~2s hook style |
+| TTS | Kokoro **`am_adam`** @ 1.05 (ChronoShorts clear US male; A/B: michael/onyx/fenrir) |
+| Narration post | FFmpeg: compress → mild lowshelf → presence ~3.2kHz → de-ess → loudnorm |
+| Captions | Centered 1-word white+outline (ChronoShorts) via faster-whisper |
 | Beat-sync | Whisper/script beats → scene süreleri |
 | Assemble | Ken Burns + grade + CRF 17 + loudnorm |
 | BGM | `bgm/soft_cinematic_pad.mp3` (layered pad + slow pulse) + sidechain duck (~0.15) |
 | Cleanup | `cleanup_temps`: `*.tmp.mp4` / `_partial` / work-dir MP4 silinir; yalnız `out/{stem}.mp4` kalır |
-| Media | Wikimedia/LOC PD + scorer |
+| Media | **`ai_local`** ChronoShorts painterly stills (SD-Turbo / Pollinations) → Wikimedia fallback |
+| Style | `STYLE_GUIDE_CHRONOSHORTS.md` + `prompts/image_style.txt` |
 | DB | SQLite + Prisma (`apps/web`) |
 
 ## Autopilot (onay yok)
