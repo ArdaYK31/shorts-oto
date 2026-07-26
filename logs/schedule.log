@@ -40,3 +40,6 @@
 [2026-07-26 19:45:48 +0300] SKIP instagram: missing credentials
 [2026-07-26 19:45:48 +0300] SKIP tiktok: missing credentials
 [2026-07-26 19:45:48 +0300] DONE unique topic=us-armed-saddam autopilot=true results={"youtube": "_dlnMgEGjC4", "instagram": null, "tiktok": null} marked_uploaded=true
+[2026-07-26 23:18:47 +0300] PREVIEW no-claim topic=cleopatra-not-egyptian title="Cleopatra Wasn't Egyptian — And Lived Closer to iPhones" (--skip-upload; topic stays eligible for scheduled upload)
+[2026-07-26 23:18:47 +0300] START topic=cleopatra-not-egyptian title="Cleopatra Wasn't Egyptian — And Lived Closer to iPhones" autopilot auto_upload=True require_approval=False
+[2026-07-26 23:22:13 +0300] OK pipeline-only topic=cleopatra-not-egyptian video=cleopatra-not-egyptian.mp4 (--skip-upload flag)

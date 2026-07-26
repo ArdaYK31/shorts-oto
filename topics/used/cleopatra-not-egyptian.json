@@ -1,0 +1,38 @@
+{
+  "id": "cleopatra-not-egyptian",
+  "title": "Cleopatra Wasn't Egyptian — And Lived Closer to iPhones",
+  "topic": "Cleopatra VII was Macedonian Greek Ptolemaic; timeline closer to modern era than Great Pyramid",
+  "language": "en",
+  "claim": "Cleopatra was Macedonian Greek — and lived closer to the iPhone than to the Great Pyramid.",
+  "hook": "Timeline punchline Americans share.",
+  "source": "Encyclopaedia Britannica: Cleopatra VII (Ptolemaic dynasty); Great Pyramid ~2580 BCE vs Cleopatra d. 30 BCE.",
+  "keywords": [
+    "Cleopatra",
+    "Ptolemaic Egypt",
+    "ancient Rome"
+  ],
+  "search_queries": [
+    "Cleopatra VII",
+    "Ptolemaic Egypt",
+    "Caesar Alexandria"
+  ],
+  "wikimedia_titles": [
+    "Cleopatra VII Yale University Art Gallery.jpg",
+    "Caesar.jpg",
+    "Great Pyramid of Giza.jpg"
+  ],
+  "pd_fallback_urls": [],
+  "scenario_id": "did-you-know",
+  "provider": "template",
+  "script_file": "cleopatra-not-egyptian.txt",
+  "word_count": 71,
+  "us_audience_score": 0.94,
+  "series_hint": "History Hooks",
+  "viral_structure": [
+    "claim",
+    "evidence",
+    "relevance",
+    "twist",
+    "payoff"
+  ]
+}
