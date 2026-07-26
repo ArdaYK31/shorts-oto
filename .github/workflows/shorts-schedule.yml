@@ -150,8 +150,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           mkdir -p topics/used logs
           # Claim markers + upload ledger + logs (never credentials)
-          git add topics/used topics/uploaded.jsonl \
-            logs/schedule.log logs/latest.json logs/jobs.jsonl logs/budget.json || true
+          # Only add files that exist (uploaded.jsonl appears after first successful upload)
+          git add topics/used \
+            logs/schedule.log logs/latest.json logs/jobs.jsonl logs/budget.json 2>/dev/null || true
+          if [ -f topics/uploaded.jsonl ]; then git add topics/uploaded.jsonl; fi
           if git diff --staged --quiet; then
             echo "No state changes to commit"
           else

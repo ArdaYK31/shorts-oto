@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 
+import os
+
 import re
 
 import shutil
@@ -14,9 +16,13 @@ from pathlib import Path
 
 from config_loader import load_config
 
-# ASCII-only work dir for FFmpeg filters that break on non-ASCII Windows paths
-
-_ASCII_WORK = Path(r"C:\yt-shorts-work")
+# ASCII-only work dir for FFmpeg/libass (Windows non-ASCII home paths break filters).
+# Must NOT hardcode C:\… inside Linux Docker — that made Cloud assemble fail instantly.
+_ASCII_WORK = (
+    Path(r"C:\yt-shorts-work")
+    if os.name == "nt"
+    else Path(os.environ.get("SHORTS_ASCII_WORK", "/tmp/yt-shorts-work"))
+)
 
 def _ffprobe_duration(path: Path) -> float:
 
