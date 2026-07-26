@@ -161,7 +161,8 @@ jobs:
           # Claim markers + upload ledger + logs (never credentials)
           # Only add files that exist (uploaded.jsonl appears after first successful upload)
           git add topics/used \
-            logs/schedule.log logs/latest.json logs/jobs.jsonl logs/budget.json 2>/dev/null || true
+            logs/schedule.log logs/latest.json logs/jobs.jsonl logs/budget.json \
+            logs/skip_slots.json 2>/dev/null || true
           if [ -f topics/uploaded.jsonl ]; then git add topics/uploaded.jsonl; fi
           if git diff --staged --quiet; then
             echo "No state changes to commit"

@@ -1,0 +1,7 @@
+{
+  "dates": {
+    "2026-07-26": ["08:00"]
+  },
+  "timezone": "Europe/Istanbul",
+  "note": "Skip only listed Istanbul wall-clock slots; other times and future days run normally."
+}

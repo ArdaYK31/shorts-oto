@@ -53,6 +53,7 @@ logs/*
 !logs/latest.json
 !logs/jobs.jsonl
 !logs/budget.json
+!logs/skip_slots.json
 
 # OS / IDE
 Thumbs.db

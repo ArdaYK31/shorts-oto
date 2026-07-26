@@ -93,6 +93,53 @@ def append_log(cfg: dict, message: str) -> None:
     print(line.rstrip())
 
 
+def _skip_slots_path() -> Path:
+    return ROOT / "logs" / "skip_slots.json"
+
+
+def load_skip_slots() -> dict[str, list[str]]:
+    """Return {YYYY-MM-DD: ["HH:MM", ...]} from logs/skip_slots.json."""
+    path = _skip_slots_path()
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"[schedule] WARN skip_slots.json unreadable: {exc}")
+        return {}
+    dates = data.get("dates") or {}
+    out: dict[str, list[str]] = {}
+    for day, slots in dates.items():
+        if isinstance(slots, list):
+            out[str(day)] = [str(s).strip() for s in slots if str(s).strip()]
+    return out
+
+
+def _hour_distance(a: int, b: int) -> int:
+    return min((a - b) % 24, (b - a) % 24)
+
+
+def should_skip_slot(cfg: dict, now: datetime | None = None) -> str | None:
+    """If today's Istanbul slot is listed in skip_slots.json, return that HH:MM.
+
+    Matches cron hour ±1 (e.g. 08:00 → 07–09) so slightly late Actions still
+    skip, without treating early morning (06:xx) as the 08:00 slot.
+    """
+    del cfg  # reserved for future config-driven paths
+    now = now or _istanbul_now()
+    day = now.strftime("%Y-%m-%d")
+    skipped = load_skip_slots().get(day) or []
+    hour = now.hour
+    for slot in skipped:
+        try:
+            slot_hour = int(str(slot).split(":")[0])
+        except (TypeError, ValueError):
+            continue
+        if _hour_distance(hour, slot_hour) <= 1:
+            return slot
+    return None
+
+
 def platform_flags(cfg: dict) -> dict[str, bool]:
     p = cfg.get("platforms") or {}
     return {
@@ -297,6 +344,22 @@ def main() -> int:
     title = None
     try:
         write_snapshot(cfg)
+        skip_slot = should_skip_slot(cfg)
+        if skip_slot:
+            msg = f"SKIP slot {skip_slot} today"
+            append_log(cfg, msg)
+            append_job(
+                {
+                    "topic_id": None,
+                    "title": None,
+                    "status": "skipped_slot",
+                    "slot": skip_slot,
+                    "platforms": {},
+                    "note": msg,
+                }
+            )
+            print(f"[schedule] {msg}")
+            return 0
         topic_id = pick_next_topic_id(cfg, args.topic_id)
         topic = pick_topic(cfg, topic_id)
         title = topic.get("title") or topic_id
