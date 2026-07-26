@@ -770,5 +770,1591 @@
     "hook": "Looking strong beat telling the truth — until the air became evidence.",
     "source": "IAEA / UNSCEAR Chernobyl reports; April 26, 1986 Reactor 4.",
     "us_audience_score": 0.89
+  },
+  {
+    "id": "able-archer-near-miss",
+    "scenario_id": "cold-war-fact",
+    "title": "A NATO War Game Almost Triggered Real Nuclear War",
+    "topic": "Able Archer 83 — Soviet fears that a NATO exercise was a cover for nuclear first strike",
+    "keywords": [
+      "Able Archer 83",
+      "Cold War",
+      "nuclear near-miss"
+    ],
+    "search_queries": [
+      "Able Archer 83",
+      "NATO exercise 1983",
+      "Cold War nuclear"
+    ],
+    "wikimedia_titles": [
+      "NATO flag.jpg",
+      "Cold War map.jpg",
+      "ICBM test.jpg"
+    ],
+    "fallback_script": "In 1983 NATO ran a nuclear command exercise called Able Archer. In Moscow, some officers feared it was cover for a real first strike. The Soviets raised alert levels while Americans thought they were just practicing. Decades later declassified files showed how close misread signals came to catastrophe. The Cold War's scariest moments weren't always the ones on TV. Follow for more history that hits different.",
+    "claim": "In 1983 a NATO war game nearly convinced the Soviets a real nuclear strike was coming.",
+    "hook": "Practice looked like Pearl Harbor — from the other side.",
+    "source": "National Security Archive: Able Archer 83; CIA/NSA declassified assessments of 1983 war scare.",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "teddy-amazon-nearly-died",
+    "scenario_id": "overlooked-hero",
+    "title": "After the Presidency, Teddy Roosevelt Almost Died in the Amazon",
+    "topic": "Theodore Roosevelt's 1913–14 River of Doubt expedition nearly killed him",
+    "keywords": [
+      "Theodore Roosevelt",
+      "Amazon",
+      "River of Doubt"
+    ],
+    "search_queries": [
+      "Theodore Roosevelt Amazon",
+      "River of Doubt",
+      "Roosevelt Rondon"
+    ],
+    "wikimedia_titles": [
+      "President Theodore Roosevelt, 1904.jpg",
+      "Amazon rainforest.jpg",
+      "Rio Roosevelt.jpg"
+    ],
+    "fallback_script": "Most ex-presidents write memoirs. Teddy Roosevelt almost died mapping an uncharted Amazon river. In 1914 the River of Doubt expedition starved, sickened, and nearly broke him — he even begged companions to leave him behind. America almost lost a former president to a jungle map. Adventure wasn't a brand for him. It was a near-obituary. Follow for more history that hits different.",
+    "claim": "After the White House, Teddy Roosevelt nearly died mapping an uncharted Amazon river in 1914.",
+    "hook": "Ex-president vs the jungle — the jungle almost won.",
+    "source": "Library of Congress / Theodore Roosevelt Center: River of Doubt expedition 1913–14; Candice Millard, The River of Doubt.",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "sybil-ludington-ride",
+    "scenario_id": "overlooked-hero",
+    "title": "A 16-Year-Old Girl Rode Twice as Far as Paul Revere",
+    "topic": "Sybil Ludington's 1777 night ride warning militia of British attack",
+    "keywords": [
+      "Sybil Ludington",
+      "American Revolution",
+      "Paul Revere"
+    ],
+    "search_queries": [
+      "Sybil Ludington",
+      "Revolutionary War ride",
+      "Danbury 1777"
+    ],
+    "wikimedia_titles": [
+      "Sybil Ludington statue.jpg",
+      "American Revolution.jpg",
+      "Paul Revere.jpg"
+    ],
+    "fallback_script": "Paul Revere gets the poem. Sybil Ludington got the longer ride. In 1777, at sixteen, she galloped roughly forty miles through the night to muster militia against a British raid. Textbooks love the famous name. History also has a teenage girl who rode farther — and most Americans never heard of her. Follow for more history that hits different.",
+    "claim": "In 1777 sixteen-year-old Sybil Ludington rode about twice as far as Paul Revere to warn the militia.",
+    "hook": "Revere got the poem. She got the longer ride.",
+    "source": "NPS / DAR commemorations of Sybil Ludington ride, April 26, 1777 (Danbury raid context).",
+    "us_audience_score": 0.94
+  },
+  {
+    "id": "dred-scott-decision",
+    "scenario_id": "one-decision",
+    "title": "The Supreme Court Ruled Black Americans Had No Citizenship",
+    "topic": "Dred Scott v. Sandford (1857) — citizenship denial that accelerated Civil War",
+    "keywords": [
+      "Dred Scott",
+      "Supreme Court",
+      "Civil War"
+    ],
+    "search_queries": [
+      "Dred Scott decision",
+      "Supreme Court 1857",
+      "Taney"
+    ],
+    "wikimedia_titles": [
+      "Dred Scott.jpg",
+      "Roger B Taney.jpg",
+      "US Supreme Court.jpg"
+    ],
+    "fallback_script": "In 1857 the Supreme Court told Dred Scott he couldn't sue for freedom — and said Black Americans had no claim to citizenship. Chief Justice Taney's opinion tried to settle slavery by judicial decree. It detonated politics instead. One ruling. A nation already cracking. The Civil War wasn't only about battlefields — it was about a court that chose the wrong side of history. Follow for more history that hits different.",
+    "claim": "In 1857 the Supreme Court ruled Black Americans could not be US citizens — and poured fuel on the Civil War.",
+    "hook": "A court tried to settle slavery. It detonated a country.",
+    "source": "US Reports: Dred Scott v. Sandford (1857); Library of Congress / National Archives.",
+    "us_audience_score": 0.95
+  },
+  {
+    "id": "emilio-aguinaldo-ally-enemy",
+    "scenario_id": "traitor-twist",
+    "title": "America's Ally Against Spain Became Its Enemy in the Philippines",
+    "topic": "Emilio Aguinaldo — Filipino revolutionary ally turned foe in Philippine–American War",
+    "keywords": [
+      "Emilio Aguinaldo",
+      "Philippine-American War",
+      "Spanish-American War"
+    ],
+    "search_queries": [
+      "Emilio Aguinaldo",
+      "Philippine American War",
+      "Spanish American War"
+    ],
+    "wikimedia_titles": [
+      "Emilio Aguinaldo.jpg",
+      "Spanish American War.jpg",
+      "Philippine American War.jpg"
+    ],
+    "fallback_script": "In 1898 Filipinos helped America beat Spain. Then America kept the islands. Revolutionary leader Emilio Aguinaldo went from partner to enemy in a brutal war Americans barely teach. Liberation turned into occupation. The twist isn't subtle: yesterday's ally can be tomorrow's target when empire wants real estate. Follow for more history that hits different.",
+    "claim": "Filipino leader Emilio Aguinaldo helped America beat Spain — then fought America when the US kept the Philippines.",
+    "hook": "Liberation became occupation overnight.",
+    "source": "Library of Congress / Britannica: Philippine–American War; Emilio Aguinaldo leadership 1899–1901.",
+    "us_audience_score": 0.88
+  },
+  {
+    "id": "project-orion-nuke-ship",
+    "scenario_id": "did-you-know",
+    "title": "The US Seriously Studied a Spaceship Powered by Nuclear Bombs",
+    "topic": "Project Orion — Cold War concept of pulse propulsion using nuclear explosions",
+    "keywords": [
+      "Project Orion",
+      "nuclear propulsion",
+      "Cold War science"
+    ],
+    "search_queries": [
+      "Project Orion nuclear",
+      "nuclear pulse propulsion",
+      "Freeman Dyson Orion"
+    ],
+    "wikimedia_titles": [
+      "Nuclear explosion.jpg",
+      "Saturn V.jpg",
+      "Cold War map.jpg"
+    ],
+    "fallback_script": "In the Cold War, American physicists studied a spaceship that rode successive nuclear blasts — Project Orion. On paper it could haul enormous payloads. In reality fallout politics and test bans buried it. Yes: the US seriously researched traveling the solar system by detonating bombs behind a pusher plate. Science fiction was almost a budget line. Follow for more history that hits different.",
+    "claim": "The US seriously studied a spaceship propelled by detonating nuclear bombs — Project Orion.",
+    "hook": "Sci-fi almost got a Pentagon budget.",
+    "source": "NASA / DOE historical reviews of Project Orion (1958–65 nuclear pulse propulsion concept).",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "great-molasses-flood",
+    "scenario_id": "ironic-ending",
+    "title": "A Wave of Molasses Killed 21 People in Boston",
+    "topic": "Boston Molasses Flood of 1919 — industrial tank rupture disaster",
+    "keywords": [
+      "Boston Molasses Flood",
+      "1919",
+      "industrial disaster"
+    ],
+    "search_queries": [
+      "Boston Molasses Flood",
+      "Great Molasses Flood 1919",
+      "North End Boston"
+    ],
+    "wikimedia_titles": [
+      "Boston Molasses Flood.jpg",
+      "Boston 1919.jpg",
+      "Industrial tank.jpg"
+    ],
+    "fallback_script": "In January 1919 a giant molasses tank in Boston's North End ruptured. A sticky wave roared through streets at roughly 35 mph. Twenty-one dead. Over a hundred injured. Buildings smashed. It sounds like a joke until you read the death toll. Industrial America learned the hard way: bad engineering doesn't care if the disaster is absurd. Follow for more history that hits different.",
+    "claim": "In 1919 a Boston molasses tank burst and killed 21 people with a sticky tidal wave.",
+    "hook": "The disaster that sounds fake — until the death toll.",
+    "source": "Smithsonian / Massachusetts historical accounts: Great Molasses Flood, January 15, 1919.",
+    "us_audience_score": 0.94
+  },
+  {
+    "id": "triangle-shirtwaist-fire",
+    "scenario_id": "one-decision",
+    "title": "Locked Doors Turned a Factory Fire Into 146 Deaths",
+    "topic": "Triangle Shirtwaist Factory fire 1911 — locked exits and US labor reform",
+    "keywords": [
+      "Triangle Shirtwaist Fire",
+      "labor history",
+      "New York 1911"
+    ],
+    "search_queries": [
+      "Triangle Shirtwaist Factory fire",
+      "1911 New York fire",
+      "labor reform"
+    ],
+    "wikimedia_titles": [
+      "Triangle Shirtwaist Factory fire.jpg",
+      "New York 1911.jpg",
+      "Sweatshop.jpg"
+    ],
+    "fallback_script": "In 1911 fire ripped through the Triangle Shirtwaist Factory in New York. Doors were locked. Escape routes failed. One hundred forty-six workers died — mostly young immigrant women. The horror forced America to rewrite workplace safety. Profit locked the exits. Grief unlocked the laws. Follow for more history that hits different.",
+    "claim": "Locked factory doors helped turn the 1911 Triangle Shirtwaist fire into 146 deaths — and US labor law reform.",
+    "hook": "Profit locked the exits. Grief unlocked the laws.",
+    "source": "Cornell ILR Triangle Fire archive; NYC historical records, March 25, 1911.",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "fdr-third-term",
+    "scenario_id": "one-decision",
+    "title": "FDR Broke the Two-Term Tradition — Then America Banned It",
+    "topic": "Franklin D. Roosevelt's four terms and the 22nd Amendment reaction",
+    "keywords": [
+      "Franklin Roosevelt",
+      "22nd Amendment",
+      "presidency"
+    ],
+    "search_queries": [
+      "FDR four terms",
+      "22nd Amendment",
+      "Roosevelt third term"
+    ],
+    "wikimedia_titles": [
+      "Franklin D Roosevelt.jpg",
+      "US Capitol.jpg",
+      "World War II.jpg"
+    ],
+    "fallback_script": "George Washington set a two-term norm. Franklin Roosevelt smashed it — elected four times through Depression and world war. After his death, America passed the 22nd Amendment to lock the old custom into law. One man broke tradition so hard the Constitution got an update. Power creates precedents — and panic responses. Follow for more history that hits different.",
+    "claim": "FDR won four presidential terms — then America amended the Constitution to stop anyone else.",
+    "hook": "He broke the norm so hard they rewrote the rules.",
+    "source": "US National Archives: 22nd Amendment (1951); FDR elections 1932–1944.",
+    "us_audience_score": 0.95
+  },
+  {
+    "id": "alien-sedition-acts",
+    "scenario_id": "ironic-ending",
+    "title": "The Founders Criminalized 'False' Criticism of the Government",
+    "topic": "Alien and Sedition Acts of 1798 — early free-speech crisis in the US",
+    "keywords": [
+      "Alien and Sedition Acts",
+      "John Adams",
+      "free speech"
+    ],
+    "search_queries": [
+      "Alien and Sedition Acts",
+      "1798",
+      "John Adams"
+    ],
+    "wikimedia_titles": [
+      "John Adams.jpg",
+      "Early American newspaper.jpg",
+      "US Constitution.jpg"
+    ],
+    "fallback_script": "Just years after the Bill of Rights, the 1798 Alien and Sedition Acts made it easier to punish critics of the government. Newspapers were targeted. Immigrants were eyed with suspicion. The party that passed them got crushed at the ballot box. America preached liberty — then briefly jailed people for political speech. The hangover still echoes. Follow for more history that hits different.",
+    "claim": "In 1798 the US made it a crime to publish 'false, scandalous' criticism of the government.",
+    "hook": "Bill of Rights era — with a muzzle attached.",
+    "source": "Library of Congress / National Archives: Alien and Sedition Acts (1798).",
+    "us_audience_score": 0.91
+  },
+  {
+    "id": "operation-paperclip",
+    "scenario_id": "cold-war-fact",
+    "title": "America Recruited Nazi Scientists After WWII",
+    "topic": "Operation Paperclip — US recruitment of German scientists including Wernher von Braun",
+    "keywords": [
+      "Operation Paperclip",
+      "Wernher von Braun",
+      "Cold War"
+    ],
+    "search_queries": [
+      "Operation Paperclip",
+      "Wernher von Braun",
+      "Nazi scientists US"
+    ],
+    "wikimedia_titles": [
+      "Wernher von Braun.jpg",
+      "V2 rocket.jpg",
+      "Saturn V.jpg"
+    ],
+    "fallback_script": "After defeating Nazi Germany, the United States quietly recruited many of its rocket scientists. Operation Paperclip. Wernher von Braun later helped put Americans on the Moon. The moral math was ugly on purpose: beat the Soviets first, scrub the resumes later. Victory didn't end the competition — it changed the hiring pool. Follow for more history that hits different.",
+    "claim": "After WWII the US recruited Nazi rocket scientists — including talent that later powered the space race.",
+    "hook": "Beat Hitler. Hire his engineers. Race Moscow.",
+    "source": "National Archives: Operation Paperclip records; NASA biographical materials on Wernher von Braun.",
+    "us_audience_score": 0.94
+  },
+  {
+    "id": "bay-of-pigs",
+    "scenario_id": "ironic-ending",
+    "title": "The CIA Invasion of Cuba Failed in Three Days",
+    "topic": "Bay of Pigs invasion 1961 — CIA-backed Cuban exile fiasco",
+    "keywords": [
+      "Bay of Pigs",
+      "CIA",
+      "John F Kennedy"
+    ],
+    "search_queries": [
+      "Bay of Pigs",
+      "1961 Cuba invasion",
+      "JFK CIA"
+    ],
+    "wikimedia_titles": [
+      "Bay of Pigs.jpg",
+      "Fidel Castro.jpg",
+      "John F Kennedy.jpg"
+    ],
+    "fallback_script": "In 1961 the CIA backed Cuban exiles to invade Castro's island. The Bay of Pigs. Within days it collapsed — captured fighters, international humiliation, and a young president owning a catastrophe. America expected a spark of uprising. It got a masterclass in how covert plans die in daylight. Follow for more history that hits different.",
+    "claim": "The 1961 Bay of Pigs CIA-backed invasion of Cuba failed within days.",
+    "hook": "A covert plan that died in daylight.",
+    "source": "JFK Library / CIA historical reviews: Bay of Pigs invasion, April 1961.",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "u2-gary-powers",
+    "scenario_id": "cold-war-fact",
+    "title": "A Shot-Down Spy Plane Torpedoed a Superpower Summit",
+    "topic": "1960 U-2 incident — Francis Gary Powers shot down over Soviet Union",
+    "keywords": [
+      "U-2 incident",
+      "Francis Gary Powers",
+      "Cold War"
+    ],
+    "search_queries": [
+      "U-2 incident 1960",
+      "Francis Gary Powers",
+      "Eisenhower Khrushchev"
+    ],
+    "wikimedia_titles": [
+      "Lockheed U-2.jpg",
+      "Francis Gary Powers.jpg",
+      "Nikita Khrushchev.jpg"
+    ],
+    "fallback_script": "In 1960 a US U-2 spy plane was shot down over the Soviet Union. Pilot Francis Gary Powers survived. Eisenhower denied, then got caught. A Paris summit with Khrushchev blew apart. One camera in the sky turned diplomacy into a public lie. The Cold War ran on secrets — until the secrets fell from 70,000 feet. Follow for more history that hits different.",
+    "claim": "In 1960 a shot-down U-2 spy plane destroyed a US–Soviet summit.",
+    "hook": "A camera fell from 70,000 feet — and so did the cover story.",
+    "source": "US State Department / Eisenhower Library: U-2 incident, May 1, 1960 (Francis Gary Powers).",
+    "us_audience_score": 0.91
+  },
+  {
+    "id": "tulsa-race-massacre",
+    "scenario_id": "overlooked-hero",
+    "title": "A Prosperous Black Neighborhood Was Burned Off the Map in 1921",
+    "topic": "Tulsa Race Massacre 1921 — destruction of Greenwood (Black Wall Street)",
+    "keywords": [
+      "Tulsa Race Massacre",
+      "Greenwood",
+      "Black Wall Street"
+    ],
+    "search_queries": [
+      "Tulsa Race Massacre 1921",
+      "Black Wall Street",
+      "Greenwood Tulsa"
+    ],
+    "wikimedia_titles": [
+      "Tulsa race riot 1921.jpg",
+      "Greenwood Tulsa.jpg",
+      "Oklahoma 1921.jpg"
+    ],
+    "fallback_script": "In 1921 Tulsa's Greenwood district — nicknamed Black Wall Street — was attacked and burned. Hundreds killed or missing. Thousands left homeless. For decades textbooks skipped it. America loves uplift stories. It buried this one. Prosperity didn't protect Greenwood from a massacre. Silence did the rest. Follow for more history that hits different.",
+    "claim": "In 1921 a white mob destroyed Tulsa's prosperous Greenwood district — and US textbooks long skipped it.",
+    "hook": "Black Wall Street burned. Silence did the rest.",
+    "source": "Oklahoma Historical Society / 1921 Tulsa Race Massacre Centennial Commission reports.",
+    "us_audience_score": 0.96
+  },
+  {
+    "id": "chinese-exclusion-act",
+    "scenario_id": "ironic-ending",
+    "title": "America Banned Immigration From an Entire Country by Name",
+    "topic": "Chinese Exclusion Act of 1882 — first major US law banning a nationality",
+    "keywords": [
+      "Chinese Exclusion Act",
+      "immigration",
+      "1882"
+    ],
+    "search_queries": [
+      "Chinese Exclusion Act",
+      "1882 immigration",
+      "Angel Island"
+    ],
+    "wikimedia_titles": [
+      "Chinese Exclusion Act.jpg",
+      "Angel Island.jpg",
+      "San Francisco Chinatown.jpg"
+    ],
+    "fallback_script": "In 1882 the United States passed the Chinese Exclusion Act — the first major federal law to ban immigration by a specific nationality. Labor panic. Racism with a stamp. It lasted for decades. America marketed itself as a nation of immigrants while writing one group out of the welcome. The contradiction wasn't subtle. It was statute. Follow for more history that hits different.",
+    "claim": "In 1882 the US passed the Chinese Exclusion Act — the first major federal ban on a nationality.",
+    "hook": "A nation of immigrants — with a nationality ban in the fine print.",
+    "source": "US National Archives: Chinese Exclusion Act (1882); Library of Congress immigration history.",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "sputnik-shock",
+    "scenario_id": "one-decision",
+    "title": "A Beeping Soviet Satellite Panicked America Into the Space Race",
+    "topic": "Sputnik 1 (1957) — US education and NASA response to Soviet satellite",
+    "keywords": [
+      "Sputnik",
+      "space race",
+      "NASA"
+    ],
+    "search_queries": [
+      "Sputnik 1",
+      "1957 space race",
+      "NASA founding"
+    ],
+    "wikimedia_titles": [
+      "Sputnik 1.jpg",
+      "Cold War map.jpg",
+      "NASA logo.jpg"
+    ],
+    "fallback_script": "In 1957 a Soviet metal ball named Sputnik beeped over American skies. Panic followed. Science funding exploded. NASA was born. Schools scrambled. One satellite didn't just orbit Earth — it rewired US education and ambition. Sometimes the enemy's flex is the best teacher. Follow for more history that hits different.",
+    "claim": "Sputnik's 1957 beep panicked America into creating NASA and turbocharging science education.",
+    "hook": "A Soviet beep rewired American ambition.",
+    "source": "NASA history: Sputnik 1 (Oct 4, 1957); National Defense Education Act / NASA founding context.",
+    "us_audience_score": 0.94
+  },
+  {
+    "id": "penicillin-mold-accident",
+    "scenario_id": "did-you-know",
+    "title": "Modern Antibiotics Started With a Messy Petri Dish",
+    "topic": "Alexander Fleming's 1928 penicillin discovery — accidental mold contamination",
+    "keywords": [
+      "penicillin",
+      "Alexander Fleming",
+      "antibiotics"
+    ],
+    "search_queries": [
+      "Alexander Fleming penicillin",
+      "1928 mold discovery",
+      "antibiotics history"
+    ],
+    "wikimedia_titles": [
+      "Alexander Fleming.jpg",
+      "Penicillium mold.jpg",
+      "Petri dish.jpg"
+    ],
+    "fallback_script": "In 1928 Alexander Fleming returned from vacation to a contaminated petri dish. Mold had killed nearby bacteria. That accident became penicillin — and reshaped medicine after WWII mass production. Billions of lives later, the origin story is still a messy lab bench. The biggest medical breakthrough of the century started as a spoiled experiment. Follow for more history that hits different.",
+    "claim": "Penicillin began when Alexander Fleming noticed mold killing bacteria in a contaminated 1928 dish.",
+    "hook": "A spoiled experiment remade medicine.",
+    "source": "Nobel Prize / Britannica: Alexander Fleming penicillin discovery (1928); WWII production history.",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "tesla-vs-edison-myth",
+    "scenario_id": "did-you-know",
+    "title": "The 'War of Currents' Was Business — Not a Cartoon Rivalry",
+    "topic": "War of Currents — AC vs DC commercialization beyond Tesla–Edison meme history",
+    "keywords": [
+      "War of Currents",
+      "Nikola Tesla",
+      "Thomas Edison"
+    ],
+    "search_queries": [
+      "War of Currents",
+      "Tesla Edison",
+      "Westinghouse AC"
+    ],
+    "wikimedia_titles": [
+      "Nikola Tesla.jpg",
+      "Thomas Edison.jpg",
+      "Westinghouse.jpg"
+    ],
+    "fallback_script": "Internet memes cast Tesla as pure genius and Edison as cartoon villain. Reality: the War of Currents was corporate combat over AC vs DC — Westinghouse, patents, money, and fear campaigns. Tesla mattered. So did systems and capital. History's not a fandom war. It's infrastructure with bloodless paperwork and very sharp elbows. Follow for more history that hits different.",
+    "claim": "The War of Currents was corporate AC-vs-DC combat — not just a Tesla-vs-Edison cartoon.",
+    "hook": "Memes want heroes. History wants the power grid.",
+    "source": "IEEE / Britannica: War of Currents (late 1880s–1890s); Westinghouse AC commercialization.",
+    "us_audience_score": 0.89
+  },
+  {
+    "id": "manhattan-project-secrecy",
+    "scenario_id": "ww2-hook",
+    "title": "America Built the Atomic Bomb in Secret Cities",
+    "topic": "Manhattan Project — Oak Ridge, Los Alamos, Hanford secrecy and scale",
+    "keywords": [
+      "Manhattan Project",
+      "atomic bomb",
+      "Los Alamos"
+    ],
+    "search_queries": [
+      "Manhattan Project",
+      "Los Alamos",
+      "Oak Ridge"
+    ],
+    "wikimedia_titles": [
+      "Manhattan Project.jpg",
+      "Los Alamos.jpg",
+      "Trinity test.jpg"
+    ],
+    "fallback_script": "During WWII America built secret cities to invent the atomic bomb. Oak Ridge. Los Alamos. Hanford. Thousands worked without knowing the full product. Then Trinity lit the desert. Then Hiroshima and Nagasaki remade war forever. The most expensive secret in US history wasn't a spy — it was an industry. Follow for more history that hits different.",
+    "claim": "The Manhattan Project built secret cities — then remade war with the atomic bomb.",
+    "hook": "The most expensive secret was an industry.",
+    "source": "US Department of Energy / National Archives: Manhattan Project (1942–46); Trinity test July 16, 1945.",
+    "us_audience_score": 0.95
+  },
+  {
+    "id": "enola-gay-decision",
+    "scenario_id": "one-decision",
+    "title": "One Aircraft Dropped a Weapon That Ended an Era",
+    "topic": "Hiroshima bombing August 6, 1945 — Enola Gay and atomic warfare threshold",
+    "keywords": [
+      "Hiroshima",
+      "Enola Gay",
+      "atomic bomb"
+    ],
+    "search_queries": [
+      "Enola Gay",
+      "Hiroshima 1945",
+      "atomic bomb"
+    ],
+    "wikimedia_titles": [
+      "Enola Gay.jpg",
+      "Hiroshima aftermath.jpg",
+      "Atomic cloud over Hiroshima.jpg"
+    ],
+    "fallback_script": "On August 6, 1945, the B-29 Enola Gay dropped an atomic bomb on Hiroshima. Tens of thousands died that day — more from radiation after. Whether you call it necessary or unforgivable, one fact is cold: warfare crossed a threshold that still defines geopolitics. One plane. One weapon. A century still arguing about it. Follow for more history that hits different.",
+    "claim": "On August 6, 1945 the Enola Gay dropped an atomic bomb on Hiroshima — and warfare crossed a permanent threshold.",
+    "hook": "One plane. One weapon. An argument that never ended.",
+    "source": "US National Archives / Truman Library: Hiroshima bombing, August 6, 1945.",
+    "us_audience_score": 0.94
+  },
+  {
+    "id": "watergate-tape-gap",
+    "scenario_id": "ironic-ending",
+    "title": "An 18-Minute Gap Helped Topple a President",
+    "topic": "Watergate scandal — Nixon tapes and the 18.5-minute gap",
+    "keywords": [
+      "Watergate",
+      "Richard Nixon",
+      "18 minute gap"
+    ],
+    "search_queries": [
+      "Watergate 18 minute gap",
+      "Nixon tapes",
+      "Watergate scandal"
+    ],
+    "wikimedia_titles": [
+      "Richard Nixon.jpg",
+      "Watergate complex.jpg",
+      "White House.jpg"
+    ],
+    "fallback_script": "Watergate wasn't only a break-in. It was tapes. When investigators wanted Nixon's recordings, an 18-and-a-half-minute gap appeared — erased. The cover-up became the story. In 1974 Nixon resigned. Sometimes the silence is louder than the crime. America learned a presidency can drown in its own deletions. Follow for more history that hits different.",
+    "claim": "An 18.5-minute gap in Nixon's Watergate tapes helped destroy his presidency.",
+    "hook": "The silence was louder than the crime.",
+    "source": "National Archives / Nixon Presidential Library: Watergate tapes and 18.5-minute gap (1970s).",
+    "us_audience_score": 0.95
+  },
+  {
+    "id": "iran-contra",
+    "scenario_id": "traitor-twist",
+    "title": "The US Secretly Sold Arms to Iran to Fund Rebels",
+    "topic": "Iran–Contra affair — covert arms sales and Nicaraguan Contra funding",
+    "keywords": [
+      "Iran-Contra",
+      "Ronald Reagan",
+      "Contras"
+    ],
+    "search_queries": [
+      "Iran Contra affair",
+      "Oliver North",
+      "Reagan Iran arms"
+    ],
+    "wikimedia_titles": [
+      "Ronald Reagan.jpg",
+      "Oliver North.jpg",
+      "Nicaragua Contras.jpg"
+    ],
+    "fallback_script": "In the 1980s US officials secretly sold arms to Iran — then diverted money to Nicaraguan Contras Congress had restricted. Iran–Contra. Hearings. Shredders. Plausible deniability on television. The Cold War's dirty laundry aired in prime time. Foreign policy by back channel has a habit of becoming a scandal with a name. Follow for more history that hits different.",
+    "claim": "In the 1980s US officials secretly sold arms to Iran and diverted funds to the Contras.",
+    "hook": "Foreign policy by shredder and back channel.",
+    "source": "National Security Archive / Congressional Iran–Contra reports (1980s).",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "mississippi-freedom-summer",
+    "scenario_id": "overlooked-hero",
+    "title": "Three Civil Rights Workers Were Murdered Registering Voters",
+    "topic": "Freedom Summer 1964 — Chaney, Goodman, Schwerner murders in Mississippi",
+    "keywords": [
+      "Freedom Summer",
+      "civil rights",
+      "Mississippi 1964"
+    ],
+    "search_queries": [
+      "Freedom Summer 1964",
+      "Chaney Goodman Schwerner",
+      "Mississippi Burning"
+    ],
+    "wikimedia_titles": [
+      "Freedom Summer.jpg",
+      "Civil rights march.jpg",
+      "Mississippi 1964.jpg"
+    ],
+    "fallback_script": "In 1964 Freedom Summer volunteers flooded Mississippi to register Black voters. Three civil rights workers — James Chaney, Andrew Goodman, and Michael Schwerner — were murdered by the Klan. The FBI investigation forced a national reckoning. Voting rights weren't abstract. They were paid in blood on American soil. Follow for more history that hits different.",
+    "claim": "In 1964 three Freedom Summer workers were murdered in Mississippi for registering Black voters.",
+    "hook": "Voting rights — paid in blood on American soil.",
+    "source": "FBI / Library of Congress: Freedom Summer 1964; Chaney–Goodman–Schwerner case.",
+    "us_audience_score": 0.95
+  },
+  {
+    "id": "emmett-till-trial",
+    "scenario_id": "one-decision",
+    "title": "An Open-Casket Funeral Forced America to Look",
+    "topic": "Emmett Till murder 1955 — open casket and civil rights awakening",
+    "keywords": [
+      "Emmett Till",
+      "civil rights",
+      "1955"
+    ],
+    "search_queries": [
+      "Emmett Till",
+      "1955 Mississippi",
+      "Mamie Till"
+    ],
+    "wikimedia_titles": [
+      "Emmett Till.jpg",
+      "Civil rights movement.jpg",
+      "Jet magazine.jpg"
+    ],
+    "fallback_script": "In 1955 fourteen-year-old Emmett Till was murdered in Mississippi. His mother insisted on an open casket. Jet magazine published the photos. A generation saw what racial terror looked like — and the civil rights movement found jet fuel. One funeral forced a country to look. Looking was the beginning of fighting. Follow for more history that hits different.",
+    "claim": "Emmett Till's 1955 open-casket funeral forced America to confront racial terror.",
+    "hook": "One funeral made a country look — then fight.",
+    "source": "Library of Congress / Smithsonian: Emmett Till murder (1955); Mamie Till-Mobley open-casket decision.",
+    "us_audience_score": 0.96
+  },
+  {
+    "id": "gulf-tonkin-resolution",
+    "scenario_id": "one-decision",
+    "title": "A Murky Naval Incident Opened the Door to Vietnam Escalation",
+    "topic": "Gulf of Tonkin incidents 1964 — resolution enabling Vietnam War escalation",
+    "keywords": [
+      "Gulf of Tonkin",
+      "Vietnam War",
+      "LBJ"
+    ],
+    "search_queries": [
+      "Gulf of Tonkin Resolution",
+      "1964 Vietnam",
+      "USS Maddox"
+    ],
+    "wikimedia_titles": [
+      "USS Maddox.jpg",
+      "Vietnam War.jpg",
+      "Lyndon Johnson.jpg"
+    ],
+    "fallback_script": "In 1964 reported attacks in the Gulf of Tonkin gave President Johnson a blank check — the Gulf of Tonkin Resolution. Later evidence showed the second incident was dubious at best. Congress waved through escalation. America slid deeper into Vietnam on incomplete fog. Wars often start with certainty. Historians finish with footnotes. Follow for more history that hits different.",
+    "claim": "The 1964 Gulf of Tonkin Resolution opened Vietnam escalation — after a murky, contested naval incident.",
+    "hook": "A foggy report. A blank check. A quagmire.",
+    "source": "US National Archives / NSA historical reviews: Gulf of Tonkin incidents and Resolution (1964).",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "spanish-flu-1918",
+    "scenario_id": "did-you-know",
+    "title": "The Deadliest Pandemic Killed More Than World War I",
+    "topic": "1918 influenza pandemic — global death toll exceeding WWI combat deaths",
+    "keywords": [
+      "1918 flu",
+      "Spanish flu",
+      "pandemic"
+    ],
+    "search_queries": [
+      "1918 influenza pandemic",
+      "Spanish flu",
+      "WWI deaths"
+    ],
+    "wikimedia_titles": [
+      "1918 flu.jpg",
+      "World War I masks.jpg",
+      "Emergency hospital 1918.jpg"
+    ],
+    "fallback_script": "World War I killed millions. The 1918 influenza pandemic likely killed more. It swept military camps and cities while newspapers soft-pedaled under wartime censorship — the 'Spanish flu' nickname stuck because Spain reported freely. A century later the lesson is blunt: the deadliest enemy wasn't always in a trench. Follow for more history that hits different.",
+    "claim": "The 1918 influenza pandemic likely killed more people than World War I combat.",
+    "hook": "The deadliest enemy wasn't always in a trench.",
+    "source": "CDC / NIH historical estimates: 1918 influenza pandemic; Britannica Spanish flu.",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "polio-vaccine-salk",
+    "scenario_id": "underdog-victory",
+    "title": "A Vaccine Ended America's Annual Polio Terror",
+    "topic": "Jonas Salk's polio vaccine 1955 — national trial and public celebration",
+    "keywords": [
+      "polio vaccine",
+      "Jonas Salk",
+      "1955"
+    ],
+    "search_queries": [
+      "Jonas Salk polio vaccine",
+      "1955 polio trial",
+      "March of Dimes"
+    ],
+    "wikimedia_titles": [
+      "Jonas Salk.jpg",
+      "Polio vaccine.jpg",
+      "March of Dimes.jpg"
+    ],
+    "fallback_script": "Mid-century America feared summer swimming pools because of polio. In 1955 Jonas Salk's vaccine was declared safe and effective after a massive trial. Church bells rang. Parents wept. Salk didn't patent it for personal fortune the way myth sometimes simplifies — but the public victory was real. A generation watched terror become a shot in the arm. Follow for more history that hits different.",
+    "claim": "In 1955 Jonas Salk's polio vaccine ended an era of annual American panic.",
+    "hook": "Summer terror became a shot in the arm.",
+    "source": "Smithsonian / March of Dimes history; 1955 Salk polio vaccine field trial announcement.",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "yellow-fever-panama",
+    "scenario_id": "overlooked-hero",
+    "title": "Mosquito Science Made the Panama Canal Possible",
+    "topic": "William Gorgas and mosquito control enabling Panama Canal completion",
+    "keywords": [
+      "Panama Canal",
+      "yellow fever",
+      "William Gorgas"
+    ],
+    "search_queries": [
+      "Panama Canal yellow fever",
+      "William Gorgas",
+      "mosquito control"
+    ],
+    "wikimedia_titles": [
+      "Panama Canal.jpg",
+      "William Gorgas.jpg",
+      "Yellow fever mosquito.jpg"
+    ],
+    "fallback_script": "France failed at Panama partly because disease murdered the workforce. America succeeded after mosquito control crushed yellow fever and malaria — Dr. William Gorgas leading the fight. The canal is celebrated as engineering. It was also entomology with a body count. Big digs need small enemies solved first. Follow for more history that hits different.",
+    "claim": "Mosquito control — not just steam shovels — made the US Panama Canal possible.",
+    "hook": "The canal was won against insects first.",
+    "source": "Panama Canal Museum / US Army medical history: Gorgas mosquito campaigns (1904–14).",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "lewis-clark-sacagawea",
+    "scenario_id": "overlooked-hero",
+    "title": "A Teen Mother Guided America's Most Famous Expedition",
+    "topic": "Sacagawea on the Lewis and Clark Expedition — guide, translator, diplomatic signal",
+    "keywords": [
+      "Sacagawea",
+      "Lewis and Clark",
+      "Corps of Discovery"
+    ],
+    "search_queries": [
+      "Sacagawea",
+      "Lewis and Clark",
+      "Corps of Discovery"
+    ],
+    "wikimedia_titles": [
+      "Sacagawea.jpg",
+      "Lewis and Clark.jpg",
+      "Missouri River.jpg"
+    ],
+    "fallback_script": "Lewis and Clark get the statues. Sacagawea did critical work — translating, guiding, and signaling peaceful intent as a woman with a baby in tow. A teenage Shoshone mother helped an American expedition cross a continent. Textbooks sometimes reduce her to a cameo. The journey needed her more than that. Follow for more history that hits different.",
+    "claim": "Teenage mother Sacagawea was essential to the Lewis and Clark Expedition as guide and translator.",
+    "hook": "The famous expedition needed a teenage mother more than textbooks admit.",
+    "source": "NPS Lewis and Clark National Historic Trail; journals referencing Sacagawea (1805–06).",
+    "us_audience_score": 0.94
+  },
+  {
+    "id": "john-adams-defended-boston-massacre",
+    "scenario_id": "refused-power",
+    "title": "A Future President Defended the Soldiers Who Shot Colonists",
+    "topic": "John Adams defending British soldiers after the Boston Massacre (1770)",
+    "keywords": [
+      "John Adams",
+      "Boston Massacre",
+      "rule of law"
+    ],
+    "search_queries": [
+      "John Adams Boston Massacre",
+      "1770 trial",
+      "British soldiers defense"
+    ],
+    "wikimedia_titles": [
+      "John Adams.jpg",
+      "Boston Massacre.jpg",
+      "Colonial Boston.jpg"
+    ],
+    "fallback_script": "After British soldiers killed colonists in the Boston Massacre, future president John Adams defended them in court. Unpopular. Dangerous for his reputation. He argued for rule of law over mob revenge — and mostly won acquittals. Revolution needed rage. A republic needed principles that survive rage. Adams chose the harder brand. Follow for more history that hits different.",
+    "claim": "Future president John Adams defended the British soldiers of the Boston Massacre in court.",
+    "hook": "Revolution wanted rage. He chose the rule of law.",
+    "source": "Massachusetts Historical Society / Adams Papers: Boston Massacre trials (1770).",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "sherman-march-sea",
+    "scenario_id": "one-decision",
+    "title": "Sherman's March Turned Total War Into a Strategy",
+    "topic": "Sherman's March to the Sea 1864 — hard war against Confederate infrastructure",
+    "keywords": [
+      "Sherman March",
+      "Civil War",
+      "Atlanta"
+    ],
+    "search_queries": [
+      "Sherman March to the Sea",
+      "1864 Civil War",
+      "Atlanta campaign"
+    ],
+    "wikimedia_titles": [
+      "William Tecumseh Sherman.jpg",
+      "Atlanta 1864.jpg",
+      "Civil War ruins.jpg"
+    ],
+    "fallback_script": "In 1864 General William Tecumseh Sherman marched from Atlanta to Savannah, wrecking railroads and plantations. He aimed at the Confederacy's will — not just its armies. Americans still argue whether it was necessary brutality or war crime energy. Either way, total war got an American face. Follow for more history that hits different.",
+    "claim": "Sherman's 1864 March to the Sea made economic destruction a deliberate Civil War strategy.",
+    "hook": "He fought the South's will — not just its armies.",
+    "source": "NPS / Library of Congress: Sherman's March to the Sea (Nov–Dec 1864).",
+    "us_audience_score": 0.91
+  },
+  {
+    "id": "gettysburg-address-short",
+    "scenario_id": "did-you-know",
+    "title": "Lincoln's Greatest Speech Was Under 300 Words",
+    "topic": "Gettysburg Address 1863 — brevity and lasting political meaning",
+    "keywords": [
+      "Gettysburg Address",
+      "Abraham Lincoln",
+      "Civil War"
+    ],
+    "search_queries": [
+      "Gettysburg Address",
+      "Lincoln 1863",
+      "Gettysburg cemetery"
+    ],
+    "wikimedia_titles": [
+      "Gettysburg Address.jpg",
+      "Abraham Lincoln.jpg",
+      "Gettysburg battlefield.jpg"
+    ],
+    "fallback_script": "The main speaker at Gettysburg talked for hours. Abraham Lincoln spoke for about two minutes — under 300 words. The Gettysburg Address redefined the war as a test of whether a nation 'conceived in liberty' could endure. Short doesn't mean small. Sometimes the shortest speech outlives the longest. Follow for more history that hits different.",
+    "claim": "Lincoln's Gettysburg Address was under 300 words — and outlived the hours-long speech before it.",
+    "hook": "Two minutes. A redefined republic.",
+    "source": "Library of Congress: Gettysburg Address (Nov 19, 1863); Bliss copy tradition.",
+    "us_audience_score": 0.95
+  },
+  {
+    "id": "salem-witch-trials",
+    "scenario_id": "ironic-ending",
+    "title": "Massachusetts Executed People for Witchcraft — Then Admitted It",
+    "topic": "Salem witch trials 1692 — executions and later reversals of attainder",
+    "keywords": [
+      "Salem witch trials",
+      "1692",
+      "Massachusetts"
+    ],
+    "search_queries": [
+      "Salem witch trials",
+      "1692 Massachusetts",
+      "witchcraft executions"
+    ],
+    "wikimedia_titles": [
+      "Salem witch trials.jpg",
+      "Colonial Massachusetts.jpg",
+      "Witch trial.jpg"
+    ],
+    "fallback_script": "In 1692 Salem's panic hanged people for witchcraft — spectral evidence welcome. Within years the colony's elite were apologizing and reversing convictions. Fear made courts. Shame cleaned the paperwork later. America's origin story includes a judicial fever dream. Follow for more history that hits different.",
+    "claim": "In 1692 Massachusetts executed people for witchcraft — then later reversed convictions in shame.",
+    "hook": "Fear made the courts. Shame cleaned the paperwork.",
+    "source": "Massachusetts archives / Britannica: Salem witch trials (1692); later reversals of attainder.",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "utah-alcohol-legacy",
+    "scenario_id": "did-you-know",
+    "title": "Utah Kept Strict Alcohol Rules Long After Prohibition Ended",
+    "topic": "Utah alcohol control quirks — post-Prohibition state liquor laws and cultural legacy",
+    "keywords": [
+      "Utah alcohol laws",
+      "Prohibition legacy",
+      "weird laws"
+    ],
+    "search_queries": [
+      "Utah liquor laws history",
+      "Zion curtain",
+      "state liquor store"
+    ],
+    "wikimedia_titles": [
+      "Utah state capitol.jpg",
+      "Prohibition.jpg",
+      "Cocktail.jpg"
+    ],
+    "fallback_script": "Prohibition ended nationally in 1933. In Utah, alcohol stayed a cultural battlefield for generations — state stores, portion rules, and restaurant workarounds that tourists mocked as weird American laws. Local faith and federal repeal collided. The punchline isn't just quirky statutes. It's how morality laws outlive the eras that wrote them. Follow for more history that hits different.",
+    "claim": "After national Prohibition ended, Utah kept some of America's strictest alcohol controls for generations.",
+    "hook": "Repeal was national. The hangover was local.",
+    "source": "Utah Department of Alcoholic Beverage Services history; Britannica Prohibition repeal (1933) context.",
+    "us_audience_score": 0.86
+  },
+  {
+    "id": "pony-express-short-lived",
+    "scenario_id": "ironic-ending",
+    "title": "The Legendary Pony Express Lasted Only 18 Months",
+    "topic": "Pony Express 1860–61 — iconic mail service killed by telegraph",
+    "keywords": [
+      "Pony Express",
+      "telegraph",
+      "American West"
+    ],
+    "search_queries": [
+      "Pony Express",
+      "1860 mail",
+      "transcontinental telegraph"
+    ],
+    "wikimedia_titles": [
+      "Pony Express.jpg",
+      "American West.jpg",
+      "Telegraph key.jpg"
+    ],
+    "fallback_script": "American myth treats the Pony Express like an era. It lasted about eighteen months. Riders sprinted mail across the continent — then the telegraph made them obsolete almost overnight. Legend outlived the business plan. The West's most cinematic startup got disrupted by a wire. Follow for more history that hits different.",
+    "claim": "The legendary Pony Express operated only about 18 months before the telegraph killed it.",
+    "hook": "America's most cinematic startup — disrupted by a wire.",
+    "source": "NPS / Smithsonian: Pony Express (April 1860–October 1861); transcontinental telegraph.",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "transcontinental-railroad",
+    "scenario_id": "underdog-victory",
+    "title": "Immigrant Labor Stitched America Together With Iron",
+    "topic": "Transcontinental railroad 1869 — Chinese and Irish labor, Promontory Summit",
+    "keywords": [
+      "transcontinental railroad",
+      "Promontory Summit",
+      "Chinese laborers"
+    ],
+    "search_queries": [
+      "transcontinental railroad 1869",
+      "Promontory Summit",
+      "Chinese railroad workers"
+    ],
+    "wikimedia_titles": [
+      "Golden Spike Ceremony.jpg",
+      "Chinese railroad workers.jpg",
+      "Union Pacific.jpg"
+    ],
+    "fallback_script": "In 1869 the golden spike linked coasts at Promontory Summit. Textbooks show the ceremony. Fewer show the Chinese and Irish crews who blasted mountains and died in numbers. America got speed. Laborers got danger and erasure. The continent was stitched with iron — and overlooked bodies. Follow for more history that hits different.",
+    "claim": "The 1869 transcontinental railroad was built largely by immigrant labor America long under-credited.",
+    "hook": "A golden spike — and erased crews.",
+    "source": "NPS Golden Spike National Historical Park; Chinese Railroad Workers in North America Project (Stanford).",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "hawaii-annexation",
+    "scenario_id": "empire-twist",
+    "title": "American Businessmen Helped Overthrow Hawaii's Queen",
+    "topic": "Overthrow of Queen Liliʻuokalani 1893 and US annexation of Hawaii",
+    "keywords": [
+      "Hawaii annexation",
+      "Liliuokalani",
+      "1893"
+    ],
+    "search_queries": [
+      "Overthrow of Hawaii 1893",
+      "Queen Liliuokalani",
+      "Hawaii annexation"
+    ],
+    "wikimedia_titles": [
+      "Queen Liliuokalani.jpg",
+      "Hawaii annexation.jpg",
+      "Iolani Palace.jpg"
+    ],
+    "fallback_script": "In 1893 American-backed interests overthrew Queen Liliʻuokalani. Annexation followed. Hawaii became a strategic prize — later a state. The tourist brochure rarely leads with a coup. Empire in the Pacific didn't always arrive with a declaration of war. Sometimes it arrived with sugar money and a lowered flag. Follow for more history that hits different.",
+    "claim": "In 1893 American-backed interests overthrew Hawaii's queen — paving the way to annexation.",
+    "hook": "Tourism hides a coup.",
+    "source": "US National Archives / Congressional apology resolution (1993) regarding 1893 overthrow of Kingdom of Hawaii.",
+    "us_audience_score": 0.91
+  },
+  {
+    "id": "alaska-sewards-folly",
+    "scenario_id": "ironic-ending",
+    "title": "America Mocked Alaska as 'Seward's Folly' — Then Found Gold and Oil",
+    "topic": "Alaska Purchase 1867 — ridiculed acquisition that later proved strategic",
+    "keywords": [
+      "Alaska Purchase",
+      "Seward's Folly",
+      "1867"
+    ],
+    "search_queries": [
+      "Alaska Purchase",
+      "Seward's Folly",
+      "1867 Russia"
+    ],
+    "wikimedia_titles": [
+      "Alaska Purchase.jpg",
+      "William H Seward.jpg",
+      "Klondike gold.jpg"
+    ],
+    "fallback_script": "In 1867 America bought Alaska from Russia for $7.2 million. Critics called it Seward's Folly — a frozen waste. Then came gold, strategic location, and later oil. The punchline wrote itself over decades. Yesterday's joke purchase became tomorrow's power map. Follow for more history that hits different.",
+    "claim": "America mocked the 1867 Alaska Purchase as Seward's Folly — then struck gold, strategy, and oil.",
+    "hook": "Yesterday's joke. Tomorrow's power map.",
+    "source": "US National Archives: Alaska Purchase Treaty (1867); Library of Congress Seward materials.",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "hindenburg-disaster",
+    "scenario_id": "ironic-ending",
+    "title": "Live Radio Turned an Airship Fire Into Instant Trauma",
+    "topic": "Hindenburg disaster 1937 — broadcast eyewitness and end of passenger airships",
+    "keywords": [
+      "Hindenburg",
+      "1937",
+      "airship"
+    ],
+    "search_queries": [
+      "Hindenburg disaster",
+      "1937 Lakehurst",
+      "Oh the humanity"
+    ],
+    "wikimedia_titles": [
+      "Hindenburg disaster.jpg",
+      "LZ 129 Hindenburg.jpg",
+      "Lakehurst.jpg"
+    ],
+    "fallback_script": "In 1937 the Hindenburg erupted in fire at Lakehurst, New Jersey. Radio reporter Herbert Morrison's raw scream — 'Oh, the humanity!' — made catastrophe intimate. Passenger airships never recovered their glamour. Technology's future can die in one newsreel. Follow for more history that hits different.",
+    "claim": "The 1937 Hindenburg fire — captured in iconic broadcast — ended the age of passenger airships.",
+    "hook": "One fire. One scream. An industry over.",
+    "source": "Smithsonian National Air and Space Museum / Britannica: Hindenburg disaster, May 6, 1937.",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "challenger-o-ring",
+    "scenario_id": "ironic-ending",
+    "title": "An O-Ring Warning Was Ignored — Then Challenger Exploded",
+    "topic": "Space Shuttle Challenger disaster 1986 — O-ring failure and ignored engineer warnings",
+    "keywords": [
+      "Challenger",
+      "NASA",
+      "O-ring"
+    ],
+    "search_queries": [
+      "Challenger disaster",
+      "O-ring",
+      "Rogers Commission"
+    ],
+    "wikimedia_titles": [
+      "Challenger explosion.jpg",
+      "Space Shuttle Challenger.jpg",
+      "NASA.jpg"
+    ],
+    "fallback_script": "On January 28, 1986, Challenger broke apart 73 seconds after launch. Investigators found failed O-rings — and a culture that sidelined engineer warnings about cold weather. Teacher Christa McAuliffe was aboard. America watched live. Hubris in aerospace isn't always loud. Sometimes it's a meeting that says launch anyway. Follow for more history that hits different.",
+    "claim": "Challenger exploded in 1986 after O-ring failure — despite engineer warnings about the cold.",
+    "hook": "The meeting said launch. Physics said no.",
+    "source": "Rogers Commission Report (1986); NASA Challenger accident archives.",
+    "us_audience_score": 0.95
+  },
+  {
+    "id": "three-mile-island",
+    "scenario_id": "cold-war-fact",
+    "title": "America's Worst Nuclear Accident Was a Partial Meltdown",
+    "topic": "Three Mile Island 1979 — partial meltdown that froze US reactor construction culture",
+    "keywords": [
+      "Three Mile Island",
+      "nuclear power",
+      "1979"
+    ],
+    "search_queries": [
+      "Three Mile Island",
+      "1979 nuclear",
+      "Harrisburg"
+    ],
+    "wikimedia_titles": [
+      "Three Mile Island.jpg",
+      "Nuclear power plant.jpg",
+      "Harrisburg.jpg"
+    ],
+    "fallback_script": "In 1979 Three Mile Island suffered a partial meltdown. Nobody died that day — but trust did. Evacuation fears. Confusing statements. US nuclear construction culture froze for a generation. Chernobyl would be worse. America's scare was enough to rewrite politics of the atom at home. Follow for more history that hits different.",
+    "claim": "The 1979 Three Mile Island partial meltdown froze America's nuclear-building culture for a generation.",
+    "hook": "Nobody died that day. Trust did.",
+    "source": "US NRC / Britannica: Three Mile Island accident, March 28, 1979.",
+    "us_audience_score": 0.91
+  },
+  {
+    "id": "duck-and-cover",
+    "scenario_id": "cold-war-fact",
+    "title": "Kids Practiced Surviving the Bomb Under School Desks",
+    "topic": "Duck and Cover civil defense films — Cold War childhood drills in US schools",
+    "keywords": [
+      "Duck and Cover",
+      "Cold War",
+      "civil defense"
+    ],
+    "search_queries": [
+      "Duck and Cover film",
+      "Cold War school drills",
+      "Bert the Turtle"
+    ],
+    "wikimedia_titles": [
+      "Duck and Cover.jpg",
+      "Cold War classroom.jpg",
+      "Bert the Turtle.jpg"
+    ],
+    "fallback_script": "Cold War kids watched Bert the Turtle and practiced Duck and Cover under desks. Civil defense sold calm as a cartoon. Adults knew a real nuclear exchange wouldn't respect plywood. The drills weren't really about physics. They were about managing national panic one classroom at a time. Follow for more history that hits different.",
+    "claim": "US schoolkids practiced Duck and Cover drills — a Cold War ritual more about calm than survival physics.",
+    "hook": "A cartoon turtle vs the bomb.",
+    "source": "US National Archives: Duck and Cover (1951 Federal Civil Defense Administration film).",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "jfk-quarantine-cuba",
+    "scenario_id": "one-decision",
+    "title": "Kennedy Chose a Blockade Over Immediate Airstrikes on Cuba",
+    "topic": "Cuban Missile Crisis 1962 — JFK quarantine decision vs airstrike option",
+    "keywords": [
+      "Cuban Missile Crisis",
+      "JFK",
+      "naval quarantine"
+    ],
+    "search_queries": [
+      "Cuban Missile Crisis quarantine",
+      "JFK ExComm",
+      "1962 blockade"
+    ],
+    "wikimedia_titles": [
+      "John F Kennedy.jpg",
+      "Cuban Missile Crisis.jpg",
+      "US Navy destroyer.jpg"
+    ],
+    "fallback_script": "In October 1962 ExComm argued airstrikes vs something quieter. Kennedy chose a naval 'quarantine' of Cuba. The world held its breath for thirteen days. One word choice — quarantine not blockade — was diplomacy under nuclear shadow. Americans remember the TV address. Fewer remember how close the hawkish option came. Follow for more history that hits different.",
+    "claim": "In 1962 Kennedy chose a naval quarantine of Cuba over immediate airstrikes — and the world survived thirteen days.",
+    "hook": "One word: quarantine. Thirteen days of breath-holding.",
+    "source": "JFK Library ExComm records; Cuban Missile Crisis, October 1962.",
+    "us_audience_score": 0.94
+  },
+  {
+    "id": "magna-carta-us-echo",
+    "scenario_id": "did-you-know",
+    "title": "American Rights Rhetoric Echoes a 1215 English Deal",
+    "topic": "Magna Carta 1215 — influence on later English law and American constitutional ideas",
+    "keywords": [
+      "Magna Carta",
+      "constitutional history",
+      "due process"
+    ],
+    "search_queries": [
+      "Magna Carta",
+      "1215",
+      "American Constitution influence"
+    ],
+    "wikimedia_titles": [
+      "Magna Carta.jpg",
+      "King John.jpg",
+      "US Constitution.jpg"
+    ],
+    "fallback_script": "In 1215 English barons forced King John to seal Magna Carta. It wasn't democracy — it was aristocrats clipping a king. Centuries later Americans borrowed its language of limits on power. Your Bill of Rights has medieval grandparents. Liberty's paperwork is older than the country that quotes it. Follow for more history that hits different.",
+    "claim": "Magna Carta (1215) helped shape the English legal tradition Americans later quoted for limited government.",
+    "hook": "Your rights have medieval grandparents.",
+    "source": "British Library Magna Carta; US National Archives essays on Magna Carta and American constitutionalism.",
+    "us_audience_score": 0.88
+  },
+  {
+    "id": "black-death-labor",
+    "scenario_id": "empire-twist",
+    "title": "The Black Death Accidentally Raised Workers' Power",
+    "topic": "Black Death labor shortage — wages and social upheaval in medieval Europe",
+    "keywords": [
+      "Black Death",
+      "medieval labor",
+      "plague"
+    ],
+    "search_queries": [
+      "Black Death labor shortage",
+      "1348 plague",
+      "Peasants Revolt"
+    ],
+    "wikimedia_titles": [
+      "Black Death.jpg",
+      "Medieval plague.jpg",
+      "Peasants Revolt.jpg"
+    ],
+    "fallback_script": "The Black Death killed a huge share of Europe in the 1300s. Then something unexpected: labor got scarce, wages pressure rose, and elites panicked with laws to freeze pay. Catastrophe rewrote bargaining power. Empires fear armies. Economies fear empty fields. The plague's aftershock was social — not just medical. Follow for more history that hits different.",
+    "claim": "After the Black Death killed millions, labor scarcity pushed wages up — and elites tried to legislate them back down.",
+    "hook": "Catastrophe rewrote bargaining power.",
+    "source": "Britannica: Black Death; economic histories of post-1348 labor shortage and wage statutes.",
+    "us_audience_score": 0.84
+  },
+  {
+    "id": "galileo-house-arrest",
+    "scenario_id": "ironic-ending",
+    "title": "The Church Forced Galileo to Recant — Then History Vindicated Him",
+    "topic": "Galileo's 1633 trial — heliocentrism conflict and house arrest",
+    "keywords": [
+      "Galileo",
+      "Inquisition",
+      "heliocentrism"
+    ],
+    "search_queries": [
+      "Galileo trial 1633",
+      "heliocentrism",
+      "house arrest"
+    ],
+    "wikimedia_titles": [
+      "Galileo Galilei.jpg",
+      "Inquisition.jpg",
+      "Telescope.jpg"
+    ],
+    "fallback_script": "In 1633 the Roman Inquisition forced Galileo to recant heliocentrism and live under house arrest. The Earth still moved. Science doesn't need permission slips. The clash became a Western parable about authority vs evidence — simplified, yes, but the house arrest was real. Follow for more history that hits different.",
+    "claim": "In 1633 the Inquisition forced Galileo to recant — and put him under house arrest.",
+    "hook": "Authority won the hearing. Evidence won the centuries.",
+    "source": "Britannica: Galileo Galilei trial (1633); Vatican archival tradition on the condemnation.",
+    "us_audience_score": 0.87
+  },
+  {
+    "id": "darwin-voyage-beagle",
+    "scenario_id": "did-you-know",
+    "title": "Evolution's Big Idea Started as a Ship's Naturalist Side Gig",
+    "topic": "Darwin's voyage on HMS Beagle — observations that fed On the Origin of Species",
+    "keywords": [
+      "Charles Darwin",
+      "HMS Beagle",
+      "evolution"
+    ],
+    "search_queries": [
+      "Darwin Beagle voyage",
+      "Origin of Species",
+      "Galapagos Darwin"
+    ],
+    "wikimedia_titles": [
+      "Charles Darwin.jpg",
+      "HMS Beagle.jpg",
+      "Galapagos tortoise.jpg"
+    ],
+    "fallback_script": "Charles Darwin boarded HMS Beagle as a young naturalist, not a prophet. Years of notes — Galápagos to South America — fermented into On the Origin of Species in 1859. Biology's bomb started as a travel journal with too many finches. Ideas that rewrite reality often begin as careful notebooks. Follow for more history that hits different.",
+    "claim": "Darwin's theory of evolution grew from his 1830s Beagle voyage notes — published as Origin of Species in 1859.",
+    "hook": "A travel journal that rewrote biology.",
+    "source": "Britannica: Charles Darwin; HMS Beagle voyage (1831–36); On the Origin of Species (1859).",
+    "us_audience_score": 0.88
+  },
+  {
+    "id": "marie-curie-radium",
+    "scenario_id": "overlooked-hero",
+    "title": "The First Person to Win Nobel Prizes in Two Sciences",
+    "topic": "Marie Curie — two Nobel Prizes; radium research and radiation risk",
+    "keywords": [
+      "Marie Curie",
+      "Nobel Prize",
+      "radium"
+    ],
+    "search_queries": [
+      "Marie Curie Nobel",
+      "radium discovery",
+      "polonium"
+    ],
+    "wikimedia_titles": [
+      "Marie Curie.jpg",
+      "Radium.jpg",
+      "Nobel Prize.jpg"
+    ],
+    "fallback_script": "Marie Curie discovered radium and polonium, pioneered radioactivity research, and became the first person to win Nobel Prizes in two different sciences. She also paid in radiation exposure. Genius isn't always rewarded with safety. Sometimes it's notebooks so radioactive museums still keep them in lead. Follow for more history that hits different.",
+    "claim": "Marie Curie was the first person to win Nobel Prizes in two different sciences.",
+    "hook": "Two Nobels. Notebooks still radioactive.",
+    "source": "Nobel Prize official biographies: Marie Curie (Physics 1903, Chemistry 1911).",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "alan-turing-enigma",
+    "scenario_id": "ww2-hook",
+    "title": "A Codebreaker Helped Shorten WWII — Then Britain Criminalized Him",
+    "topic": "Alan Turing and Enigma cryptanalysis — postwar prosecution for homosexuality",
+    "keywords": [
+      "Alan Turing",
+      "Enigma",
+      "Bletchley Park"
+    ],
+    "search_queries": [
+      "Alan Turing Enigma",
+      "Bletchley Park",
+      "Turing pardon"
+    ],
+    "wikimedia_titles": [
+      "Alan Turing.jpg",
+      "Enigma machine.jpg",
+      "Bletchley Park.jpg"
+    ],
+    "fallback_script": "At Bletchley Park, Alan Turing helped crack Enigma and shorten World War II. Afterward Britain prosecuted him for homosexuality; he died in 1954. Decades later came a royal pardon. The man who helped save ships was treated as a criminal for who he loved. History's gratitude arrived late. Follow for more history that hits different.",
+    "claim": "Alan Turing helped crack Enigma and shorten WWII — then Britain prosecuted him for homosexuality.",
+    "hook": "Saved ships. Criminalized for love. Pardoned too late.",
+    "source": "UK National Archives / Bletchley Park historical materials; 2013 royal pardon of Alan Turing.",
+    "us_audience_score": 0.91
+  },
+  {
+    "id": "dunkirk-civilian-boats",
+    "scenario_id": "underdog-victory",
+    "title": "Civilian Boats Helped Evacuate an Army From Dunkirk",
+    "topic": "Dunkirk evacuation 1940 — Operation Dynamo and civilian 'little ships'",
+    "keywords": [
+      "Dunkirk",
+      "Operation Dynamo",
+      "WWII"
+    ],
+    "search_queries": [
+      "Dunkirk evacuation",
+      "Operation Dynamo",
+      "little ships"
+    ],
+    "wikimedia_titles": [
+      "Dunkirk evacuation.jpg",
+      "Operation Dynamo.jpg",
+      "English Channel 1940.jpg"
+    ],
+    "fallback_script": "In 1940 Allied troops were trapped at Dunkirk. Operation Dynamo evacuated hundreds of thousands — including with help from civilian 'little ships.' It was retreat marketed as miracle, because sometimes survival is the victory. Britain lived to fight. The war was not over. The army was not finished. Follow for more history that hits different.",
+    "claim": "In 1940 Dunkirk's evacuation saved hundreds of thousands — with civilian boats helping pull an army off the beach.",
+    "hook": "Retreat sold as miracle — because survival was the win.",
+    "source": "Imperial War Museums / UK official histories: Operation Dynamo, Dunkirk 1940.",
+    "us_audience_score": 0.89
+  },
+  {
+    "id": "midway-codebreakers",
+    "scenario_id": "ww2-hook",
+    "title": "Codebreakers Won Midway Before the Carriers Did",
+    "topic": "Battle of Midway 1942 — US cryptanalysis enabling ambush of Japanese fleet",
+    "keywords": [
+      "Battle of Midway",
+      "codebreaking",
+      "WWII Pacific"
+    ],
+    "search_queries": [
+      "Battle of Midway",
+      "Station HYPO",
+      "Joseph Rochefort"
+    ],
+    "wikimedia_titles": [
+      "Battle of Midway.jpg",
+      "USS Yorktown.jpg",
+      "Pacific War.jpg"
+    ],
+    "fallback_script": "At Midway in 1942, US carriers ambushed a Japanese fleet. The real opening shot was codebreaking — Station HYPO peeling AF as Midway. Intelligence set the trap. Dive bombers finished it. Hollywood loves dogfights. The Pacific war also turned on men with headphones. Follow for more history that hits different.",
+    "claim": "US codebreakers made the 1942 Midway ambush possible before the carriers opened fire.",
+    "hook": "Headphones set the trap. Dive bombers sprung it.",
+    "source": "US Naval History and Heritage Command: Battle of Midway (June 1942); Station HYPO cryptanalysis.",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "iwo-jima-flag-myth",
+    "scenario_id": "did-you-know",
+    "title": "The Famous Iwo Jima Flag Photo Was the Second Raising",
+    "topic": "Iwo Jima flag raisings Feb 23 1945 — Rosenthal photo of the second flag",
+    "keywords": [
+      "Iwo Jima",
+      "flag raising",
+      "Joe Rosenthal"
+    ],
+    "search_queries": [
+      "Iwo Jima flag raising",
+      "Joe Rosenthal",
+      "Mount Suribachi"
+    ],
+    "wikimedia_titles": [
+      "Raising the Flag on Iwo Jima.jpg",
+      "Mount Suribachi.jpg",
+      "US Marines Iwo Jima.jpg"
+    ],
+    "fallback_script": "The iconic Iwo Jima photo isn't the first flag on Suribachi — it's the second, larger flag, captured by Joe Rosenthal. The image became a monument and a Marine Corps brand. War photography can freeze a sequel and make it the original in public memory. Follow for more history that hits different.",
+    "claim": "The famous Iwo Jima flag photo shows the second flag raising on Mount Suribachi — not the first.",
+    "hook": "America memorialized the sequel.",
+    "source": "USMC History Division / Britannica: Raising the Flag on Iwo Jima (Feb 23, 1945); Joe Rosenthal.",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "patton-slapping-incident",
+    "scenario_id": "ironic-ending",
+    "title": "America's Hardest General Almost Lost His Command Over a Slap",
+    "topic": "George S. Patton slapping incidents 1943 — public fury and sidelining",
+    "keywords": [
+      "George Patton",
+      "WWII",
+      "slapping incident"
+    ],
+    "search_queries": [
+      "Patton slapping incident",
+      "1943 Sicily",
+      "Eisenhower Patton"
+    ],
+    "wikimedia_titles": [
+      "George S Patton.jpg",
+      "Sicily 1943.jpg",
+      "WWII generals.jpg"
+    ],
+    "fallback_script": "General George S. Patton slapped shell-shocked soldiers in Sicily in 1943. When the press broke it, America erupted. Eisenhower sidelined the hard-charging general for months. Battlefield genius met PR catastrophe. Even war heroes answer to cameras — eventually. Follow for more history that hits different.",
+    "claim": "Patton's 1943 slapping of shell-shocked soldiers nearly ended his combat command.",
+    "hook": "Battlefield genius vs a PR catastrophe.",
+    "source": "US Army Center of Military History / Eisenhower papers: Patton slapping incidents, August 1943.",
+    "us_audience_score": 0.88
+  },
+  {
+    "id": "women-codebreakers-arlington",
+    "scenario_id": "overlooked-hero",
+    "title": "Thousands of Women Helped Crack Codes America Rarely Credits",
+    "topic": "US women cryptanalysts in WWII — Arlington Hall and Navy codebreaking labor",
+    "keywords": [
+      "women codebreakers",
+      "WWII",
+      "Arlington Hall"
+    ],
+    "search_queries": [
+      "WWII women codebreakers",
+      "Arlington Hall",
+      "Navy WAVES cryptanalysis"
+    ],
+    "wikimedia_titles": [
+      "WWII women workers.jpg",
+      "Codebreaking WWII.jpg",
+      "Arlington Hall.jpg"
+    ],
+    "fallback_script": "Hollywood loves lone genius codebreakers. WWII also ran on thousands of American women at places like Arlington Hall — sorting traffic, breaking systems, keeping silence. They shortened wars and then went home to erased credit. The intelligence war had a female workforce America still under-teaches. Follow for more history that hits different.",
+    "claim": "Thousands of US women cryptanalysts helped win WWII's code war — then got little public credit.",
+    "hook": "The intelligence war had a female workforce textbooks skip.",
+    "source": "NSA / National Archives histories of Arlington Hall and WWII women cryptanalysts.",
+    "us_audience_score": 0.91
+  },
+  {
+    "id": "ghost-army-ww2",
+    "scenario_id": "ww2-hook",
+    "title": "A Fake Army of Inflatable Tanks Fooled the Nazis",
+    "topic": "Ghost Army (23rd Headquarters Special Troops) — WWII tactical deception unit",
+    "keywords": [
+      "Ghost Army",
+      "WWII deception",
+      "inflatable tanks"
+    ],
+    "search_queries": [
+      "Ghost Army WWII",
+      "23rd Headquarters Special Troops",
+      "inflatable tanks"
+    ],
+    "wikimedia_titles": [
+      "WWII inflatable tank.jpg",
+      "Normandy 1944.jpg",
+      "US Army WWII.jpg"
+    ],
+    "fallback_script": "In WWII a secret US unit — the Ghost Army — used inflatable tanks, sound trucks, and phony radio traffic to spoof German intelligence. Artists and sound engineers went to war with illusions. Deception saved lives. The battlefield can be a stage set with real bullets nearby. Follow for more history that hits different.",
+    "claim": "The WWII Ghost Army used inflatable tanks and sound tricks to spoof German forces.",
+    "hook": "Artists went to war with illusions — and saved lives.",
+    "source": "Smithsonian / US Army histories: 23rd Headquarters Special Troops (Ghost Army).",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "exxon-valdez",
+    "scenario_id": "ironic-ending",
+    "title": "One Tanker Spill Forced America to Rewrite Oil Shipping Rules",
+    "topic": "Exxon Valdez oil spill 1989 — environmental disaster and Oil Pollution Act",
+    "keywords": [
+      "Exxon Valdez",
+      "oil spill",
+      "1989"
+    ],
+    "search_queries": [
+      "Exxon Valdez",
+      "1989 oil spill",
+      "Prince William Sound"
+    ],
+    "wikimedia_titles": [
+      "Exxon Valdez.jpg",
+      "Prince William Sound.jpg",
+      "Oil spill cleanup.jpg"
+    ],
+    "fallback_script": "In 1989 the Exxon Valdez spilled oil into Alaska's Prince William Sound. Wildlife died. Beaches blackened. Congress answered with the Oil Pollution Act. One tanker night rewrote liability and shipping rules. Environmental law often arrives after the sludge, not before. Follow for more history that hits different.",
+    "claim": "The 1989 Exxon Valdez spill pushed Congress to pass the Oil Pollution Act.",
+    "hook": "Law arrived after the sludge.",
+    "source": "EPA / NOAA Exxon Valdez accounts; Oil Pollution Act of 1990.",
+    "us_audience_score": 0.88
+  },
+  {
+    "id": "love-canal",
+    "scenario_id": "one-decision",
+    "title": "A Neighborhood Built on Toxic Waste Created Superfund",
+    "topic": "Love Canal disaster — Hooker Chemical waste and Superfund origins",
+    "keywords": [
+      "Love Canal",
+      "Superfund",
+      "environmental history"
+    ],
+    "search_queries": [
+      "Love Canal",
+      "Superfund",
+      "Hooker Chemical"
+    ],
+    "wikimedia_titles": [
+      "Love Canal.jpg",
+      "Environmental protest.jpg",
+      "Toxic waste.jpg"
+    ],
+    "fallback_script": "Love Canal was a neighborhood — and a chemical dump. When waste seeped into yards and basements, mothers organized, cameras came, and America invented Superfund. Environmental protection didn't start as a vibe. It started as poisoned ground under swing sets. Follow for more history that hits different.",
+    "claim": "Love Canal's toxic-waste nightmare helped create the US Superfund program.",
+    "hook": "Poison under swing sets wrote environmental law.",
+    "source": "EPA Superfund history; Love Canal emergency declarations (late 1970s).",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "silent-spring-ddt",
+    "scenario_id": "one-decision",
+    "title": "One Book Helped Launch the Modern Environmental Movement",
+    "topic": "Rachel Carson's Silent Spring (1962) — DDT scrutiny and EPA-era politics",
+    "keywords": [
+      "Silent Spring",
+      "Rachel Carson",
+      "DDT"
+    ],
+    "search_queries": [
+      "Silent Spring Rachel Carson",
+      "DDT ban",
+      "EPA founding"
+    ],
+    "wikimedia_titles": [
+      "Rachel Carson.jpg",
+      "Silent Spring.jpg",
+      "DDT spraying.jpg"
+    ],
+    "fallback_script": "In 1962 Rachel Carson's Silent Spring warned that pesticides were silencing birds — and poisoning ecosystems. Industry attacked her. The public listened. DDT scrutiny and the modern environmental movement followed. Sometimes a book is a policy bomb with better footnotes. Follow for more history that hits different.",
+    "claim": "Rachel Carson's 1962 Silent Spring helped launch America's modern environmental movement.",
+    "hook": "A book that made pesticides a national fight.",
+    "source": "Britannica / EPA historical essays: Rachel Carson, Silent Spring (1962); DDT policy debates.",
+    "us_audience_score": 0.89
+  },
+  {
+    "id": "apollo-13-failure-success",
+    "scenario_id": "underdog-victory",
+    "title": "A Dead Spacecraft Became NASA's Finest Hour",
+    "topic": "Apollo 13 1970 — oxygen tank explosion and safe return using improvisation",
+    "keywords": [
+      "Apollo 13",
+      "NASA",
+      "Jim Lovell"
+    ],
+    "search_queries": [
+      "Apollo 13",
+      "1970 NASA",
+      "Houston we have a problem"
+    ],
+    "wikimedia_titles": [
+      "Apollo 13 crew.jpg",
+      "Mission Control Houston.jpg",
+      "Damaged Apollo 13 service module.jpg"
+    ],
+    "fallback_script": "Apollo 13 was supposed to land on the Moon. An oxygen tank explosion crippled the ship. Improvisation in Mission Control and the crew brought them home. Failure became NASA's finest hour — because survival counted as victory. Spaceflight's heroism is sometimes a square peg and duct-tape math. Follow for more history that hits different.",
+    "claim": "After an oxygen-tank explosion, Apollo 13's crew and Mission Control improvised a safe return in 1970.",
+    "hook": "Failure became NASA's finest hour.",
+    "source": "NASA Apollo 13 mission reports (April 1970); Jim Lovell crew accounts.",
+    "us_audience_score": 0.96
+  },
+  {
+    "id": "ford-pardons-nixon",
+    "scenario_id": "one-decision",
+    "title": "Ford Pardoned Nixon — and May Have Lost the Next Election",
+    "topic": "Gerald Ford's 1974 pardon of Richard Nixon — political cost and national healing debate",
+    "keywords": [
+      "Gerald Ford",
+      "Nixon pardon",
+      "1974"
+    ],
+    "search_queries": [
+      "Ford pardons Nixon",
+      "1974 pardon",
+      "Watergate aftermath"
+    ],
+    "wikimedia_titles": [
+      "Gerald Ford.jpg",
+      "Richard Nixon.jpg",
+      "White House.jpg"
+    ],
+    "fallback_script": "In 1974 President Gerald Ford pardoned Richard Nixon. He said the country needed to heal. Voters heard a fix. Ford lost in 1976. Mercy has a political price. America's post-Watergate hangover included a pardon that still starts arguments. Follow for more history that hits different.",
+    "claim": "Gerald Ford's 1974 pardon of Nixon may have cost him the 1976 election.",
+    "hook": "Mercy with a ballot-box price.",
+    "source": "Ford Presidential Library: Proclamation 4311 (Sept 8, 1974) pardoning Richard Nixon.",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "election-1800-peaceful",
+    "scenario_id": "refused-power",
+    "title": "America's First Real Power Handover Almost Broke the System",
+    "topic": "Election of 1800 — Jefferson vs Adams; House deadlock and peaceful transfer",
+    "keywords": [
+      "Election of 1800",
+      "Thomas Jefferson",
+      "John Adams"
+    ],
+    "search_queries": [
+      "Election of 1800",
+      "Jefferson Adams",
+      "House contingent election"
+    ],
+    "wikimedia_titles": [
+      "Thomas Jefferson.jpg",
+      "John Adams.jpg",
+      "US Capitol early.jpg"
+    ],
+    "fallback_script": "The Election of 1800 deadlocked in the House. Jefferson vs Burr. Federalists vs Democratic-Republicans. For a moment the young republic looked like it might crack. Then power transferred — Adams went home. Americans treat peaceful handover as destiny. In 1800 it was an invention under stress. Follow for more history that hits different.",
+    "claim": "The Election of 1800 nearly deadlocked the republic — then produced a pioneering peaceful transfer of power.",
+    "hook": "Peaceful handover wasn't destiny. It was a stress test.",
+    "source": "US National Archives / Library of Congress: Election of 1800; House contingent election 1801.",
+    "us_audience_score": 0.93
   }
 ]
