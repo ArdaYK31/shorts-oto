@@ -75,14 +75,17 @@ B) fal.ai görseller (önerilen — ~$30/ay bütçe)
   FAL_KEY yoksa Pollinations ücretsiz fallback.
   Cap: config.yaml media.ai_api.budget.monthly_cap_usd: 30
 
-C) ElevenLabs TTS (önerilen — Pay-as-you-go ≈ ~$5/ay hacimde)
+C) ElevenLabs TTS (opsiyonel PAYG — secret ekleyince açılır)
+
+  Secret ekleyince ElevenLabs açılır; yoksa Kokoro. Ücretsiz kalite iyileştirmeleri aktif.
 
   ELEVENLABS_API_KEY
     → https://elevenlabs.io → Profile → API Key
     → GitHub → Settings → Secrets and variables → Actions → New repository secret
     → Name: ELEVENLABS_API_KEY  (değeri sohbete YAPISTIRMA — sadece GitHub Secret)
-  config.yaml: tts.provider=elevenlabs · model_id=eleven_multilingual_v2
-  Key yoksa / API hata verirse otomatik Kokoro am_adam fallback.
+  config.yaml: tts.provider=auto · model_id=eleven_multilingual_v2
+  Key yoksa / API hata verirse otomatik Kokoro am_adam (zorunlu değil).
+  Zorla ücretsiz: tts.provider=kokoro
 
   CLI (gh kuruluysa):
     gh secret set ELEVENLABS_API_KEY --repo ArdaYK31/shorts-oto

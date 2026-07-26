@@ -281,6 +281,52 @@ def _run_fallback(text: str, wav_path: Path, voice: str, speed: float, tts_cfg: 
         _run_kokoro(text, wav_path, voice, speed, tts_cfg)
 
 
+def _run_elevenlabs_or_fallback(
+    text: str, wav_path: Path, voice: str, speed: float, tts_cfg: dict, *, mode: str
+) -> None:
+    """Try ElevenLabs when key is present; otherwise (or on API error) use Kokoro.
+
+    mode: 'auto' | 'elevenlabs' — same runtime behavior; log wording differs slightly.
+    """
+    el = tts_cfg.get("elevenlabs") or {}
+    api_key = _elevenlabs_api_key()
+    model_id = str(el.get("model_id") or "eleven_multilingual_v2")
+    voice_id = str(el.get("voice_id") or "").strip()
+    el_speed = float(el.get("speed", speed))
+    if not api_key:
+        if mode == "auto":
+            print(
+                "[tts] auto: no ELEVENLABS_API_KEY / ELEVEN_API_KEY — "
+                "using Kokoro am_adam (add GitHub secret to enable PAYG ElevenLabs)"
+            )
+        else:
+            print(
+                "[tts] ELEVENLABS_API_KEY missing — "
+                "falling back to Kokoro (set GitHub secret, never paste key in chat)"
+            )
+        _run_fallback(text, wav_path, voice, speed, tts_cfg)
+        return
+    print(
+        f"[tts] ElevenLabs ({mode}) model={model_id} voice_id={voice_id[:8]}… "
+        f"stability={el.get('stability', 0.45)} speed={el_speed}"
+    )
+    try:
+        _synthesize_elevenlabs(
+            text,
+            wav_path,
+            voice_id=voice_id,
+            model_id=model_id,
+            stability=float(el.get("stability", 0.45)),
+            similarity_boost=float(el.get("similarity_boost", 0.75)),
+            style=float(el.get("style", 0.15)),
+            use_speaker_boost=bool(el.get("use_speaker_boost", True)),
+            speed=el_speed,
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[tts] ElevenLabs failed ({exc}); falling back…")
+        _run_fallback(text, wav_path, voice, speed, tts_cfg)
+
+
 def synthesize(script_path: Path | None = None) -> Path:
     cfg = load_config()
     scripts_dir = cfg["paths_resolved"]["scripts"]
@@ -316,38 +362,11 @@ def synthesize(script_path: Path | None = None) -> Path:
         print(f"[tts] WARN non-US voice {voice!r}; ChronoShorts expects am_*")
     speed = float(tts_cfg.get("speed", 1.05))
 
-    if provider == "elevenlabs":
-        el = tts_cfg.get("elevenlabs") or {}
-        api_key = _elevenlabs_api_key()
-        model_id = str(el.get("model_id") or "eleven_multilingual_v2")
-        voice_id = str(el.get("voice_id") or "").strip()
-        el_speed = float(el.get("speed", speed))
-        if not api_key:
-            print(
-                "[tts] ELEVENLABS_API_KEY missing — "
-                "falling back to Kokoro (set GitHub secret, never paste key in chat)"
-            )
-            _run_fallback(text, wav_path, voice, speed, tts_cfg)
-        else:
-            print(
-                f"[tts] ElevenLabs model={model_id} voice_id={voice_id[:8]}… "
-                f"stability={el.get('stability', 0.45)} speed={el_speed}"
-            )
-            try:
-                _synthesize_elevenlabs(
-                    text,
-                    wav_path,
-                    voice_id=voice_id,
-                    model_id=model_id,
-                    stability=float(el.get("stability", 0.45)),
-                    similarity_boost=float(el.get("similarity_boost", 0.75)),
-                    style=float(el.get("style", 0.15)),
-                    use_speaker_boost=bool(el.get("use_speaker_boost", True)),
-                    speed=el_speed,
-                )
-            except Exception as exc:  # noqa: BLE001
-                print(f"[tts] ElevenLabs failed ({exc}); falling back…")
-                _run_fallback(text, wav_path, voice, speed, tts_cfg)
+    # auto / elevenlabs: PAYG ElevenLabs when secret is set; else free Kokoro am_adam
+    if provider in ("auto", "elevenlabs"):
+        _run_elevenlabs_or_fallback(
+            text, wav_path, voice, speed, tts_cfg, mode=provider
+        )
     elif provider == "kokoro":
         _run_kokoro(text, wav_path, voice, speed, tts_cfg)
     elif provider == "kokoro_onnx":
@@ -355,7 +374,7 @@ def synthesize(script_path: Path | None = None) -> Path:
     else:
         raise SystemExit(
             f"Unknown/unsupported tts.provider: {provider}. "
-            "Use elevenlabs, kokoro, or kokoro_onnx."
+            "Use auto, elevenlabs, kokoro, or kokoro_onnx."
         )
 
     _post_process_narration(wav_path, out_path)

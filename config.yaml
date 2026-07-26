@@ -38,8 +38,12 @@ script:
   viral_structure: ["claim", "evidence", "relevance", "twist", "payoff"]
 
 tts:
-  # kokoro | kokoro_onnx — keep free Kokoro am_adam (no ElevenLabs / paid TTS by default)
-  provider: kokoro
+  # auto | elevenlabs | kokoro | kokoro_onnx
+  # auto (recommended): ELEVENLABS_API_KEY / ELEVEN_API_KEY set → ElevenLabs multilingual_v2;
+  #                      no key → free Kokoro am_adam. ElevenLabs never required.
+  # elevenlabs: same runtime (prefer EL + Kokoro fallback); auto is clearer in docs.
+  # kokoro / kokoro_onnx: force free local TTS (ignore ElevenLabs secret).
+  provider: auto
   fallback: kokoro
   # LOCKED brand voice — ChronoShorts clear US male documentary narrator (Kokoro path)
   # Do not rotate per episode; A/B only via explicit config change
@@ -52,9 +56,11 @@ tts:
   kokoro_onnx_voices: "C:/kokoro-models/voices-v1.0.bin"
   edge_voice: en-US-ChristopherNeural
   edge_rate: "+5%"
-  # Optional paid path kept in code but NOT default — enable only with explicit config + secret
+  # PAYG path — key ONLY via GitHub secret / env (never paste in chat or commit)
   elevenlabs:
+    # Secret: ELEVENLABS_API_KEY (alias ELEVEN_API_KEY). Multilingual v2 narration.
     model_id: eleven_multilingual_v2
+    # ElevenLabs → Voices → Voice ID (Adam US male premade; replace as needed)
     voice_id: "pNInz6obpgDQGcFmaJgB"
     stability: 0.45
     similarity_boost: 0.75

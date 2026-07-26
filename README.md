@@ -1,7 +1,7 @@
 # YouTube History Shorts + Atelier Series Autopilot
 
 Sıfır nakit maliyetli yerel pipeline + **Atelier** dashboard + **bulut schedule** (GitHub Actions):
-Amerikan tarihi Shorts üret → Kokoro TTS → Whisper karaoke + beat-sync → FFmpeg →  
+Amerikan tarihi Shorts üret → TTS (`auto`: ElevenLabs secret varsa / yoksa Kokoro) → Whisper karaoke + beat-sync → FFmpeg →  
 **YouTube Shorts + Instagram Reels + TikTok** (public). PC kapalıyken de çalışır.
 
 > Kurulum: **`CLOUD_SETUP.txt`** (Türkçe, adım adım). Yerel Task Scheduler ikincildir.
@@ -20,7 +20,7 @@ Amerikan tarihi Shorts üret → Kokoro TTS → Whisper karaoke + beat-sync → 
 - FFmpeg + ffprobe (PATH)
 - Node **20+** (dashboard)
 - `ESPEAK_DATA_PATH=C:\espeak-ng-data` (Kokoro / phonemizer)
-- İnternet (PD görseller + model indirmeleri; **ücretli API yok**)
+- İnternet (PD görseller + model indirmeleri; ElevenLabs yalnızca `ELEVENLABS_API_KEY` secret ile)
 
 ## Pipeline çalıştır
 
@@ -60,7 +60,7 @@ Pipeline tetikleme: Queue/Series içinden `Generate` → `python src/run_pipelin
 
 | Parça | Araç |
 |-------|------|
-| TTS | Kokoro **`am_adam`** @ 1.05 (ChronoShorts clear US male; A/B: michael/onyx/fenrir) |
+| TTS | `auto`: ElevenLabs multilingual_v2 if `ELEVENLABS_API_KEY`; else Kokoro **`am_adam`** @ 1.05 |
 | Narration post | FFmpeg: compress → mild lowshelf → presence ~3.2kHz → de-ess → loudnorm |
 | Captions | Centered 1-word white+outline (ChronoShorts) via faster-whisper |
 | Beat-sync | Whisper/script beats → scene süreleri |

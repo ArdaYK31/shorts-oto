@@ -897,7 +897,7 @@ def assemble(
                 "Description: see seo/*.seo.json (English SEO pack)",
                 f"Visibility: {privacy}",
                 note,
-                "Paid APIs (ElevenLabs/InVideo/MidJourney/etc.) are NOT used.",
+                "ElevenLabs only if ELEVENLABS_API_KEY is set; else Kokoro. Free quality upgrades stay on.",
             ]
         ),
         encoding="utf-8",
