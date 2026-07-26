@@ -9,43 +9,59 @@
     "16:00"
   ],
   "next_runs": [
-    "2026-07-26T08:00:00+03:00",
     "2026-07-26T16:00:00+03:00",
-    "2026-07-27T00:00:00+03:00"
+    "2026-07-27T00:00:00+03:00",
+    "2026-07-27T08:00:00+03:00"
   ],
   "platforms_connected": {
     "youtube": true,
     "instagram": false,
     "tiktok": false,
-    "fal": false
+    "fal": true
   },
   "budget": {
     "month": "2026-07",
-    "spent_usd": 0.036,
+    "spent_usd": 0.102,
     "cap_usd": 30.0,
-    "images_generated": 6,
+    "images_generated": 17,
     "cost_per_image_usd": 0.006,
     "provider": "fal_flux_schnell"
   },
   "latest_job": {
-    "topic_id": "washington-refused-crown",
-    "title": "The Man Who Was Offered a Crown and Said No",
-    "status": "uploaded",
-    "video": "washington-refused-crown.mp4",
-    "platforms": {
-      "youtube": "Y3It0wFt594",
-      "instagram": null,
-      "tiktok": null
-    },
-    "links": {
-      "youtube": "https://youtu.be/Y3It0wFt594",
-      "instagram": null,
-      "tiktok": null
-    },
-    "ts": "2026-07-26T06:25:07.074324+03:00",
-    "updated_at": "2026-07-26T06:25:07.074324+03:00"
+    "topic_id": "benedict-arnold-traitor",
+    "title": "America's Greatest Hero Turned Its Greatest Traitor",
+    "status": "failed",
+    "error": "RuntimeError(\"Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'\")",
+    "platforms": {},
+    "ts": "2026-07-26T10:37:50.285447+03:00",
+    "updated_at": "2026-07-26T10:37:50.285447+03:00"
   },
   "recent_jobs": [
+    {
+      "topic_id": "benedict-arnold-traitor",
+      "title": "America's Greatest Hero Turned Its Greatest Traitor",
+      "status": "failed",
+      "error": "RuntimeError(\"Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'\")",
+      "platforms": {},
+      "ts": "2026-07-26T10:37:50.285447+03:00",
+      "updated_at": "2026-07-26T10:37:50.285447+03:00"
+    },
+    {
+      "topic_id": "benedict-arnold-traitor",
+      "title": "America's Greatest Hero Turned Its Greatest Traitor",
+      "status": "rendering",
+      "platforms": {},
+      "ts": "2026-07-26T10:35:07.183415+03:00",
+      "updated_at": "2026-07-26T10:35:07.183415+03:00"
+    },
+    {
+      "topic_id": "benedict-arnold-traitor",
+      "title": "America's Greatest Hero Turned Its Greatest Traitor",
+      "status": "queued",
+      "platforms": {},
+      "ts": "2026-07-26T10:35:07.174562+03:00",
+      "updated_at": "2026-07-26T10:35:07.174562+03:00"
+    },
     {
       "topic_id": "washington-refused-crown",
       "title": "The Man Who Was Offered a Crown and Said No",
@@ -141,5 +157,5 @@
     }
   ],
   "actions_url": "https://github.com/ArdaYK31/shorts-oto/actions",
-  "updated_at": "2026-07-26T06:25:07.074324+03:00"
+  "updated_at": "2026-07-26T10:37:50.285447+03:00"
 }

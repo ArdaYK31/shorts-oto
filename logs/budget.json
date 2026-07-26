@@ -1,9 +1,9 @@
 {
   "month": "2026-07",
-  "images_generated": 6,
-  "estimated_spend_usd": 0.036,
+  "images_generated": 17,
+  "estimated_spend_usd": 0.102,
   "cap_usd": 30.0,
   "cost_per_image_usd": 0.006,
   "provider": "fal_flux_schnell",
-  "updated_at": "2026-07-26T02:58:20.211857+00:00"
+  "updated_at": "2026-07-26T07:35:47.383569+00:00"
 }

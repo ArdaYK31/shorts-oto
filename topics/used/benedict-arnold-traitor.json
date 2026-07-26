@@ -1,0 +1,25 @@
+{
+  "id": "benedict-arnold-traitor",
+  "title": "America's Greatest Hero Turned Its Greatest Traitor",
+  "topic": "Benedict Arnold — Revolutionary War hero who betrayed America at West Point",
+  "language": "en",
+  "keywords": [
+    "Benedict Arnold",
+    "American Revolution",
+    "West Point"
+  ],
+  "search_queries": [
+    "Benedict Arnold",
+    "West Point",
+    "Revolutionary War"
+  ],
+  "wikimedia_titles": [
+    "Benedict Arnold 1color.jpg",
+    "West Point, New York.jpg",
+    "SiegeofYorktown.jpg"
+  ],
+  "pd_fallback_urls": [],
+  "scenario_id": "traitor-twist",
+  "provider": "template",
+  "script_file": "benedict-arnold-traitor.txt"
+}

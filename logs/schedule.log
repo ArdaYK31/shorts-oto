@@ -22,3 +22,9 @@
 [2026-07-26 06:25:07 +0300] SKIP instagram: missing credentials
 [2026-07-26 06:25:07 +0300] SKIP tiktok: missing credentials
 [2026-07-26 06:25:07 +0300] DONE unique topic=washington-refused-crown autopilot=true results={"youtube": "Y3It0wFt594", "instagram": null, "tiktok": null} marked_uploaded=true
+[2026-07-26 10:35:07 +0300] CLAIMED unique topic=benedict-arnold-traitor title="America's Greatest Hero Turned Its Greatest Traitor" path=/app/topics/used/benedict-arnold-traitor.json (each cron slot must upload a DIFFERENT Short)
+[2026-07-26 10:35:07 +0300] START topic=benedict-arnold-traitor title="America's Greatest Hero Turned Its Greatest Traitor" autopilot auto_upload=True require_approval=False
+[2026-07-26 10:37:50 +0300] FAIL youtube error=OSError(30, 'Read-only file system')
+[2026-07-26 10:37:50 +0300] SKIP instagram: missing credentials
+[2026-07-26 10:37:50 +0300] SKIP tiktok: missing credentials
+[2026-07-26 10:37:50 +0300] FAIL topic=benedict-arnold-traitor error=RuntimeError("Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'")
