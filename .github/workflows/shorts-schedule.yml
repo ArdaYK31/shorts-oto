@@ -108,6 +108,7 @@ jobs:
             if [ -n "${{ inputs.topic_id }}" ]; then ARGS+=(--topic-id "${{ inputs.topic_id }}"); fi
           fi
           mkdir -p .cache/huggingface .cache/torch logs out topics/used
+          # credentials volume is RW so OAuth token refresh can rewrite youtube_token.json
           docker run --rm \
             -e META_ACCESS_TOKEN \
             -e IG_USER_ID \
@@ -119,7 +120,6 @@ jobs:
             -e IMAGE_API_KEY \
             -e ESPEAK_DATA_PATH=/usr/lib/x86_64-linux-gnu/espeak-ng-data \
             -e HF_HOME=/root/.cache/huggingface \
-            # RW: google-auth refreshes access token and must rewrite youtube_token.json
             -v "$PWD/credentials:/app/credentials" \
             -v "$PWD/topics:/app/topics" \
             -v "$PWD/logs:/app/logs" \
