@@ -11,6 +11,10 @@ credentials/
 !package.json
 !package-lock.json
 !tsconfig.json
+!apps/web/public/status-latest.json
+!logs/latest.json
+!logs/budget.json
+!logs/jobs.jsonl
 
 # Python
 __pycache__/

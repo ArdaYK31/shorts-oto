@@ -1,4 +1,4 @@
-# Atelier (apps/web) — Vercel deploy
+# Atelier status panel — deploy
 
 ## Goal
 Public HTTPS status panel for ChronoShorts autopilot:
@@ -7,7 +7,16 @@ Public HTTPS status panel for ChronoShorts autopilot:
 - Image budget meter ($30/mo fal.ai)
 - Platform connection flags (no secrets shown)
 
-## One-click / CLI deploy
+## Fast path (no Vercel login): GitHub Pages
+Static panel lives in `docs/index.html` and reads
+`https://raw.githubusercontent.com/ArdaYK31/shorts-oto/main/logs/latest.json`.
+
+1. Repo → Settings → Pages → Source: **GitHub Actions**
+2. Push triggers `.github/workflows/pages.yml`
+3. Live URL (after first green run):
+   `https://ardayk31.github.io/shorts-oto/`
+
+## Full Next.js app: Vercel
 
 ### A) Vercel CLI (preferred)
 
