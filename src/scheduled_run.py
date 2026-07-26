@@ -98,6 +98,10 @@ def _skip_slots_path() -> Path:
     return ROOT / "logs" / "skip_slots.json"
 
 
+def _force_next_topic_path() -> Path:
+    return ROOT / "logs" / "force_next_topic.json"
+
+
 def load_skip_slots() -> dict[str, list[str]]:
     """Return {YYYY-MM-DD: ["HH:MM", ...]} from logs/skip_slots.json."""
     path = _skip_slots_path()
@@ -114,6 +118,70 @@ def load_skip_slots() -> dict[str, list[str]]:
         if isinstance(slots, list):
             out[str(day)] = [str(s).strip() for s in slots if str(s).strip()]
     return out
+
+
+def load_force_next_topic(now: datetime | None = None) -> str | None:
+    """Return staged topic_id from logs/force_next_topic.json when the slot matches.
+
+    If upload_at is set (ISO datetime, Europe/Istanbul), only honor on that
+    Istanbul calendar day within ±1 hour of the target hour — so a daytime
+    preview_only run cannot burn the midnight force early.
+    """
+    path = _force_next_topic_path()
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"[schedule] WARN force_next_topic.json unreadable: {exc}")
+        return None
+    if not isinstance(data, dict):
+        return None
+    tid = data.get("topic_id") or data.get("id")
+    if not tid or not str(tid).strip():
+        return None
+    tid = str(tid).strip()
+    upload_at_raw = data.get("upload_at")
+    if not upload_at_raw:
+        return tid
+    now = now or _istanbul_now()
+    try:
+        target = datetime.fromisoformat(str(upload_at_raw).strip())
+    except ValueError as exc:
+        print(f"[schedule] WARN force_next_topic upload_at invalid: {exc}")
+        return tid
+    if target.tzinfo is None:
+        try:
+            target = target.replace(tzinfo=ZoneInfo("Europe/Istanbul"))
+        except Exception:  # noqa: BLE001
+            from datetime import timedelta
+
+            target = target.replace(tzinfo=timezone(timedelta(hours=3)))
+    target_local = target.astimezone(now.tzinfo)
+    if target_local.strftime("%Y-%m-%d") != now.strftime("%Y-%m-%d"):
+        print(
+            f"[schedule] force_next_topic={tid} deferred "
+            f"(upload_at={target_local.isoformat()} now={now.isoformat()})"
+        )
+        return None
+    if _hour_distance(now.hour, target_local.hour) > 1:
+        print(
+            f"[schedule] force_next_topic={tid} deferred "
+            f"(hour {now.hour} vs target {target_local.hour})"
+        )
+        return None
+    return tid
+
+
+def clear_force_next_topic(*, reason: str = "consumed") -> None:
+    path = _force_next_topic_path()
+    if not path.exists():
+        return
+    try:
+        path.unlink()
+        print(f"[schedule] cleared force_next_topic.json ({reason})")
+    except OSError as exc:
+        print(f"[schedule] WARN could not clear force_next_topic.json: {exc}")
 
 
 def _hour_distance(a: int, b: int) -> int:
@@ -370,6 +438,7 @@ def main() -> int:
 
     topic_id = None
     title = None
+    forced_tid = None
     try:
         write_snapshot(cfg)
         skip_slot = should_skip_slot(cfg)
@@ -388,7 +457,15 @@ def main() -> int:
             )
             print(f"[schedule] {msg}")
             return 0
-        topic_id = pick_next_topic_id(cfg, args.topic_id)
+        forced_tid = None if args.topic_id else load_force_next_topic()
+        topic_id = pick_next_topic_id(cfg, args.topic_id or forced_tid)
+        if forced_tid and topic_id == forced_tid:
+            append_log(
+                cfg,
+                f"FORCE topic={topic_id} from logs/force_next_topic.json "
+                f"(staged prototype / midnight slot)",
+            )
+            print(f"[schedule] FORCE topic_id={topic_id} (force_next_topic.json)")
         topic = pick_topic(cfg, topic_id)
         title = topic.get("title") or topic_id
         # Fact gate BEFORE claim — soft-fail without burning a used/ slot
@@ -410,12 +487,22 @@ def main() -> int:
             return 0
         # Claim immediately so the next cron cannot pick the same topic
         # even if this run fails mid-pipeline (used/ is committed by Actions).
-        claimed_path = mark_claimed(cfg, topic)
-        append_log(
-            cfg,
-            f"CLAIMED unique topic={topic_id} title={title!r} path={claimed_path} "
-            f"(each cron slot must upload a DIFFERENT Short)",
-        )
+        # Preview-only (--skip-upload): do NOT claim — leave topic free for the
+        # staged midnight upload (force_next_topic.json / natural queue pick).
+        if args.skip_upload:
+            append_log(
+                cfg,
+                f"PREVIEW no-claim topic={topic_id} title={title!r} "
+                f"(--skip-upload; topic stays eligible for scheduled upload)",
+            )
+            print(f"[schedule] PREVIEW no-claim topic={topic_id}")
+        else:
+            claimed_path = mark_claimed(cfg, topic)
+            append_log(
+                cfg,
+                f"CLAIMED unique topic={topic_id} title={title!r} path={claimed_path} "
+                f"(each cron slot must upload a DIFFERENT Short)",
+            )
         append_log(
             cfg,
             f"START topic={topic_id} title={title!r} "
@@ -521,6 +608,8 @@ def main() -> int:
             youtube_id=results.get("youtube"),
             title=title,
         )
+        if forced_tid and topic_id == forced_tid:
+            clear_force_next_topic(reason=f"uploaded topic={topic_id}")
         links = {
             "youtube": (
                 f"https://youtu.be/{results['youtube']}" if results.get("youtube") else None

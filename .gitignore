@@ -54,6 +54,7 @@ logs/*
 !logs/jobs.jsonl
 !logs/budget.json
 !logs/skip_slots.json
+!logs/force_next_topic.json
 
 # OS / IDE
 Thumbs.db

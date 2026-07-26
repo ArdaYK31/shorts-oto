@@ -234,7 +234,11 @@ jobs:
           # Only add files that exist (uploaded.jsonl appears after first successful upload)
           git add topics/used \
             logs/schedule.log logs/latest.json logs/jobs.jsonl logs/budget.json \
-            logs/skip_slots.json 2>/dev/null || true
+            logs/skip_slots.json logs/force_next_topic.json 2>/dev/null || true
+          # force_next_topic.json may be deleted after midnight upload — stage deletion
+          if [ ! -f logs/force_next_topic.json ]; then
+            git rm -f --ignore-unmatch logs/force_next_topic.json 2>/dev/null || true
+          fi
           if [ -f topics/uploaded.jsonl ]; then git add topics/uploaded.jsonl; fi
           if git diff --staged --quiet; then
             echo "No state changes to commit"
