@@ -26,8 +26,8 @@ script:
   provider: template
   ollama_url: http://127.0.0.1:11434
   ollama_model: llama3.2
-  target_words_min: 80
-  target_words_max: 140
+  target_words_min: 70
+  target_words_max: 110
   prompt_file: prompts/script_system.txt
   language: en
 

@@ -121,6 +121,18 @@ def generate_with_ollama(cfg: dict[str, Any], topic: dict[str, Any], scenario: d
     return content
 
 
+def _clamp_script_words(narration: str, max_words: int) -> str:
+    """Keep spoken length inside Shorts budget (defense before TTS)."""
+    words = narration.split()
+    if len(words) <= max_words:
+        return narration.strip()
+    cut = " ".join(words[:max_words]).rstrip(".,;:")
+    if not cut.endswith("."):
+        cut += "."
+    print(f"[script] Clamped narration {len(words)} → {max_words} words for Shorts duration")
+    return cut
+
+
 def generate_script(topic_id: str | None = None) -> Path:
     cfg = load_config()
     # Enforce English content language
@@ -138,6 +150,9 @@ def generate_script(topic_id: str | None = None) -> Path:
             narration = topic["fallback_script"]
     else:
         narration = topic["fallback_script"]
+
+    max_words = int((cfg.get("script") or {}).get("target_words_max", 140))
+    narration = _clamp_script_words(str(narration).strip(), max_words)
 
     scripts_dir = cfg["paths_resolved"]["scripts"]
     scripts_dir.mkdir(parents=True, exist_ok=True)

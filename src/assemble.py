@@ -160,7 +160,9 @@ def _expand_scene_durs(durs: list[float], max_sec: float = 5.0, target: float = 
 
         if d <= max_sec:
 
-            out.append(max(d, 0.9))
+            # Avoid max(d, 0.9): that inflated timeline past narration length.
+
+            out.append(max(d, 0.05))
 
             continue
 
@@ -198,7 +200,7 @@ def _load_beats(cap_dir: Path, stem: str, duration: float) -> list[float] | None
 
         return None
 
-    durs = [max(float(b.get("end", 0)) - float(b.get("start", 0)), 0.9) for b in beats]
+    durs = [max(float(b.get("end", 0)) - float(b.get("start", 0)), 0.05) for b in beats]
 
     total = sum(durs)
 
@@ -206,7 +208,7 @@ def _load_beats(cap_dir: Path, stem: str, duration: float) -> list[float] | None
 
         return None
 
-    durs = [max(d * (duration / total), 0.9) for d in durs]
+    durs = [d * (duration / total) for d in durs]
 
     # Prefer more cuts: split any still longer than 5s across multiple images
 
@@ -360,9 +362,67 @@ def assemble(
 
     max_dur = float(cfg["project"]["max_duration_sec"])
 
-    if duration > max_dur:
+    gates = cfg.get("quality_gates") or {}
 
-        print(f"[assemble] Warning: audio {duration:.1f}s > {max_dur}s (Shorts soft limit)")
+    gate_max = float(gates.get("max_duration_sec", 60))
+
+    # Hard cap narration before scenes so quality_gates cannot fail schedule uploads.
+
+    hard_max = min(max_dur, gate_max - 1.0)
+
+    hard_max = max(hard_max, 20.0)
+
+    if duration > hard_max + 0.05:
+
+        trimmed = audio_path.with_suffix(".trim.mp3")
+
+        fade = min(1.2, hard_max * 0.08)
+
+        fade_start = max(hard_max - fade, 0.0)
+
+        cmd_trim = [
+
+            "ffmpeg",
+
+            "-y",
+
+            "-i",
+
+            str(audio_path),
+
+            "-t",
+
+            f"{hard_max:.3f}",
+
+            "-af",
+
+            f"afade=t=out:st={fade_start:.3f}:d={fade:.3f}",
+
+            "-codec:a",
+
+            "libmp3lame",
+
+            "-q:a",
+
+            "2",
+
+            str(trimmed),
+
+        ]
+
+        subprocess.run(cmd_trim, check=True, capture_output=True)
+
+        trimmed.replace(audio_path)
+
+        duration = _ffprobe_duration(audio_path)
+
+        print(
+
+            f"[assemble] Hard-trimmed audio to {duration:.1f}s "
+
+            f"(Shorts cap {hard_max:.0f}s; was over limit)"
+
+        )
 
     manifest = proc_dir / f"{stem}.images.json"
 
@@ -641,6 +701,10 @@ def assemble(
         "48000",
 
         "-shortest",
+
+        "-t",
+
+        f"{hard_max:.3f}",
 
         "-movflags",
 

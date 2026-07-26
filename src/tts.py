@@ -101,6 +101,62 @@ def _post_process_narration(raw_wav: Path, out_mp3: Path) -> None:
     print(f"[tts] Post-FX: ChronoShorts EQ (compress + mild lowshelf + presence 3.2k + de-ess + loudnorm)")
 
 
+def _ffprobe_duration(path: Path) -> float:
+    cmd = [
+        "ffprobe",
+        "-v",
+        "error",
+        "-show_entries",
+        "format=duration",
+        "-of",
+        "default=noprint_wrappers=1:nokey=1",
+        str(path),
+    ]
+    return float(subprocess.check_output(cmd, text=True).strip())
+
+
+def _atempo_chain(speedup: float) -> str:
+    """Build atempo filter chain (each stage must be within 0.5–2.0)."""
+    parts: list[str] = []
+    remaining = max(speedup, 1.0)
+    while remaining > 2.0 + 1e-9:
+        parts.append("atempo=2.0")
+        remaining /= 2.0
+    parts.append(f"atempo={remaining:.6f}")
+    return ",".join(parts)
+
+
+def enforce_max_duration(mp3_path: Path, max_sec: float) -> float:
+    """Speed up narration in-place so duration <= max_sec (Shorts hard cap)."""
+    duration = _ffprobe_duration(mp3_path)
+    if duration <= max_sec + 0.05:
+        return duration
+    speedup = duration / max_sec
+    filt = _atempo_chain(speedup)
+    tmp = mp3_path.with_suffix(".fit.mp3")
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        str(mp3_path),
+        "-af",
+        filt,
+        "-codec:a",
+        "libmp3lame",
+        "-q:a",
+        "2",
+        str(tmp),
+    ]
+    subprocess.run(cmd, check=True, capture_output=True)
+    tmp.replace(mp3_path)
+    fitted = _ffprobe_duration(mp3_path)
+    print(
+        f"[tts] Duration fit: {duration:.1f}s → {fitted:.1f}s "
+        f"(atempo chain for Shorts max {max_sec:.0f}s)"
+    )
+    return fitted
+
+
 def synthesize(script_path: Path | None = None) -> Path:
     cfg = load_config()
     scripts_dir = cfg["paths_resolved"]["scripts"]
@@ -161,6 +217,17 @@ def synthesize(script_path: Path | None = None) -> Path:
         )
 
     _post_process_narration(wav_path, out_path)
+    project = cfg.get("project") or {}
+    gates = cfg.get("quality_gates") or {}
+    max_sec = float(
+        project.get("max_duration_sec")
+        or gates.get("max_duration_sec")
+        or 58
+    )
+    # Leave a small cushion so assemble/xfade + gate (60s) never fail schedule uploads.
+    hard_max = min(max_sec, float(gates.get("max_duration_sec", 60)) - 1.0)
+    hard_max = max(hard_max, 20.0)
+    enforce_max_duration(out_path, hard_max)
     print(f"[tts] Wrote {out_path}")
     return out_path
 

@@ -52,7 +52,7 @@ from config_loader import load_config  # noqa: E402
 from fetch_media import fetch_media  # noqa: E402
 from generate_script import generate_script, load_queue, pick_topic  # noqa: E402
 from job_status import append_job, write_snapshot  # noqa: E402
-from quality_gates import assert_ok  # noqa: E402
+from quality_gates import check_output  # noqa: E402
 from seo_adapt import load_seo, platform_preview  # noqa: E402
 from topic_state import (  # noqa: E402
     blocked_ids,
@@ -134,7 +134,12 @@ def pick_next_topic_id(cfg: dict, topic_id: str | None = None) -> str:
     return queue[0]["id"]
 
 
-def run_pipeline(topic_id: str, cfg: dict) -> tuple[Path, Path]:
+def run_pipeline(
+    topic_id: str,
+    cfg: dict,
+    *,
+    enforce_quality_gates: bool = True,
+) -> tuple[Path, Path]:
     script_path = generate_script(topic_id)
     stem = script_path.stem
     meta_path = script_path.parent / f"{stem}.meta.json"
@@ -146,7 +151,20 @@ def run_pipeline(topic_id: str, cfg: dict) -> tuple[Path, Path]:
     caption_path = make_captions(script_path, audio_path)
     out = assemble(stem=stem, audio_path=audio_path, caption_path=caption_path)
     cleanup_temp_mp4s(stem=stem, keep=out)
-    assert_ok(out, cfg)
+
+    gate = check_output(out, cfg)
+    if not gate["ok"]:
+        msg = "[quality_gates] FAILED: " + "; ".join(gate["errors"])
+        # Preview-only (--skip-upload): keep artifact success as exit 0.
+        # Cron uploads still hard-fail so a >60s Short never goes public.
+        if enforce_quality_gates:
+            raise SystemExit(msg)
+        print(f"[quality_gates] WARN (skip-upload preview, artifact kept): {msg}")
+        append_log(cfg, f"WARN quality_gates skip-upload topic={topic_id} {msg}")
+    else:
+        print(
+            f"[quality_gates] OK duration={gate['duration_sec']:.1f}s path={out.name}"
+        )
 
     seo_dir = cfg["paths_resolved"].get("seo") or (ROOT / "seo")
     seo_path = seo_dir / f"{stem}.seo.json"
@@ -337,7 +355,11 @@ def main() -> int:
                 "platforms": {},
             }
         )
-        video_path, seo_path = run_pipeline(topic_id, cfg)
+        video_path, seo_path = run_pipeline(
+            topic_id,
+            cfg,
+            enforce_quality_gates=not args.skip_upload,
+        )
         # Never honor SEO approval.status=pending — cloud path always uploads
         try:
             seo_data = json.loads(seo_path.read_text(encoding="utf-8"))
