@@ -17,7 +17,7 @@
     "youtube": true,
     "instagram": false,
     "tiktok": false,
-    "fal": true
+    "fal": false
   },
   "budget": {
     "month": "2026-07",
@@ -30,13 +30,56 @@
   "latest_job": {
     "topic_id": "washington-refused-crown",
     "title": "The Man Who Was Offered a Crown and Said No",
-    "status": "failed",
-    "error": "[quality_gates] FAILED: Duration 92.1s > max 60.0s",
-    "platforms": {},
-    "ts": "2026-07-26T06:02:49.953180+03:00",
-    "updated_at": "2026-07-26T06:02:49.953180+03:00"
+    "status": "uploaded",
+    "video": "washington-refused-crown.mp4",
+    "platforms": {
+      "youtube": "Y3It0wFt594",
+      "instagram": null,
+      "tiktok": null
+    },
+    "links": {
+      "youtube": "https://youtu.be/Y3It0wFt594",
+      "instagram": null,
+      "tiktok": null
+    },
+    "ts": "2026-07-26T06:25:07.074324+03:00",
+    "updated_at": "2026-07-26T06:25:07.074324+03:00"
   },
   "recent_jobs": [
+    {
+      "topic_id": "washington-refused-crown",
+      "title": "The Man Who Was Offered a Crown and Said No",
+      "status": "uploaded",
+      "video": "washington-refused-crown.mp4",
+      "platforms": {
+        "youtube": "Y3It0wFt594",
+        "instagram": null,
+        "tiktok": null
+      },
+      "links": {
+        "youtube": "https://youtu.be/Y3It0wFt594",
+        "instagram": null,
+        "tiktok": null
+      },
+      "ts": "2026-07-26T06:25:07.074324+03:00",
+      "updated_at": "2026-07-26T06:25:07.074324+03:00"
+    },
+    {
+      "topic_id": "washington-refused-crown",
+      "title": "The Man Who Was Offered a Crown and Said No",
+      "status": "rendering",
+      "platforms": {},
+      "ts": "2026-07-26T06:15:31.674728+03:00",
+      "updated_at": "2026-07-26T06:15:31.674728+03:00"
+    },
+    {
+      "topic_id": "washington-refused-crown",
+      "title": "The Man Who Was Offered a Crown and Said No",
+      "status": "queued",
+      "platforms": {},
+      "ts": "2026-07-26T06:15:31.644728+03:00",
+      "updated_at": "2026-07-26T06:15:31.644728+03:00"
+    },
     {
       "topic_id": "washington-refused-crown",
       "title": "The Man Who Was Offered a Crown and Said No",
@@ -98,5 +141,5 @@
     }
   ],
   "actions_url": "https://github.com/ArdaYK31/shorts-oto/actions",
-  "updated_at": "2026-07-26T06:02:49.953180+03:00"
+  "updated_at": "2026-07-26T06:25:07.074324+03:00"
 }

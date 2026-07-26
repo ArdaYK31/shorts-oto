@@ -16,3 +16,9 @@
 [2026-07-26 05:57:02 +0300] CLAIMED unique topic=washington-refused-crown title='The Man Who Was Offered a Crown and Said No' path=/app/topics/used/washington-refused-crown.json (each cron slot must upload a DIFFERENT Short)
 [2026-07-26 05:57:02 +0300] START topic=washington-refused-crown title='The Man Who Was Offered a Crown and Said No' autopilot auto_upload=True require_approval=False
 [2026-07-26 06:02:49 +0300] FAIL topic=washington-refused-crown error=[quality_gates] FAILED: Duration 92.1s > max 60.0s
+[2026-07-26 06:15:31 +0300] CLAIMED unique topic=washington-refused-crown title='The Man Who Was Offered a Crown and Said No' path=C:\Users\Ömür KIRBIYIK\Desktop\yt otomatizasyon\topics\used\washington-refused-crown.json (each cron slot must upload a DIFFERENT Short)
+[2026-07-26 06:15:31 +0300] START topic=washington-refused-crown title='The Man Who Was Offered a Crown and Said No' autopilot auto_upload=True require_approval=False
+[2026-07-26 06:25:07 +0300] OK youtube id=Y3It0wFt594 url=https://youtu.be/Y3It0wFt594
+[2026-07-26 06:25:07 +0300] SKIP instagram: missing credentials
+[2026-07-26 06:25:07 +0300] SKIP tiktok: missing credentials
+[2026-07-26 06:25:07 +0300] DONE unique topic=washington-refused-crown autopilot=true results={"youtube": "Y3It0wFt594", "instagram": null, "tiktok": null} marked_uploaded=true

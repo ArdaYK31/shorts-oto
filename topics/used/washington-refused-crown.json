@@ -20,5 +20,7 @@
   "pd_fallback_urls": [],
   "scenario_id": "refused-power",
   "provider": "template",
-  "script_file": "washington-refused-crown.txt"
+  "script_file": "washington-refused-crown.txt",
+  "status": "uploaded",
+  "youtube_id": "Y3It0wFt594"
 }
