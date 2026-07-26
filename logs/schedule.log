@@ -9,3 +9,7 @@
 [2026-07-26 05:03:09 +0300] START topic=benedict-arnold-traitor title="America's Greatest Hero Turned Its Greatest Traitor" autopilot auto_upload=True require_approval=False
 [2026-07-26 05:03:09 +0300] DRY-RUN topic=benedict-arnold-traitor platforms={"youtube": true, "instagram": true, "tiktok": true} yt_creds=True ig_creds=False tt_creds=False privacy=public require_approval=false
 [2026-07-26 05:13:43 +0300] START topic=stanislav-petrov title='The Man Who Saved the World by Ignoring the Alarm' autopilot auto_upload=True require_approval=False
+[2026-07-26 05:17:44 +0300] OK youtube id=_LRfwnuL6Fk url=https://youtu.be/_LRfwnuL6Fk
+[2026-07-26 05:17:44 +0300] SKIP instagram: missing credentials
+[2026-07-26 05:17:44 +0300] SKIP tiktok: missing credentials
+[2026-07-26 05:17:44 +0300] DONE topic=stanislav-petrov autopilot=true results={"youtube": "_LRfwnuL6Fk", "instagram": null, "tiktok": null}

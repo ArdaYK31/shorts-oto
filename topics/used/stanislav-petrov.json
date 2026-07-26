@@ -1,0 +1,25 @@
+{
+  "id": "stanislav-petrov",
+  "title": "The Man Who Saved the World by Ignoring the Alarm",
+  "topic": "Stanislav Petrov 1983 nuclear false alarm — Cold War near-miss",
+  "language": "en",
+  "keywords": [
+    "Stanislav Petrov",
+    "Cold War",
+    "nuclear war"
+  ],
+  "search_queries": [
+    "Stanislav Petrov",
+    "1983 nuclear false alarm",
+    "Cold War"
+  ],
+  "wikimedia_titles": [
+    "Stanislav Petrov.jpg",
+    "Cold War map.jpg",
+    "ICBM test.jpg"
+  ],
+  "pd_fallback_urls": [],
+  "scenario_id": "cold-war-fact",
+  "provider": "template",
+  "script_file": "stanislav-petrov.txt"
+}

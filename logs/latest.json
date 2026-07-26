@@ -30,12 +30,40 @@
   "latest_job": {
     "topic_id": "stanislav-petrov",
     "title": "The Man Who Saved the World by Ignoring the Alarm",
-    "status": "rendering",
-    "platforms": {},
-    "ts": "2026-07-26T05:13:43.569411+03:00",
-    "updated_at": "2026-07-26T05:13:43.569411+03:00"
+    "status": "uploaded",
+    "video": "stanislav-petrov.mp4",
+    "platforms": {
+      "youtube": "_LRfwnuL6Fk",
+      "instagram": null,
+      "tiktok": null
+    },
+    "links": {
+      "youtube": "https://youtu.be/_LRfwnuL6Fk",
+      "instagram": null,
+      "tiktok": null
+    },
+    "ts": "2026-07-26T05:17:44.745356+03:00",
+    "updated_at": "2026-07-26T05:17:44.745356+03:00"
   },
   "recent_jobs": [
+    {
+      "topic_id": "stanislav-petrov",
+      "title": "The Man Who Saved the World by Ignoring the Alarm",
+      "status": "uploaded",
+      "video": "stanislav-petrov.mp4",
+      "platforms": {
+        "youtube": "_LRfwnuL6Fk",
+        "instagram": null,
+        "tiktok": null
+      },
+      "links": {
+        "youtube": "https://youtu.be/_LRfwnuL6Fk",
+        "instagram": null,
+        "tiktok": null
+      },
+      "ts": "2026-07-26T05:17:44.745356+03:00",
+      "updated_at": "2026-07-26T05:17:44.745356+03:00"
+    },
     {
       "topic_id": "stanislav-petrov",
       "title": "The Man Who Saved the World by Ignoring the Alarm",
@@ -54,5 +82,5 @@
     }
   ],
   "actions_url": "https://github.com/ArdaYK31/shorts-oto/actions",
-  "updated_at": "2026-07-26T05:13:43.569411+03:00"
+  "updated_at": "2026-07-26T05:17:44.745356+03:00"
 }

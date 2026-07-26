@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atelier · ChronoShorts Status</title>
+  <style>
+    :root {
+      --bg: #f0e8dc; --paper: #f7f1e8; --ink: #1c1612; --muted: #6b5e52;
+      --line: #d9cbb8; --copper: #b86b3c; --sage: #4f6f5a; --wash: #e5d6c4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink);
+      font-family: "Segoe UI", Georgia, serif;
+      background:
+        radial-gradient(ellipse 100% 80% at 0% 0%, #efe2d0 0%, transparent 55%),
+        var(--bg);
+      min-height: 100vh; padding: 2rem 1.25rem 3rem;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 2.2rem; margin: 0.25rem 0 0.5rem; letter-spacing: -0.02em; }
+    .muted { color: var(--muted); font-size: 0.95rem; }
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 1.5rem; }
+    .chip {
+      border: 1px solid var(--line); background: var(--paper);
+      padding: 0.25rem 0.6rem; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
+    }
+    .chip.ok { color: var(--sage); border-color: rgba(79,111,90,.35); }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card {
+      background: var(--paper); border: 1px solid var(--line);
+      box-shadow: 0 12px 40px rgba(28,22,18,.06); padding: 1.1rem 1.2rem;
+    }
+    h2 { margin: 0 0 0.35rem; font-size: 1.25rem; }
+    .bar { height: 12px; border: 1px solid var(--line); background: var(--wash); margin-top: 0.75rem; }
+    .bar > i { display: block; height: 100%; background: var(--sage); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; }
+    a { color: var(--copper); }
+    .wide { grid-column: 1 / -1; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="muted" style="text-transform:uppercase;letter-spacing:.16em;font-weight:700;font-size:.8rem;color:var(--copper)">Atelier control panel</p>
+    <h1>Autopilot status</h1>
+    <p class="muted">Schedule 00:00 / 08:00 / 16:00 Europe/Istanbul · public YouTube · no approval · fal.ai $30/mo budget</p>
+    <div class="row" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <p class="muted" style="margin-top:1.5rem" id="meta"></p>
+  </div>
+  <script>
+    const RAW = "https://raw.githubusercontent.com/ArdaYK31/shorts-oto/main/logs/latest.json";
+    const ACTIONS = "https://github.com/ArdaYK31/shorts-oto/actions";
+    const fmt = (iso) => {
+      if (!iso) return "—";
+      try { return new Date(iso).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" }); }
+      catch { return iso; }
+    };
+    async function load() {
+      let data;
+      try {
+        const r = await fetch(RAW + "?t=" + Date.now(), { cache: "no-store" });
+        data = await r.json();
+      } catch (e) {
+        document.getElementById("grid").innerHTML = `<div class="card wide"><p>Status yüklenemedi. <a href="${ACTIONS}">Actions</a> · ${e}</p></div>`;
+        return;
+      }
+      const spent = Number(data.budget?.spent_usd || 0);
+      const cap = Number(data.budget?.cap_usd || 30);
+      const pct = Math.min(100, Math.round((spent / Math.max(cap, 0.01)) * 100));
+      const p = data.platforms_connected || {};
+      document.getElementById("chips").innerHTML = [
+        ["Autopilot ON", true],
+        [data.privacy || "public", true],
+        ["no approval", !data.require_approval],
+      ].map(([t, ok]) => `<span class="chip ${ok ? "ok" : ""}">${t}</span>`).join("");
+      const jobs = (data.recent_jobs || []).slice(0, 15);
+      document.getElementById("grid").innerHTML = `
+        <section class="card">
+          <h2>Schedule</h2>
+          <p class="muted">${data.timezone || "Europe/Istanbul"} · ${(data.schedule_times || []).join(" · ")}</p>
+          <ul>${(data.next_runs || []).map(r => `<li><strong>${fmt(r)}</strong></li>`).join("") || "<li class='muted'>—</li>"}</ul>
+          <p><a href="${ACTIONS}" target="_blank" rel="noreferrer">GitHub Actions</a></p>
+        </section>
+        <section class="card">
+          <h2>Image budget</h2>
+          <p class="muted">${data.budget?.provider || "fal"} · ${data.budget?.month || ""} · ~$${Number(data.budget?.cost_per_image_usd || 0.006).toFixed(3)}/img</p>
+          <p><strong>$${spent.toFixed(2)} / $${cap.toFixed(0)}</strong> · ${data.budget?.images_generated || 0} images · ${pct}%</p>
+          <div class="bar"><i style="width:${pct}%"></i></div>
+        </section>
+        <section class="card wide">
+          <h2>Platforms</h2>
+          <p class="muted">Presence only — secrets never shown</p>
+          <div class="row">
+            ${[["youtube","YouTube"],["instagram","Instagram"],["tiktok","TikTok"],["fal","FAL_KEY"]].map(([k,l]) =>
+              `<span class="chip ${p[k] ? "ok" : ""}">${l}: ${p[k] ? "present" : "missing"}</span>`).join("")}
+          </div>
+        </section>
+        <section class="card wide">
+          <h2>Recent jobs</h2>
+          <table>
+            <thead><tr><th>When</th><th>Topic</th><th>Status</th><th>Links</th></tr></thead>
+            <tbody>
+              ${jobs.length ? jobs.map(j => {
+                const yt = j.links?.youtube || (j.platforms?.youtube ? ("https://youtu.be/" + j.platforms.youtube) : null);
+                return `<tr>
+                  <td>${fmt(j.updated_at || j.ts)}</td>
+                  <td><strong>${j.title || j.topic_id || "—"}</strong><br><span class="muted">${j.topic_id || ""}</span></td>
+                  <td>${j.status || "—"}${j.error ? `<br><span class="muted">${j.error}</span>` : ""}</td>
+                  <td>${yt ? `<a href="${yt}" target="_blank" rel="noreferrer">YT</a>` : "—"}</td>
+                </tr>`;
+              }).join("") : `<tr><td colspan="4" class="muted">No jobs yet — waiting for Actions commit of logs/latest.json</td></tr>`}
+            </tbody>
+          </table>
+        </section>`;
+      document.getElementById("meta").textContent = "Updated " + fmt(data.updated_at) + " · source logs/latest.json";
+    }
+    load();
+    setInterval(load, 30000);
+  </script>
+</body>
+</html>
