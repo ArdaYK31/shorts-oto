@@ -11,7 +11,8 @@ services:
     image: chronoshorts:latest
     working_dir: /app
     volumes:
-      - ./credentials:/app/credentials:ro
+      # RW so OAuth token refresh can rewrite youtube_token.json
+      - ./credentials:/app/credentials
       - ./topics:/app/topics
       - ./logs:/app/logs
       - ./out:/app/out

@@ -119,7 +119,8 @@ jobs:
             -e IMAGE_API_KEY \
             -e ESPEAK_DATA_PATH=/usr/lib/x86_64-linux-gnu/espeak-ng-data \
             -e HF_HOME=/root/.cache/huggingface \
-            -v "$PWD/credentials:/app/credentials:ro" \
+            # RW: google-auth refreshes access token and must rewrite youtube_token.json
+            -v "$PWD/credentials:/app/credentials" \
             -v "$PWD/topics:/app/topics" \
             -v "$PWD/logs:/app/logs" \
             -v "$PWD/out:/app/out" \

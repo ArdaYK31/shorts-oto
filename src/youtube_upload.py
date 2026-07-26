@@ -55,7 +55,13 @@ def get_credentials(cfg: dict | None = None):
     creds = Credentials.from_authorized_user_file(str(token_path), SCOPES)
     if creds.expired and creds.refresh_token:
         creds.refresh(Request())
-        token_path.write_text(creds.to_json(), encoding="utf-8")
+        # CI mounts credentials :ro — persist is best-effort; in-memory creds still upload.
+        try:
+            token_path.write_text(creds.to_json(), encoding="utf-8")
+        except OSError as exc:
+            print(
+                f"[youtube] token refreshed in memory; could not write {token_path} ({exc})"
+            )
     if not creds.valid:
         print("Token invalid. Re-run youtube_auth.py")
         raise SystemExit(1)
