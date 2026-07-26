@@ -140,6 +140,15 @@ jobs:
             logs/schedule.log
           if-no-files-found: warn
 
+      - name: Upload preview mp4 artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chronoshorts-preview-mp4
+          path: out/*.mp4
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Persist used/uploaded topics + status logs
         # Always run: even partial success must keep mark_claimed so next cron
         # does not re-pick the same topic (fixes 3× same Short / day).
