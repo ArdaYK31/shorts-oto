@@ -16,7 +16,7 @@ Görseller (ücretli API — ~$30/ay bütçe):
   Konu havuzu: ABD tarihi + dünya tarihi (Roma, WWII, Soğuk Savaş…) +
     ünlü figürler + "Did you know?" şok fact'ler. Hepsi İngilizce.
   Senaryolar: scenarios/history_hooks.json | Kuyruk: topics/queue.json (~30)
-  Stil: prompts/image_style.txt · TTS: Kokoro am_adam
+  Stil: prompts/image_style.txt · TTS: ElevenLabs (secret varsa) / Kokoro am_adam
 
 Saatler (Türkiye / Europe/Istanbul = GMT+3):
   00:00  →  UTC 21:00 (bir gün önce)
@@ -24,7 +24,7 @@ Saatler (Türkiye / Europe/Istanbul = GMT+3):
   16:00  →  UTC 13:00
 
 Akış (FULL AUTOPILOT — insan onayı YOK):
-  GitHub Actions tetiklenir → Docker içinde video render (Kokoro/Whisper/FFmpeg)
+  GitHub Actions tetiklenir → Docker içinde video render (ElevenLabs veya Kokoro / Whisper / FFmpeg)
   → fal.ai / Pollinations AI stills → SEO → HEMEN yükle (Approve beklenmez)
   → YouTube Shorts (public) + Instagram Reels + TikTok (secret varsa)
   → logs/latest.json + jobs.jsonl + budget.json + schedule.log commit
@@ -75,10 +75,23 @@ B) fal.ai görseller (önerilen — ~$30/ay bütçe)
   FAL_KEY yoksa Pollinations ücretsiz fallback.
   Cap: config.yaml media.ai_api.budget.monthly_cap_usd: 30
 
-C) Instagram (opsiyonel)
+C) ElevenLabs TTS (önerilen — Pay-as-you-go ≈ ~$5/ay hacimde)
+
+  ELEVENLABS_API_KEY
+    → https://elevenlabs.io → Profile → API Key
+    → GitHub → Settings → Secrets and variables → Actions → New repository secret
+    → Name: ELEVENLABS_API_KEY  (değeri sohbete YAPISTIRMA — sadece GitHub Secret)
+  config.yaml: tts.provider=elevenlabs · model_id=eleven_multilingual_v2
+  Key yoksa / API hata verirse otomatik Kokoro am_adam fallback.
+
+  CLI (gh kuruluysa):
+    gh secret set ELEVENLABS_API_KEY --repo ArdaYK31/shorts-oto
+    (komut key'i etkileşimli ister — sohbete yapıştırma)
+
+D) Instagram (opsiyonel)
   META_ACCESS_TOKEN, IG_USER_ID, META_GRAPH_VERSION
 
-D) TikTok (opsiyonel)
+E) TikTok (opsiyonel)
   TIKTOK_ACCESS_TOKEN, TIKTOK_MODE
 
 
@@ -97,4 +110,5 @@ D) TikTok (opsiyonel)
 
 5) Güvenlik
 -----------
-  credentials/ ASLA commit etme. Secret sızarsa fal/Google/Meta/TikTok'ta iptal et.
+  credentials/ ASLA commit etme. Secret sızarsa fal/ElevenLabs/Google/Meta/TikTok'ta iptal et.
+  API key'leri ASLA sohbete / commit'e yapıştırma.

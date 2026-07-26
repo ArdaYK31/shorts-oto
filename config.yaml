@@ -38,8 +38,10 @@ script:
   viral_structure: ["claim", "evidence", "relevance", "twist", "payoff"]
 
 tts:
-  provider: kokoro
-  # LOCKED brand voice — ChronoShorts clear US male documentary narrator
+  # elevenlabs | kokoro | kokoro_onnx — elevenlabs needs GitHub secret ELEVENLABS_API_KEY
+  provider: elevenlabs
+  fallback: kokoro  # if key missing / API error → Kokoro am_adam
+  # LOCKED brand voice — ChronoShorts clear US male documentary narrator (Kokoro path)
   # Do not rotate per episode; A/B only via explicit config change
   voice_locked: true
   voice: am_adam
@@ -50,6 +52,18 @@ tts:
   kokoro_onnx_voices: "C:/kokoro-models/voices-v1.0.bin"
   edge_voice: en-US-ChristopherNeural
   edge_rate: "+5%"
+  elevenlabs:
+    # NEVER put the API key in config or chat — GitHub → Settings → Secrets → Actions
+    # Secret name: ELEVENLABS_API_KEY (alias: ELEVEN_API_KEY). PAYG ~$5/mo at Shorts volume.
+    # Model: Multilingual v2 — storytelling / narration quality, cost-efficient on PAYG
+    model_id: eleven_multilingual_v2
+    # ElevenLabs → Voices → copy Voice ID (Adam US male premade default below; replace as needed)
+    voice_id: "pNInz6obpgDQGcFmaJgB"
+    stability: 0.45
+    similarity_boost: 0.75
+    style: 0.15
+    use_speaker_boost: true
+    speed: 1.05
 
 media:
   # ChronoShorts match: AI painterly stills (see STYLE_GUIDE_CHRONOSHORTS.md)

@@ -160,6 +160,7 @@ jobs:
           TIKTOK_MODE: ${{ secrets.TIKTOK_MODE }}
           FAL_KEY: ${{ secrets.FAL_KEY }}
           IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           GITHUB_RUN_ID: ${{ github.run_id }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SERVER_URL: ${{ github.server_url }}
@@ -185,6 +186,7 @@ jobs:
             -e TIKTOK_MODE \
             -e FAL_KEY \
             -e IMAGE_API_KEY \
+            -e ELEVENLABS_API_KEY \
             -e GITHUB_RUN_ID \
             -e GITHUB_REPOSITORY \
             -e GITHUB_SERVER_URL \
