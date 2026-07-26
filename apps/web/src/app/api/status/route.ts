@@ -13,10 +13,10 @@ const DEFAULT_RAW =
 type StatusPayload = Record<string, unknown>;
 
 function readLocalLatest(): StatusPayload | null {
+  // Disk-only live logs — not the bundled public snapshot (that can go stale on Vercel).
   const candidates = [
     path.join(pipelineRoot(), "logs", "latest.json"),
     path.join(process.cwd(), "..", "..", "logs", "latest.json"),
-    path.join(process.cwd(), "public", "status-latest.json"),
   ];
   for (const p of candidates) {
     try {
@@ -73,14 +73,44 @@ function emptyStatus(): StatusPayload {
   };
 }
 
+function readBundledFallback(): StatusPayload | null {
+  // Stale snapshot shipped with the app — only after live sources fail.
+  try {
+    const p = path.join(process.cwd(), "public", "status-latest.json");
+    if (fs.existsSync(p)) {
+      return JSON.parse(fs.readFileSync(p, "utf8")) as StatusPayload;
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
 export async function GET() {
-  const local = readLocalLatest();
-  if (local) {
-    return NextResponse.json({ ...local, source: "local" });
+  // Local/dev: prefer live pipeline logs on disk.
+  // Vercel: prefer GitHub-committed logs/latest.json (Actions updates it).
+  // Never let a bundled public snapshot block the live remote feed.
+  const onVercel = Boolean(process.env.VERCEL);
+  if (!onVercel) {
+    const local = readLocalLatest();
+    if (local) {
+      return NextResponse.json({ ...local, source: "local" });
+    }
   }
   const remote = await fetchRemoteLatest();
   if (remote) {
     return NextResponse.json({ ...remote, source: "github_raw" });
+  }
+  if (onVercel) {
+    const bundled = readBundledFallback();
+    if (bundled) {
+      return NextResponse.json({ ...bundled, source: "bundled" });
+    }
+  } else {
+    const local = readLocalLatest();
+    if (local) {
+      return NextResponse.json({ ...local, source: "local" });
+    }
   }
   return NextResponse.json(emptyStatus());
 }
