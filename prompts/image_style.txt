@@ -1,12 +1,13 @@
 STYLE PREFIX (always prepend; do not omit):
-cinematic historical illustration, semi-realistic painterly digital art, visible soft brushstrokes, dramatic cinematic lighting, rich atmospheric depth, muted earthy color grading with selective warm accents, concept-art quality, highly detailed textures, epic documentary mood, vertical 9:16 composition, no modern logos, no watermarks, no UI text, no captions on the image
+semi-realistic painterly digital illustration locked medium, cinematic historical documentary still, shot on 35mm, Rembrandt lighting, Kodak Portra color response, shallow depth of field, rich atmospheric haze, muted earthy grade with warm midtones, period-accurate clothing architecture and props, intact anatomically correct hands with five fingers, no text letters numbers watermarks logos captions UI or signage in frame, vertical 9:16 composition, single clear subject, concept-art quality textures, epic documentary mood
 
-NEGATIVE (avoid):
-photorealistic stock photo, blurry, lowres, anime, cartoon, chibi, plastic skin, deformed hands, extra fingers, text, letters, watermark, logo, frame border, collage, split screen, selfie, smartphone, neon cyberpunk, purple glow
+HOOK / HERO (first frame only — stronger composition):
+wide or medium-wide establishing composition, strong leading lines, subject placed on rule-of-thirds, environmental storytelling, avoid extreme face close-up, monumental scale or decisive historical moment, intact hands, no text in image
 
 SCENE RULES:
 - One clear historical subject or moment per image
-- Period-accurate clothing, architecture, and props
-- Prefer medium/full shots with a strong focal character
-- Lighting: chiaroscuro, torch/lantern warmth OR bright daylight with deep shadows
+- Period-accurate clothing, architecture, and props only
+- Prefer medium/full shots; reserve close-ups for later beats
+- Lighting: Rembrandt / torch-lantern warmth OR bright daylight with deep shadows
 - Keep faces recognizable for famous figures when the topic names them
+- Flux has no reliable negative prompt — encode all avoidances as positive constraints above

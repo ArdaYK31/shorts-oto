@@ -17,12 +17,13 @@ from budget import can_afford, record_images, remaining_usd
 from config_loader import load_config
 
 _STYLE_CACHE: str | None = None
+_HOOK_CACHE: str | None = None
 
 SCENE_BEATS: list[str] = [
-    "dramatic hero portrait, medium shot, intense expression",
+    "wide establishing hero tableau, strong composition, environmental storytelling",
     "wide establishing shot, epic environment, atmospheric depth",
     "character in action, storytelling moment, dynamic pose",
-    "intimate interior scene, lantern or window light, chiaroscuro",
+    "intimate interior scene, lantern or window light, Rembrandt lighting",
     "crowd or army context in background, main figure in focus",
     "symbolic object and figure, cinematic still, rich textures",
     "low-angle heroic framing, monumental architecture",
@@ -44,45 +45,83 @@ def _load_style_prefix(cfg: dict[str, Any]) -> str:
     lines: list[str] = []
     capture = False
     for line in raw.splitlines():
-        if line.strip().upper().startswith("STYLE PREFIX"):
+        upper = line.strip().upper()
+        if upper.startswith("STYLE PREFIX"):
             capture = True
             continue
-        if capture and line.strip().upper().startswith("NEGATIVE"):
+        if capture and (
+            upper.startswith("NEGATIVE")
+            or upper.startswith("HOOK")
+            or upper.startswith("SCENE")
+        ):
             break
         if capture and line.strip():
             lines.append(line.strip())
     _STYLE_CACHE = " ".join(lines) if lines else (
-        "cinematic historical illustration, semi-realistic painterly digital art, "
-        "dramatic cinematic lighting, muted earthy color grading"
+        "semi-realistic painterly digital illustration, cinematic historical documentary still, "
+        "35mm Rembrandt Portra, shallow depth of field, no text in image, intact hands"
     )
     return _STYLE_CACHE
 
 
+def _load_hook_prefix(cfg: dict[str, Any]) -> str:
+    """Optional first-frame composition boost from image_style.txt HOOK section."""
+    global _HOOK_CACHE
+    if _HOOK_CACHE is not None:
+        return _HOOK_CACHE
+    root = cfg["_root"]
+    path = root / cfg["media"].get("style_prompt_file", "prompts/image_style.txt")
+    raw = path.read_text(encoding="utf-8") if path.exists() else ""
+    lines: list[str] = []
+    capture = False
+    for line in raw.splitlines():
+        upper = line.strip().upper()
+        if upper.startswith("HOOK"):
+            capture = True
+            continue
+        if capture and (upper.startswith("SCENE") or upper.startswith("NEGATIVE")):
+            break
+        if capture and line.strip():
+            lines.append(line.strip())
+    _HOOK_CACHE = " ".join(lines)
+    return _HOOK_CACHE
+
+
 def _load_negative(cfg: dict[str, Any]) -> str:
+    """Legacy NEGATIVE block (Flux Schnell often ignores it — constraints live in STYLE PREFIX)."""
     root = cfg["_root"]
     path = root / cfg["media"].get("style_prompt_file", "prompts/image_style.txt")
     if not path.exists():
-        return "text, watermark, logo, anime, blurry, lowres"
+        return "text, watermark, logo, anime, blurry, lowres, deformed hands"
     raw = path.read_text(encoding="utf-8")
     lines: list[str] = []
     capture = False
     for line in raw.splitlines():
-        if line.strip().upper().startswith("NEGATIVE"):
+        upper = line.strip().upper()
+        if upper.startswith("NEGATIVE"):
             capture = True
             continue
-        if capture and line.strip().upper().startswith("SCENE"):
+        if capture and (upper.startswith("SCENE") or upper.startswith("HOOK")):
             break
         if capture and line.strip():
             lines.append(line.strip())
-    return ", ".join(lines) if lines else "text, watermark, logo, anime"
+    return ", ".join(lines) if lines else (
+        "text, watermark, logo, anime, blurry, lowres, deformed hands"
+    )
 
 
 def _safe_stem(name: str) -> str:
     return re.sub(r"[^a-zA-Z0-9._-]+", "_", name)[:80]
 
 
+def _topic_seed(stem: str) -> int:
+    """Deterministic per-topic seed (free; no API cost). Scene i uses topic_seed + i."""
+    return int(hashlib.md5(stem.encode()).hexdigest()[:8], 16) % 10_000_000
+
+
 def build_scene_prompts(meta: dict[str, Any], count: int, cfg: dict[str, Any]) -> list[str]:
     style = _load_style_prefix(cfg)
+    hook = _load_hook_prefix(cfg)
     title = (meta.get("title") or meta.get("id") or "historical figure").strip()
     keywords = [str(k) for k in (meta.get("keywords") or [])][:5]
     kw = ", ".join(keywords)
@@ -92,7 +131,10 @@ def build_scene_prompts(meta: dict[str, Any], count: int, cfg: dict[str, Any]) -
     prompts: list[str] = []
     for i in range(count):
         beat = SCENE_BEATS[i % len(SCENE_BEATS)]
-        prompts.append(f"{style}. {topic_bit}. Scene: {beat}.")
+        if i == 0 and hook:
+            prompts.append(f"{style}. {hook}. {topic_bit}. Scene: {beat}.")
+        else:
+            prompts.append(f"{style}. {topic_bit}. Scene: {beat}.")
     return prompts
 
 
@@ -135,8 +177,9 @@ def generate_via_fal(
         "Accept": "application/json",
     }
     out: list[Path] = []
+    base_seed = _topic_seed(stem)
     for i, prompt in enumerate(prompts):
-        seed = int(hashlib.md5(f"{stem}-{i}".encode()).hexdigest()[:8], 16) % 10_000_000
+        seed = (base_seed + i * 997) % 10_000_000
         body: dict[str, Any] = {
             "prompt": prompt[:2000],
             "image_size": {"width": int(width), "height": int(height)},
@@ -197,11 +240,13 @@ def generate_via_pollinations(
     """Zero-cost HTTP image gen (no API key)."""
     dest_dir.mkdir(parents=True, exist_ok=True)
     out: list[Path] = []
+    base_seed = _topic_seed(stem)
     for i, prompt in enumerate(prompts):
+        seed = (base_seed + i * 997) % 10_000_000
         url = (
             f"https://image.pollinations.ai/prompt/{quote(prompt[:900])}"
             f"?width={width}&height={height}&nologo=true&enhance=true"
-            f"&seed={int(hashlib.md5(f'{stem}-{i}'.encode()).hexdigest()[:8], 16) % 10_000_000}"
+            f"&seed={seed}"
         )
         dest = dest_dir / f"{stem}_ai_{i:02d}.jpg"
         print(f"[ai] Pollinations {i+1}/{len(prompts)}")
@@ -254,8 +299,9 @@ def generate_via_diffusers(
 
     out: list[Path] = []
     gen = torch.Generator(device=device)
+    base_seed = _topic_seed(stem)
     for i, prompt in enumerate(prompts):
-        seed = int(hashlib.md5(f"{stem}-{i}".encode()).hexdigest()[:8], 16) % (2**31 - 1)
+        seed = (base_seed + i * 997) % (2**31 - 1)
         gen.manual_seed(seed)
         print(f"[ai] Local render {i+1}/{len(prompts)}")
         kwargs: dict[str, Any] = {

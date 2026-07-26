@@ -1,0 +1,5 @@
+# Fonts (OFL)
+
+Montserrat-Bold.ttf — Copyright 2011 The Montserrat Project Authors
+License: SIL Open Font License 1.1
+Source: https://github.com/JulietaUla/Montserrat

@@ -30,9 +30,10 @@ STRUCTURE (MANDATORY — Claim → Evidence → Relevance → Twist → Payoff):
   3) RELEVANCE / FACT: Why this sticks for a US Shorts audience (irony, school-myth flip, stakes).
   4) TWIST: The paradox or knife-turn.
   5) PAYOFF: Close with ONE of:
-     - Loop-bait ("And that's not even the wildest part.")
+     - Loop-bait soft ending ("And that's not even the wildest part." / "But wait — there's more.")
      - Soft comment CTA ("Comment the year you thought this happened.")
      - Soft follow ("Follow for more history that hits different.")
+     Prefer a closer that invites a rewatch/loop over a hard stop.
      Use "Follow for more American history." only if the topic is clearly US-centric.
 
 RULES:

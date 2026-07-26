@@ -64,9 +64,15 @@ def _grade_filter(cfg: dict, label_in: str, label_out: str) -> str:
 
     ]
 
-    if ass.get("vignette", True):
+    # Slight warm midtones (no paid LUT) — reds up, blues down a touch
+    warm = ass.get("warm_midtones", True)
+    if warm:
+        parts.append("colorbalance=rs=0.04:gs=0.01:bs=-0.03:rm=0.03:bm=-0.02")
 
-        parts.append("vignette=PI/5")
+    if ass.get("vignette", True):
+        # Softer than PI/5 — less crushed edges on 9:16
+        vig = str(ass.get("vignette_angle", "PI/6"))
+        parts.append(f"vignette={vig}")
 
     if ass.get("grain", False):
 
@@ -75,6 +81,12 @@ def _grade_filter(cfg: dict, label_in: str, label_out: str) -> str:
         parts.append(f"noise=alls={strength}:allf=t")
 
     return ",".join(parts) + f"[{label_out}]"
+
+def _ease_progress(n: int) -> str:
+    """Cubic ease-in-out progress 0→1 over frames (FFmpeg zoompan expr)."""
+    # p = on/n; ease = 3p^2 - 2p^3
+    return f"(3*pow(on/{n},2)-2*pow(on/{n},3))"
+
 
 def _ken_burns_filter(
 
@@ -94,15 +106,17 @@ def _ken_burns_filter(
 
 ) -> str:
 
-    """Smooth Ken Burns only. NO shake/tremble/wiggle."""
+    """Smooth Ken Burns only. NO shake/tremble/wiggle. Ease-in-out zoom/pan."""
 
     n = max(frames - 1, 1)
 
     z_delta = max(zoom_end - 1.0, 0.04)
 
+    ease = _ease_progress(n)
+
     if mode == "zoom_in":
 
-        z_expr = f"1+{z_delta:.6f}*(on/{n})"
+        z_expr = f"1+{z_delta:.6f}*{ease}"
 
         x_expr = "iw/2-(iw/zoom/2)"
 
@@ -110,7 +124,7 @@ def _ken_burns_filter(
 
     elif mode == "zoom_out":
 
-        z_expr = f"{zoom_end:.6f}-{z_delta:.6f}*(on/{n})"
+        z_expr = f"{zoom_end:.6f}-{z_delta:.6f}*{ease}"
 
         x_expr = "iw/2-(iw/zoom/2)"
 
@@ -120,15 +134,40 @@ def _ken_burns_filter(
 
         z_expr = f"1+{z_delta * 0.55:.6f}"
 
-        x_expr = f"(iw-iw/zoom)*((on/{n}))"
+        x_expr = f"(iw-iw/zoom)*({ease})"
 
         y_expr = "ih/2-(ih/zoom/2)"
+
+    elif mode == "pan_left":
+
+        z_expr = f"1+{z_delta * 0.55:.6f}"
+
+        x_expr = f"(iw-iw/zoom)*(1-({ease}))"
+
+        y_expr = "ih/2-(ih/zoom/2)"
+
+    elif mode == "pan_up":
+
+        # Prefer vertical pans for 9:16 — reveal more of the frame
+        z_expr = f"1+{z_delta * 0.55:.6f}"
+
+        x_expr = "iw/2-(iw/zoom/2)"
+
+        y_expr = f"(ih-ih/zoom)*(1-({ease}))"
+
+    elif mode == "pan_down":
+
+        z_expr = f"1+{z_delta * 0.55:.6f}"
+
+        x_expr = "iw/2-(iw/zoom/2)"
+
+        y_expr = f"(ih-ih/zoom)*({ease})"
 
     else:
 
         z_expr = f"1+{z_delta * 0.55:.6f}"
 
-        x_expr = f"(iw-iw/zoom)*(1-(on/{n}))"
+        x_expr = f"(iw-iw/zoom)*(1-({ease}))"
 
         y_expr = "ih/2-(ih/zoom/2)"
 
@@ -145,6 +184,23 @@ def _ken_burns_filter(
         f"setsar=1,format=yuv420p[v{i}]"
 
     )
+
+
+def _pick_ken_burns_modes(n: int) -> list[str]:
+    """9:16-friendly modes; never repeat the same mode on consecutive scenes."""
+    # Prefer vertical pans for vertical video; keep some zoom variety
+    pool = ["pan_up", "pan_down", "zoom_in", "pan_up", "zoom_out", "pan_down", "pan_left", "pan_right"]
+    out: list[str] = []
+    for i in range(n):
+        choice = pool[i % len(pool)]
+        if out and choice == out[-1]:
+            # Skip to next distinct mode
+            for alt in pool:
+                if alt != out[-1]:
+                    choice = alt
+                    break
+        out.append(choice)
+    return out
 
 def _expand_scene_durs(durs: list[float], max_sec: float = 4.0, target: float = 3.0) -> list[float]:
 
@@ -298,15 +354,32 @@ def _scene_durations(
 
     return imgs, [seg] * len(imgs)
 
-def _stage_ass(caption_path: Path, stem: str) -> Path:
+def _fonts_dir(cfg: dict) -> Path | None:
+    """Bundled free fonts (Montserrat) for libass — works on Actions Linux + Windows."""
+    root = Path(cfg.get("_root") or Path(__file__).resolve().parent.parent)
+    fonts = root / "assets" / "fonts"
+    if fonts.is_dir() and any(fonts.glob("*.ttf")):
+        return fonts
+    return None
 
-    """Copy ASS to ASCII-only path so libass/ffmpeg do not choke on Turkish chars."""
+
+def _stage_ass(caption_path: Path, stem: str, fonts_dir: Path | None = None) -> Path:
+
+    """Copy ASS (+ fonts) to ASCII-only path so libass/ffmpeg do not choke on Turkish chars."""
 
     _ASCII_WORK.mkdir(parents=True, exist_ok=True)
 
     dest = _ASCII_WORK / f"{stem}.ass"
 
     shutil.copy2(caption_path, dest)
+
+    if fonts_dir and fonts_dir.is_dir():
+        staged_fonts = _ASCII_WORK / "fonts"
+        staged_fonts.mkdir(parents=True, exist_ok=True)
+        for ttf in fonts_dir.glob("*.ttf"):
+            target = staged_fonts / ttf.name
+            if not target.exists() or target.stat().st_mtime < ttf.stat().st_mtime:
+                shutil.copy2(ttf, target)
 
     return dest
 
@@ -486,7 +559,7 @@ def assemble(
 
             print(f"[assemble] Crossfade reduced to {crossfade:.2f}s for short beats")
 
-    modes = ["zoom_in", "pan_right", "zoom_out", "pan_left"]
+    modes = _pick_ken_burns_modes(len(images))
 
     inputs: list[str] = []
 
@@ -503,7 +576,7 @@ def assemble(
         # round(): int() truncation made clips short → xfade offset past end → freeze
         frames = max(int(round(seg_input * fps)), 1)
 
-        filter_parts.append(_ken_burns_filter(i, frames, w, h, fps, zoom, modes[i % len(modes)]))
+        filter_parts.append(_ken_burns_filter(i, frames, w, h, fps, zoom, modes[i]))
 
     if crossfade > 0 and len(images) > 1:
 
@@ -617,15 +690,21 @@ def assemble(
 
     if caption_path and caption_path.exists():
 
-        staged_ass = _stage_ass(caption_path, stem)
+        fonts_dir = _fonts_dir(cfg)
+
+        staged_ass = _stage_ass(caption_path, stem, fonts_dir)
 
         ass_esc = str(staged_ass).replace("\\", "/").replace(":", "\\:")
 
-        filter_parts.append(f"[vgraded]ass='{ass_esc}'[vout]")
+        if fonts_dir:
+            fonts_esc = str(_ASCII_WORK / "fonts").replace("\\", "/").replace(":", "\\:")
+            filter_parts.append(f"[vgraded]ass='{ass_esc}':fontsdir='{fonts_esc}'[vout]")
+            print(f"[assemble] Captions + fontsdir={fonts_esc}")
+        else:
+            filter_parts.append(f"[vgraded]ass='{ass_esc}'[vout]")
+            print(f"[assemble] Captions staged at {staged_ass}")
 
         video_map = "[vout]"
-
-        print(f"[assemble] Captions staged at {staged_ass}")
 
     else:
 
