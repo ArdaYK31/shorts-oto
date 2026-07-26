@@ -1,0 +1,65 @@
+// Series Autopilot — agency SQLite schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Org {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  series    Series[]
+  users     User[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  orgId        String
+  org          Org      @relation(fields: [orgId], references: [id])
+  createdAt    DateTime @default(now())
+}
+
+model Series {
+  id          String    @id @default(cuid())
+  orgId       String
+  org         Org       @relation(fields: [orgId], references: [id])
+  slug        String    @unique
+  title       String
+  niche       String    @default("American history")
+  language    String    @default("en")
+  description String    @default("")
+  postsPerWeek Int      @default(5)
+  createdAt   DateTime  @default(now())
+  episodes    Episode[]
+}
+
+model Episode {
+  id            String   @id @default(cuid())
+  seriesId      String
+  series        Series   @relation(fields: [seriesId], references: [id])
+  stem          String
+  title         String
+  topic         String   @default("")
+  // DRAFT | GENERATING | IN_REVIEW | APPROVED | REJECTED | UPLOADED
+  status        String   @default("DRAFT")
+  scriptPath    String?
+  audioPath     String?
+  videoPath     String?
+  seoPath       String?
+  scriptText    String?
+  seoJson       String?
+  rejectionNote String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([seriesId, stem])
+  @@index([status])
+}
+

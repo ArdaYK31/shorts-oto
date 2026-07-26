@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f0e8dc;
+  --paper: #f7f1e8;
+  --ink: #1c1612;
+  --muted: #6b5e52;
+  --line: #d9cbb8;
+  --copper: #b86b3c;
+  --copper-deep: #8f4e2a;
+  --sage: #4f6f5a;
+  --wash: #e5d6c4;
+}
+
+body {
+  color: var(--ink);
+  font-family: var(--font-body), "Source Sans 3", sans-serif;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 100% 80% at 0% 0%, #efe2d0 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 100% 100%, #e8d5c0 0%, transparent 50%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(28, 22, 18, 0.015) 3px,
+      rgba(28, 22, 18, 0.015) 4px
+    ),
+    var(--bg);
+}
+
+.font-display {
+  font-family: var(--font-display), Fraunces, Georgia, serif;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 40px rgba(28, 22, 18, 0.06);
+}
+
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 text-sm font-semibold transition;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+.btn:hover {
+  background: var(--wash);
+}
+.btn-primary {
+  background: var(--copper);
+  border-color: var(--copper);
+  color: #fff8f2;
+}
+.btn-primary:hover {
+  background: var(--copper-deep);
+}
+.btn-sage {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: #f4faf5;
+}
+.btn-sage:hover {
+  filter: brightness(0.95);
+}
+.chip {
+  @apply text-[0.72rem] font-semibold uppercase tracking-wide px-2 py-1;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--muted);
+}
+.chip-good {
+  color: var(--sage);
+  border-color: rgba(79, 111, 90, 0.35);
+}
+

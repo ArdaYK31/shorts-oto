@@ -1,0 +1,165 @@
+CLOUD KURULUM — ChronoShorts FULL AUTOPILOT (PC KAPALI)
+======================================================
+Bilgisayar KAPALI olabilir. Günde 3 Short üretilir ve insan onayı /
+Approve kuyruğu BEKLENMEDEN YouTube + Instagram + TikTok'a (secret varsa)
+PUBLIC olarak yüklenir. schedule.require_approval=false | auto_upload=true.
+
+İçerik stratejisi (önemli):
+  Hedef = Amerikan izleyici dikkati (USA-only değil).
+  Konu havuzu: ABD tarihi + dünya tarihi (Roma, WWII, Soğuk Savaş…) +
+  ünlü figürler + "Did you know?" şok fact'ler. Hepsi İngilizce.
+  Senaryolar: scenarios/history_hooks.json | Kuyruk: topics/queue.json (~30)
+
+Saatler (Türkiye / Europe/Istanbul = GMT+3):
+  00:00  →  UTC 21:00 (bir gün önce)
+  08:00  →  UTC 05:00
+  16:00  →  UTC 13:00
+
+Akış (FULL AUTOPILOT — insan onayı YOK):
+  GitHub Actions tetiklenir → Docker içinde video render (Kokoro/Whisper/FFmpeg)
+  → SEO (İngilizce title/desc/tags) → HEMEN yükle (Approve beklenmez)
+  → YouTube Shorts (public) + Instagram Reels + TikTok (secret varsa)
+  → logs/schedule.log + topics/used güncellenir
+  config: schedule.auto_upload=true, schedule.require_approval=false
+
+  Atelier dashboard'daki Approve kuyruğu SADECE elle/yerel denemeler içindir;
+  bulut schedule onu kullanmaz ve beklemez.
+
+ÖNEMLİ: Bilgisayarın KAPALI olabilir. Render bulutta olur.
+Yerel Windows Task Scheduler ikincildir; asıl sistem GitHub Actions'tır.
+
+
+1) GitHub reposu oluştur ve kodu yükle
+--------------------------------------
+PowerShell (proje kökünden):
+
+  cd "C:\Users\Ömür KIRBIYIK\Desktop\yt otomatizasyon"
+  git init
+  git add .
+  git status
+  # credentials/ ASLA eklenmemeli (.gitignore'da)
+  git commit -m "ChronoShorts cloud schedule"
+  # GitHub'da yeni boş repo oluştur, sonra:
+  git remote add origin https://github.com/KULLANICI/REPO.git
+  git branch -M main
+  git push -u origin main
+
+Repo Settings → Actions → General → "Read and write permissions" (workflow'un
+topics/used commit'lemesi için) aç.
+
+
+2) GitHub Secrets ekle (Settings → Secrets and variables → Actions)
+-------------------------------------------------------------------
+A) YouTube (zorunlu — yoksa YT atlanır)
+
+  YOUTUBE_CLIENT_SECRET_JSON
+    → credentials\client_secret.json dosyasının TÜM içeriğini yapıştır
+      (tek satır veya çok satır JSON kabul edilir)
+
+  YOUTUBE_TOKEN_JSON
+    → credentials\youtube_token.json dosyasının TÜM içeriğini yapıştır
+      (önce yerelde: .\.venv312\Scripts\python.exe src\youtube_auth.py)
+
+  İstersen base64 de kullanabilirsin; bu workflow düz JSON bekler.
+  Base64 ile saklamak istersen secret'a base64 koyup workflow'u decode
+  edecek şekilde değiştirmen gerekir — şu an düz JSON yeterli.
+
+  YouTube gizlilik: PUBLIC (herkese açık). config.yaml → upload.privacy: public
+
+B) Instagram Reels (opsiyonel — yoksa "skipped" yazar, YT yine çalışır)
+
+  META_ACCESS_TOKEN   → uzun ömürlü Page/User access token
+  IG_USER_ID          → Instagram professional account ID
+  META_GRAPH_VERSION  → opsiyonel (varsayılan v21.0)
+
+  Nasıl alınır (özet):
+  1. Instagram hesabını Professional (Business/Creator) yap
+  2. Bir Facebook Sayfası'na bağla
+  3. https://developers.facebook.com → uygulama oluştur
+  4. Instagram Graph API / Content Publishing ürünlerini ekle
+  5. Facebook Login for Business ile izinler:
+       instagram_basic, instagram_content_publish, pages_show_list, ...
+  6. Graph API Explorer veya kendi OAuth akışınla token al
+  7. IG User ID: Sayfa → connected Instagram business account id
+  8. App Review gerekebilir (Content Publishing). Review öncesi test
+     kullanıcılarıyla denenebilir; production için onay şart olabilir.
+  9. Token'ı long-lived yap (60 gün+) ve GitHub Secret'a koy
+
+C) TikTok (opsiyonel — yoksa "skipped")
+
+  TIKTOK_ACCESS_TOKEN → video.publish (Direct Post) veya video.upload
+  TIKTOK_MODE         → opsiyonel: direct (varsayılan) veya inbox
+  TIKTOK_PRIVACY_LEVEL→ workflow'da PUBLIC_TO_EVERYONE (herkese açık)
+
+  Nasıl alınır (özet):
+  1. https://developers.tiktok.com → Login → Create app
+  2. Content Posting API ürününü ekle
+  3. Scopes: video.publish (Direct) ve/veya video.upload (inbox draft)
+  4. Redirect URI ayarla, OAuth ile kullanıcı token'ı al
+  5. Direct Post genelde App Audit ister. Audit yokken inbox/draft
+     çalışabilir; kod Direct fail olursa inbox'a düşmeyi dener.
+  6. Token'ı GitHub Secret'a koy (refresh token akışını ayrıca
+     kendin yenilemen gerekebilir — token bitince secret'ı güncelle)
+
+
+3) Actions'ı aç ve ilk testi yap
+--------------------------------
+  Repo → Actions → "ChronoShorts Schedule" → Enable
+  Run workflow → dry_run = true  (render yok, plan yazar)
+  Sonra skip_upload = true ile bir render dene (yükleme yok)
+  Hazır olunca normal schedule'a bırak (günde 3 public yayın)
+
+
+4) Docker ile VPS alternatifi (istersen)
+----------------------------------------
+  Docker Desktop / Linux VPS:
+
+    docker compose build
+    docker compose run --rm shorts
+
+  Cron (Istanbul saati, VPS TZ=Europe/Istanbul):
+    0 0,8,16 * * * cd /opt/chronoshorts && docker compose run --rm shorts
+
+  credentials/ klasörünü VPS'e kopyala (asla git'e koyma).
+  IG/TT için aynı env var'ları export et.
+
+
+5) Yerel manuel komutlar (PC açıkken test)
+------------------------------------------
+  .\.venv312\Scripts\python.exe src\scheduled_run.py --dry-run
+  .\.venv312\Scripts\python.exe src\scheduled_run.py --skip-upload
+  .\.venv312\Scripts\python.exe src\scheduled_run.py
+
+  Log: logs\schedule.log
+
+
+6) Bugün ne çalışır / ne eksik kalır?
+------------------------------------
+  ÇALIŞIR (kod hazır — FULL AUTOPILOT):
+  - Dockerfile + GitHub Actions cron (PC off, Approve yok)
+  - Tek render → SEO → 3 platforma HEMEN yükleme
+  - require_approval=false; auto_upload=true; privacy=public
+  - YouTube public upload (secret varsa)
+  - IG/TT resmi API istemcileri (secret yoksa skip)
+  - Konu kuyruğu: topics/queue.json
+  - SEO İngilizce; IG caption + TikTok title SEO'dan
+
+  SENİN YAPMAN GEREKEN:
+  - Repo push + Actions izinleri
+  - YouTube secret'ları (client_secret + token)
+  - Instagram Meta Developer app + token + IG_USER_ID
+  - TikTok Developer app + token (+ mümkünse audit)
+  - İlk dry-run / skip-upload testi
+
+
+7) Güvenlik
+-----------
+  - credentials/ gitignore'da — ASLA commit etme
+  - Şifre yok; sadece OAuth token / client secret
+  - Secret sızdırırsan Google/Meta/TikTok'ta token iptal et
+
+
+Sorun olursa:
+  Actions log → "SKIP instagram/tiktok" = secret eksik (normal)
+  "FAIL youtube" = token süresi dolmuş → youtube_auth.py yeniden çalıştır
+  Render OOM = GitHub runner RAM; VPS/daha büyük runner düşün

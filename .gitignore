@@ -1,0 +1,64 @@
+# Secrets — never commit
+credentials/
+.env
+.env.*
+
+# Allow committed JSON data (topics / scenarios / used markers may be committed by Actions)
+*.json
+!topics/**/*.json
+!scenarios/**/*.json
+!**/meta.json
+!package.json
+!package-lock.json
+!tsconfig.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.venv312/
+venv/
+
+# Model / build caches
+.cache/
+*.onnx
+*.bin
+
+# Outputs (keep folders)
+audio/*
+!audio/.gitkeep
+media/raw/*
+!media/raw/.gitkeep
+media/processed/*
+!media/processed/.gitkeep
+captions/*
+!captions/.gitkeep
+out/*
+!out/.gitkeep
+scripts/*.txt
+scripts/*.meta.json
+!scripts/.gitkeep
+seo/*.json
+!seo/.gitkeep
+
+# Logs: allow schedule.log persistence from Actions; ignore other noise
+logs/*
+!logs/.gitkeep
+!logs/schedule.log
+
+# OS / IDE
+Thumbs.db
+Desktop.ini
+.DS_Store
+.cursor/
+apps/web/node_modules/
+apps/web/.next/
+
+# Explicit credential / secret blocks (never commit)
+credentials/*.json
+*youtube_token*
+*client_secret*
+secrets/
+**/secrets/
+node_modules/
+out/*.mp4

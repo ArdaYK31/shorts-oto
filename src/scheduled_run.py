@@ -1,0 +1,350 @@
+"""Cloud/local daily Shorts job: pick topic → pipeline → SEO → multi-platform upload.
+
+Platforms (config.platforms + secrets):
+  YouTube Shorts, Instagram Reels, TikTok
+
+Designed for GitHub Actions / Docker (PC can be OFF). Never opens a browser.
+Exit non-zero if pipeline fails OR if an *enabled+credentialed* platform fails.
+Missing Meta/TikTok secrets → skip those platforms (YouTube still works).
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import traceback
+from datetime import datetime, timezone
+from pathlib import Path
+from zoneinfo import ZoneInfo
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def _ensure_espeak_data_path() -> None:
+    if os.environ.get("ESPEAK_DATA_PATH"):
+        existing = Path(os.environ["ESPEAK_DATA_PATH"])
+        if existing.exists():
+            return
+    candidates = [
+        Path(r"C:\espeak-ng-data"),
+        Path("/usr/lib/x86_64-linux-gnu/espeak-ng-data"),
+        Path("/usr/lib/aarch64-linux-gnu/espeak-ng-data"),
+        Path("/usr/share/espeak-ng-data"),
+        Path("/usr/lib/espeak-ng-data"),
+    ]
+    for c in candidates:
+        if (c / "phontab").exists():
+            os.environ["ESPEAK_DATA_PATH"] = str(c)
+            print(f"[schedule] ESPEAK_DATA_PATH={c}")
+            return
+    print("[schedule] WARNING: espeak-ng data not found; Kokoro may fail")
+
+
+_ensure_espeak_data_path()
+
+from assemble import assemble  # noqa: E402
+from captions import make_captions  # noqa: E402
+from cleanup_temps import cleanup_temp_mp4s  # noqa: E402
+from config_loader import load_config  # noqa: E402
+from fetch_media import fetch_media  # noqa: E402
+from generate_script import generate_script, load_queue, pick_topic  # noqa: E402
+from quality_gates import assert_ok  # noqa: E402
+from seo_adapt import load_seo, platform_preview  # noqa: E402
+from tts import synthesize  # noqa: E402
+from upload_instagram import credentials_present as ig_creds  # noqa: E402
+from upload_instagram import upload_reel  # noqa: E402
+from upload_tiktok import credentials_present as tt_creds  # noqa: E402
+from upload_tiktok import upload_video as upload_tiktok  # noqa: E402
+from youtube_upload import load_seo_metadata, upload_short  # noqa: E402
+
+
+def _istanbul_now() -> datetime:
+    try:
+        return datetime.now(ZoneInfo("Europe/Istanbul"))
+    except Exception:  # noqa: BLE001
+        # Windows without tzdata: fixed GMT+3
+        from datetime import timedelta
+
+        return datetime.now(timezone(timedelta(hours=3)))
+
+
+def _log_path(_cfg: dict) -> Path:
+    logs = ROOT / "logs"
+    logs.mkdir(parents=True, exist_ok=True)
+    return logs / "schedule.log"
+
+
+def append_log(cfg: dict, message: str) -> None:
+    path = _log_path(cfg)
+    ts = _istanbul_now().strftime("%Y-%m-%d %H:%M:%S %z")
+    line = f"[{ts}] {message}\n"
+    with path.open("a", encoding="utf-8") as f:
+        f.write(line)
+    print(line.rstrip())
+
+
+def platform_flags(cfg: dict) -> dict[str, bool]:
+    p = cfg.get("platforms") or {}
+    return {
+        "youtube": bool(p.get("youtube", True)),
+        "instagram": bool(p.get("instagram", True)),
+        "tiktok": bool(p.get("tiktok", True)),
+    }
+
+
+def pick_next_topic_id(cfg: dict, topic_id: str | None = None) -> str:
+    if topic_id:
+        return topic_id
+
+    queue = load_queue(cfg)
+    if not queue:
+        raise SystemExit("topics/queue.json is empty — add American history topics")
+
+    used_dir = cfg["paths_resolved"]["topics"] / "used"
+    used_dir.mkdir(parents=True, exist_ok=True)
+    used_ids = {p.stem for p in used_dir.glob("*.json")}
+
+    for item in queue:
+        if item["id"] not in used_ids:
+            return item["id"]
+
+    print("[schedule] All topics used — cycling queue (clearing topics/used)")
+    for p in used_dir.glob("*.json"):
+        try:
+            p.unlink()
+        except OSError as exc:
+            print(f"[schedule] Could not clear {p}: {exc}")
+    return queue[0]["id"]
+
+
+def run_pipeline(topic_id: str, cfg: dict) -> tuple[Path, Path]:
+    script_path = generate_script(topic_id)
+    stem = script_path.stem
+    meta_path = script_path.parent / f"{stem}.meta.json"
+
+    cleanup_temp_mp4s(stem=stem, keep=cfg["paths_resolved"]["out"] / f"{stem}.mp4")
+
+    audio_path = synthesize(script_path)
+    fetch_media(meta_path)
+    caption_path = make_captions(script_path, audio_path)
+    out = assemble(stem=stem, audio_path=audio_path, caption_path=caption_path)
+    cleanup_temp_mp4s(stem=stem, keep=out)
+    assert_ok(out, cfg)
+
+    seo_dir = cfg["paths_resolved"].get("seo") or (ROOT / "seo")
+    seo_path = seo_dir / f"{stem}.seo.json"
+    if not seo_path.exists():
+        raise SystemExit(f"SEO pack missing after pipeline: {seo_path}")
+    return out, seo_path
+
+
+def resolve_privacy(cfg: dict) -> str:
+    sched = cfg.get("schedule") or {}
+    upload = cfg.get("upload") or {}
+    return sched.get("privacy") or upload.get("privacy") or "public"
+
+
+def yt_credentials_ok(cfg: dict) -> bool:
+    upload = cfg.get("upload") or {}
+    cred_dir = ROOT / (upload.get("credentials_dir") or "credentials")
+    return (cred_dir / "youtube_token.json").exists() and (
+        cred_dir / "client_secret.json"
+    ).exists()
+
+
+def upload_all_platforms(
+    cfg: dict,
+    video_path: Path,
+    seo_path: Path,
+) -> dict[str, str | None]:
+    """Upload to enabled platforms. Skips if disabled or credentials missing."""
+    flags = platform_flags(cfg)
+    seo = load_seo(seo_path)
+    results: dict[str, str | None] = {
+        "youtube": None,
+        "instagram": None,
+        "tiktok": None,
+    }
+    errors: list[str] = []
+
+    if flags["youtube"]:
+        if not yt_credentials_ok(cfg):
+            print("[youtube] skipped: missing credentials/client_secret.json or youtube_token.json")
+            append_log(cfg, "SKIP youtube: missing credentials")
+        else:
+            try:
+                title, description, tags = load_seo_metadata(seo_path)
+                privacy = resolve_privacy(cfg)
+                vid = upload_short(
+                    video_path,
+                    title=title,
+                    description=description,
+                    tags=tags,
+                    privacy=privacy,
+                    cfg=cfg,
+                )
+                results["youtube"] = vid
+                append_log(cfg, f"OK youtube id={vid} url=https://youtu.be/{vid}")
+            except Exception as exc:  # noqa: BLE001
+                errors.append(f"youtube:{exc}")
+                append_log(cfg, f"FAIL youtube error={exc!r}")
+    else:
+        print("[youtube] disabled in config.platforms")
+
+    if flags["instagram"]:
+        if not ig_creds():
+            print("[instagram] skipped: missing META_ACCESS_TOKEN or IG_USER_ID")
+            append_log(cfg, "SKIP instagram: missing credentials")
+        else:
+            try:
+                mid = upload_reel(video_path, seo=seo)
+                results["instagram"] = mid
+                append_log(cfg, f"OK instagram media_id={mid}")
+            except Exception as exc:  # noqa: BLE001
+                errors.append(f"instagram:{exc}")
+                append_log(cfg, f"FAIL instagram error={exc!r}")
+    else:
+        print("[instagram] disabled in config.platforms")
+
+    if flags["tiktok"]:
+        if not tt_creds():
+            print("[tiktok] skipped: missing TIKTOK_ACCESS_TOKEN")
+            append_log(cfg, "SKIP tiktok: missing credentials")
+        else:
+            try:
+                pid = upload_tiktok(video_path, seo=seo)
+                results["tiktok"] = pid
+                append_log(cfg, f"OK tiktok publish_id={pid}")
+            except Exception as exc:  # noqa: BLE001
+                errors.append(f"tiktok:{exc}")
+                append_log(cfg, f"FAIL tiktok error={exc!r}")
+    else:
+        print("[tiktok] disabled in config.platforms")
+
+    if errors:
+        raise RuntimeError("Platform upload failures: " + "; ".join(errors))
+    return results
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Scheduled ChronoShorts job (cloud: YT + IG + TikTok)"
+    )
+    parser.add_argument("--topic-id", default=None)
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Pick topic + print platform plan (no render, no upload)",
+    )
+    parser.add_argument(
+        "--skip-upload",
+        action="store_true",
+        help="Full pipeline only; no platform uploads",
+    )
+    args = parser.parse_args()
+
+    cfg = load_config()
+    sched = cfg.get("schedule") or {}
+    # FULL AUTOPILOT defaults — never wait for Approve / review queue
+    auto_upload = bool(sched.get("auto_upload", True))
+    require_approval = bool(sched.get("require_approval", False))
+    if require_approval:
+        print(
+            "[schedule] WARNING: schedule.require_approval=true in config — "
+            "forcing false for cloud autopilot path (no human gate)."
+        )
+        require_approval = False
+        sched = {**sched, "require_approval": False}
+        cfg["schedule"] = sched
+    flags = platform_flags(cfg)
+
+    topic_id = None
+    try:
+        topic_id = pick_next_topic_id(cfg, args.topic_id)
+        topic = pick_topic(cfg, topic_id)
+        append_log(
+            cfg,
+            f"START topic={topic_id} title={topic.get('title', '')!r} "
+            f"autopilot auto_upload={auto_upload} require_approval={require_approval}",
+        )
+
+        if args.dry_run:
+            append_log(
+                cfg,
+                f"DRY-RUN topic={topic_id} platforms={json.dumps(flags)} "
+                f"yt_creds={yt_credentials_ok(cfg)} ig_creds={ig_creds()} "
+                f"tt_creds={tt_creds()} privacy={resolve_privacy(cfg)} "
+                f"require_approval=false",
+            )
+            print(f"[dry-run] Topic: {topic_id}")
+            print(f"[dry-run] Title: {topic.get('title')}")
+            print(f"[dry-run] Platforms: {flags}")
+            print(f"[dry-run] Autopilot: upload immediately (no approval)")
+            print(f"[dry-run] YT creds: {yt_credentials_ok(cfg)}")
+            print(f"[dry-run] IG creds: {ig_creds()}")
+            print(f"[dry-run] TT creds: {tt_creds()}")
+            return 0
+
+        video_path, seo_path = run_pipeline(topic_id, cfg)
+        # Never honor SEO approval.status=pending — cloud path always uploads
+        try:
+            seo_data = json.loads(seo_path.read_text(encoding="utf-8"))
+            appr = seo_data.get("approval") or {}
+            appr["status"] = "auto_approved"
+            appr["require_approval"] = False
+            appr["auto_upload"] = True
+            appr["upload_mode"] = "autopilot"
+            appr["note"] = (
+                "FULL AUTOPILOT: uploaded by scheduled_run without human approval."
+            )
+            seo_data["approval"] = appr
+            seo_path.write_text(
+                json.dumps(seo_data, indent=2, ensure_ascii=False), encoding="utf-8"
+            )
+        except Exception as exc:  # noqa: BLE001
+            print(f"[schedule] SEO approval stamp skipped: {exc}")
+
+        preview = platform_preview(load_seo(seo_path))
+        print(f"[schedule] Video: {video_path}")
+        print(f"[schedule] YT title: {preview['youtube']['title']}")
+        print("[schedule] AUTOPILOT: uploading now (no Approve button / no queue wait)")
+
+        if args.skip_upload:
+            append_log(
+                cfg,
+                f"OK pipeline-only topic={topic_id} video={video_path.name} "
+                f"(--skip-upload flag)",
+            )
+            return 0
+        if not auto_upload:
+            # Config mis-set: still force upload on schedule path unless --skip-upload
+            append_log(
+                cfg,
+                "WARN auto_upload=false ignored on scheduled_run — forcing upload",
+            )
+
+        results = upload_all_platforms(cfg, video_path, seo_path)
+        append_log(
+            cfg,
+            f"DONE topic={topic_id} autopilot=true results={json.dumps(results)}",
+        )
+        return 0
+
+    except SystemExit as exc:
+        code = int(exc.code) if isinstance(exc.code, int) else 1
+        if code == 0:
+            return 0
+        msg = str(exc) if exc.args else f"SystemExit({code})"
+        append_log(cfg, f"FAIL topic={topic_id or '?'} error={msg}")
+        return code if code else 1
+    except Exception as exc:  # noqa: BLE001
+        append_log(cfg, f"FAIL topic={topic_id or '?'} error={exc!r}")
+        traceback.print_exc()
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

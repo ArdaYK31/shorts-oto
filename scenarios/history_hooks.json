@@ -1,0 +1,104 @@
+{
+  "language": "en",
+  "series": "History Hooks",
+  "audience": "American viewers (US attention, not USA-only topics)",
+  "note": "English-only ChronoShorts-style hooks. Mix US history, world history Americans binge, biographies, did-you-know facts. Zero paid APIs.",
+  "scenarios": [
+    {
+      "id": "failed-before-fame",
+      "name": "Failed Before Fame",
+      "angle": "Dismissed as a failure — then history flips.",
+      "hook_style": "Open at rock bottom before the reveal.",
+      "structure": ["rock bottom", "unexpected turn", "decisive contribution", "ironic closer"],
+      "example_topics": ["Ulysses S. Grant", "Einstein school myths", "Churchill wilderness years"]
+    },
+    {
+      "id": "traitor-twist",
+      "name": "Traitor Twist",
+      "angle": "Praised as a hero — then the knife turns.",
+      "hook_style": "Start as praise, flip to betrayal.",
+      "structure": ["hero setup", "praise", "betrayal reveal", "name becomes insult"],
+      "example_topics": ["Benedict Arnold", "Brutus", "Quisling"]
+    },
+    {
+      "id": "refused-power",
+      "name": "Refused Power",
+      "angle": "Could have taken a crown — walked away.",
+      "hook_style": "Contrast conquerors who seize power with the one who said no.",
+      "structure": ["offer of power", "expectation", "refusal", "republic/legacy"],
+      "example_topics": ["George Washington", "Cincinnatus", "Diocletian retirement"]
+    },
+    {
+      "id": "overlooked-hero",
+      "name": "Overlooked Hero",
+      "angle": "Textbooks skim them — their act changed everything.",
+      "hook_style": "You know the famous name. Not the person who made it possible.",
+      "structure": ["famous event", "hidden actor", "concrete contribution", "why forgotten"],
+      "example_topics": ["Sybil Ludington", "Robert Smalls", "Noor Inayat Khan"]
+    },
+    {
+      "id": "ironic-ending",
+      "name": "Ironic Ending",
+      "angle": "Plan, prophecy, or ambition ends opposite of intended.",
+      "hook_style": "State the goal — land the historical punchline.",
+      "structure": ["ambition", "momentum", "reversal", "irony"],
+      "example_topics": ["Prohibition", "Titanic unsinkable", "Archduke Franz Ferdinand car"]
+    },
+    {
+      "id": "ironic-death",
+      "name": "Ironic Death",
+      "angle": "How they died is the twist America can't stop sharing.",
+      "hook_style": "Lead with the absurd or poetic death detail.",
+      "structure": ["status/power", "fatal moment", "irony lands", "legacy sting"],
+      "example_topics": ["Cleopatra asp myth vs reality", "Rasputin", "Attila wedding night"]
+    },
+    {
+      "id": "one-decision",
+      "name": "One Decision",
+      "angle": "A single choice rewrites the map or the century.",
+      "hook_style": "Zoom into one vote, order, signature, or second.",
+      "structure": ["the fork", "pressure", "the decision", "aftermath"],
+      "example_topics": ["Louisiana Purchase", "Archduke's wrong turn", "Cuban Missile Crisis"]
+    },
+    {
+      "id": "underdog-victory",
+      "name": "Underdog Victory",
+      "angle": "Outgunned, outnumbered — wins anyway.",
+      "hook_style": "Stack impossible odds in the first two lines.",
+      "structure": ["impossible odds", "unlikely method", "turning point", "legacy"],
+      "example_topics": ["Yorktown", "Battle of Britain", "300 Spartans myth vs reality"]
+    },
+    {
+      "id": "did-you-know",
+      "name": "Did You Know",
+      "angle": "One surprising fact Americans share — punchy curiosity.",
+      "hook_style": "Open with the disbelief line: 'The US once…' / 'Cleopatra wasn't…'",
+      "structure": ["shock fact", "why true", "context sting", "follow CTA"],
+      "example_topics": ["US armed Saddam", "Oxford older than Aztecs", "Cleopatra closer to iPhone than pyramids"]
+    },
+    {
+      "id": "empire-twist",
+      "name": "Empire Twist",
+      "angle": "An empire's peak hides the seed of its collapse — or a forgotten flex.",
+      "hook_style": "Start with power porn, end with the crack in the marble.",
+      "structure": ["peak power", "hidden cost", "twist", "echo today"],
+      "example_topics": ["Rome bread and circuses", "British Empire tea", "Ottoman siege"]
+    },
+    {
+      "id": "cold-war-fact",
+      "name": "Cold War Fact",
+      "angle": "Nuclear-age absurdity, spies, and near-misses US audiences love.",
+      "hook_style": "One button / one spy / one near-apocalypse.",
+      "structure": ["stakes", "secret detail", "near-miss or reveal", "why it matters"],
+      "example_topics": ["Stanislav Petrov", "Able Archer", "Berlin Tunnel"]
+    },
+    {
+      "id": "ww2-hook",
+      "name": "WWII Hook",
+      "angle": "World War II story with a US-audience cold open.",
+      "hook_style": "Lead with the detail Hollywood skipped.",
+      "structure": ["cold open", "named figure/event", "3 facts", "sting"],
+      "example_topics": ["Navajo Code Talkers", "Operation Mincemeat", "Hiroo Onoda"]
+    }
+  ]
+}

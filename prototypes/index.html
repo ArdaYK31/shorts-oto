@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Series Autopilot — UI Prototipleri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0d10;
+      --fg: #ece7df;
+      --muted: #9a948a;
+      --line: #2a2c33;
+      --a: #c4a574;
+      --b: #3d9b8f;
+      --c: #d4784a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, #1a1c24 0%, transparent 55%),
+        var(--bg);
+      color: var(--fg);
+      font-family: "DM Sans", system-ui, sans-serif;
+      padding: 48px 24px 80px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .brand {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .lead { color: var(--muted); max-width: 42rem; line-height: 1.55; margin-bottom: 40px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    a.card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #12141a;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    a.card:hover { transform: translateY(-3px); border-color: #4a4e5a; }
+    .swatch {
+      height: 140px;
+      position: relative;
+    }
+    .swatch span {
+      position: absolute;
+      left: 16px; bottom: 14px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+    .a { background: linear-gradient(145deg, #1a1510 0%, #3d2e1a 40%, #c4a574 160%); }
+    .b { background: linear-gradient(145deg, #0e1416 0%, #16353a 45%, #3d9b8f 140%); }
+    .c { background: linear-gradient(145deg, #f3ebe1 0%, #e8d5c4 50%, #d4784a 160%); color: #1a120c; }
+    .body { padding: 20px 18px 22px; }
+    .body h2 {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .body p { color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+    .tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg);
+      border: 1px solid var(--line);
+      padding: 4px 8px;
+    }
+    .note { margin-top: 36px; color: var(--muted); font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 class="brand">Series Autopilot</h1>
+    <p class="lead">
+      Ajans dashboard’u için üç görsel dil. Her prototip aynı işlevi gösterir:
+      Series listesi, onay kuyruğu ve bir bölüm önizlemesi. Beğendiğini söyle;
+      tema token’larına kilitleyip Next.js’e taşıyacağız.
+    </p>
+    <div class="grid">
+      <a class="card" href="a-cinema.html">
+        <div class="swatch a"><span>Prototype A</span></div>
+        <div class="body">
+          <h2>Cinema Vault</h2>
+          <p>Koyu, sinematik, altın vurgu. Tarih belgeseli / ChronoShorts hissi.</p>
+          <span class="tag">Dark · Gold · Editorial</span>
+        </div>
+      </a>
+      <a class="card" href="b-console.html">
+        <div class="swatch b"><span>Prototype B</span></div>
+        <div class="body">
+          <h2>Operator Console</h2>
+          <p>Ajans üretim masası. Soğuk slate + teal. Yoğun ama net kontrol paneli.</p>
+          <span class="tag">Tool · Teal · Dense</span>
+        </div>
+      </a>
+      <a class="card" href="c-atelier.html">
+        <div class="swatch c"><span>Prototype C</span></div>
+        <div class="body">
+          <h2>Daylight Atelier</h2>
+          <p>Açık stüdyo. Kağıt dokusu, mürekkep ve bakır. Satış demo’su için sıcak.</p>
+          <span class="tag">Light · Ink · Warm</span>
+        </div>
+      </a>
+    </div>
+    <p class="note">Dosyalar: <code>prototypes/</code> — tarayıcıda index.html aç.</p>
+  </div>
+</body>
+</html>

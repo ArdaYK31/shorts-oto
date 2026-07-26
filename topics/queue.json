@@ -1,0 +1,307 @@
+[
+  {
+    "id": "ulysses-grant-nobody",
+    "scenario_id": "failed-before-fame",
+    "title": "Firewood Seller to Lee's Conqueror: Ulysses Grant",
+    "topic": "Ulysses S. Grant — failed shopkeeper turned Civil War general who forced Lee's surrender",
+    "keywords": ["Ulysses S. Grant", "American Civil War", "Appomattox"],
+    "search_queries": ["Ulysses S. Grant portrait", "Appomattox Court House", "Civil War"],
+    "wikimedia_titles": ["Ulysses S Grant by Brady c1870-restored.jpg", "Battle of Antietam.jpg", "Robert Edward Lee.jpg"],
+    "pd_fallback_urls": [
+      "https://tile.loc.gov/storage-services/service/pnp/cwpb/06900/06902v.jpg",
+      "https://tile.loc.gov/storage-services/service/pnp/cwpb/04400/04402v.jpg",
+      "https://tile.loc.gov/storage-services/service/pnp/cwpb/01000/01005v.jpg"
+    ],
+    "fallback_script": "He sold firewood on street corners just to eat — then Robert E. Lee surrendered to him. Before fame, Ulysses S. Grant failed at almost everything. He left the army. Went broke as a farmer. Then the Civil War came — and the man everyone underestimated became Lincoln's last hope. Grant won with relentless pressure. In 1865, at Appomattox, Lee surrendered to the quiet man who once couldn't keep a shop open. America was nearly torn in half. A nobody held it together. Follow for more history that hits different."
+  },
+  {
+    "id": "benedict-arnold-traitor",
+    "scenario_id": "traitor-twist",
+    "title": "America's Greatest Hero Turned Its Greatest Traitor",
+    "topic": "Benedict Arnold — Revolutionary War hero who betrayed America at West Point",
+    "keywords": ["Benedict Arnold", "American Revolution", "West Point"],
+    "search_queries": ["Benedict Arnold", "West Point", "Revolutionary War"],
+    "wikimedia_titles": ["Benedict Arnold 1color.jpg", "West Point, New York.jpg", "SiegeofYorktown.jpg"],
+    "fallback_script": "He was supposed to be an American legend. Benedict Arnold helped win early battles when the Revolution was hanging by a thread. Wounded for the cause. Praised as a hero. Then pride and money poisoned him. In 1780 he plotted to hand West Point to the British. The plot failed. His name didn't. Today \"Benedict Arnold\" means betrayal. America's greatest early hero became its most infamous traitor. Follow for more history that hits different."
+  },
+  {
+    "id": "washington-refused-crown",
+    "scenario_id": "refused-power",
+    "title": "The Man Who Was Offered a Crown and Said No",
+    "topic": "George Washington refused monarchical power and stepped down after two terms",
+    "keywords": ["George Washington", "presidency", "American republic"],
+    "search_queries": ["George Washington portrait", "Mount Vernon", "Constitutional Convention"],
+    "wikimedia_titles": ["Gilbert Stuart Williamstown Portrait of George Washington.jpg", "Washington Resigning His Commission.jpg"],
+    "fallback_script": "After winning a revolution, most conquerors take a throne. George Washington was offered power that could have made him a king in everything but name. He walked away. He resigned his commission. Later he stepped down after two terms. In a world addicted to rulers for life, Washington chose a republic. Power was available. He said no. Follow for more history that hits different."
+  },
+  {
+    "id": "us-armed-saddam",
+    "scenario_id": "did-you-know",
+    "title": "Did You Know? The US Once Backed Saddam Hussein",
+    "topic": "Cold War realpolitik — US and Western support for Iraq during the Iran–Iraq War era",
+    "keywords": ["Saddam Hussein", "Iran-Iraq War", "Cold War"],
+    "search_queries": ["Saddam Hussein 1980s", "Iran Iraq War", "Donald Rumsfeld Saddam"],
+    "wikimedia_titles": ["Saddam Hussein in 1998.png", "Iran-Iraq War.jpg", "Donald Rumsfeld.jpg"],
+    "fallback_script": "Did you know the United States once treated Saddam Hussein as a useful partner? In the 1980s, during the Iran–Iraq War, Washington's enemy-of-my-enemy logic shaped quiet diplomacy and dual-use trade that propped up Baghdad against Tehran. Fast-forward: the same dictator becomes America's public enemy in two Gulf wars. History isn't a comic book of permanent good guys. It's alliances that age like milk. Follow for more history that hits different."
+  },
+  {
+    "id": "cleopatra-not-egyptian",
+    "scenario_id": "did-you-know",
+    "title": "Cleopatra Wasn't Egyptian — And Lived Closer to iPhones",
+    "topic": "Cleopatra VII was Macedonian Greek Ptolemaic; timeline closer to modern era than Great Pyramid",
+    "keywords": ["Cleopatra", "Ptolemaic Egypt", "ancient Rome"],
+    "search_queries": ["Cleopatra VII", "Ptolemaic Egypt", "Caesar Alexandria"],
+    "wikimedia_titles": ["Cleopatra VII Yale University Art Gallery.jpg", "Caesar.jpg", "Great Pyramid of Giza.jpg"],
+    "fallback_script": "Cleopatra wasn't Egyptian the way most Americans imagine. She was a Macedonian Greek queen of the Ptolemaic dynasty — speaking Egyptian as a political flex. And the timeline punchline? Cleopatra lived closer to the invention of the iPhone than to the building of the Great Pyramid. Ancient Egypt wasn't one frozen moment. It was thousands of years — and she was near the end. Follow for more history that hits different."
+  },
+  {
+    "id": "oxford-older-aztecs",
+    "scenario_id": "did-you-know",
+    "title": "Oxford University Is Older Than the Aztec Empire",
+    "topic": "Teaching at Oxford began before the Aztec capital rose — timeline shock fact",
+    "keywords": ["Oxford University", "Aztec Empire", "timeline facts"],
+    "search_queries": ["University of Oxford historic", "Tenochtitlan", "Aztec Empire"],
+    "wikimedia_titles": ["Oxford University Coat Of Arms.svg", "Tenochtitlan.jpg", "Bodleian Library.jpg"],
+    "fallback_script": "Did you know Oxford University is older than the Aztec Empire? Teaching at Oxford was underway in the 1000s. Tenochtitlán — the Aztec capital — rose centuries later. When Europeans later met the Aztec world, Oxford already had generations of scholars. Your mental map of \"old\" is probably wrong. Empires and universities don't age on the same clock. Follow for more history that hits different."
+  },
+  {
+    "id": "stanislav-petrov",
+    "scenario_id": "cold-war-fact",
+    "title": "The Man Who Saved the World by Ignoring the Alarm",
+    "topic": "Stanislav Petrov 1983 nuclear false alarm — Cold War near-miss",
+    "keywords": ["Stanislav Petrov", "Cold War", "nuclear war"],
+    "search_queries": ["Stanislav Petrov", "1983 nuclear false alarm", "Cold War"],
+    "wikimedia_titles": ["Stanislav Petrov.jpg", "Cold War map.jpg", "ICBM test.jpg"],
+    "fallback_script": "In 1983, Soviet screens screamed: American missiles incoming. Protocol said report it — which could start nuclear war. Officer Stanislav Petrov looked at the data and decided it was a false alarm. He was right. A satellite glitch nearly ended civilization. One skeptical human refused to trust the machine. You probably never learned his name in school. Follow for more history that hits different."
+  },
+  {
+    "id": "operation-mincemeat",
+    "scenario_id": "ww2-hook",
+    "title": "WWII's Weirdest Spy Trick: A Dead Man With Fake Plans",
+    "topic": "Operation Mincemeat — British deception using a corpse to fool Hitler",
+    "keywords": ["Operation Mincemeat", "World War II", "espionage"],
+    "search_queries": ["Operation Mincemeat", "WWII deception", "Sicily invasion"],
+    "wikimedia_titles": ["Sicily 1943.jpg", "Winston Churchill 1941.jpg", "World War II montage.jpg"],
+    "fallback_script": "In World War II, British intelligence dressed a corpse as an officer, planted fake invasion plans on the body, and floated it toward the enemy. Operation Mincemeat. Hitler bought the lie. Attention shifted. Sicily got hit harder than expected. A dead stranger helped save thousands of living soldiers. War isn't only tanks — sometimes it's theater with a body as the prop. Follow for more history that hits different."
+  },
+  {
+    "id": "navajo-code-talkers",
+    "scenario_id": "ww2-hook",
+    "title": "The Unbreakable WWII Code Was a Native Language",
+    "topic": "Navajo Code Talkers — US Marines' unbreakable battlefield code",
+    "keywords": ["Navajo Code Talkers", "World War II", "US Marines"],
+    "search_queries": ["Navajo Code Talkers", "Pacific War", "WWII Marines"],
+    "wikimedia_titles": ["Navajo Code Talkers.jpg", "Iwo Jima flag raising.jpg", "US Marines WWII.jpg"],
+    "fallback_script": "Japan cracked codes. Then the US Marines turned to Navajo. Code Talkers built a spoken cipher from their language — fast, flexible, unbroken. In the Pacific, messages flew while enemy cryptographers hit a wall. America had tried to erase Native languages. In WWII, one of them helped win battles. Irony doesn't get louder than that. Follow for more history that hits different."
+  },
+  {
+    "id": "hiroo-onoda",
+    "scenario_id": "ironic-ending",
+    "title": "He Fought WWII Until 1974 — Then Still Saluted",
+    "topic": "Hiroo Onoda held out in the Philippines decades after Japan surrendered",
+    "keywords": ["Hiroo Onoda", "World War II", "holdout soldier"],
+    "search_queries": ["Hiroo Onoda", "Japanese holdout", "Lubang Island"],
+    "wikimedia_titles": ["Hiroo Onoda.jpg", "Japanese surrender 1945.jpg", "Philippines jungle.jpg"],
+    "fallback_script": "World War II ended in 1945. Hiroo Onoda kept fighting until 1974. On a Philippine island he hid, raided, and refused every leaflet calling him home — convinced it was enemy propaganda. Only his former commander ordering him to stand down ended the war for him. Loyalty can outlive the war that created it. Follow for more history that hits different."
+  },
+  {
+    "id": "rasputin-ironic-death",
+    "scenario_id": "ironic-death",
+    "title": "They Poisoned, Shot, and Drowned Rasputin — Myth vs Mess",
+    "topic": "Grigori Rasputin's murder — legend of unkillable mystic vs chaotic assassination",
+    "keywords": ["Rasputin", "Romanov", "Russian Empire"],
+    "search_queries": ["Grigori Rasputin", "Romanov family", "Russian Empire"],
+    "wikimedia_titles": ["Rasputin.jpg", "Nicholas II of Russia.jpg", "Winter Palace.jpg"],
+    "fallback_script": "Legend says Rasputin survived poison, bullets, and the river. The truth is messier — and somehow wilder. The mystic who haunted the Romanov court was murdered by aristocrats terrified of his influence. Russia was already cracking. Killing the \"holy devil\" didn't save the empire. Within years the dynasty was gone. Sometimes the myth is the point — and the point is panic. Follow for more history that hits different."
+  },
+  {
+    "id": "rome-bread-circuses",
+    "scenario_id": "empire-twist",
+    "title": "Rome Kept the Crowds Quiet With Bread and Bloodsport",
+    "topic": "Panem et circenses — Roman public grain and games as political control",
+    "keywords": ["Ancient Rome", "Colosseum", "bread and circuses"],
+    "search_queries": ["Roman Colosseum", "ancient Rome grain dole", "gladiator"],
+    "wikimedia_titles": ["Colosseum in Rome, Italy - April 2007.jpg", "Gladiators.jpg", "Roman Forum.jpg"],
+    "fallback_script": "Ancient Rome figured out something modern politics still copies: keep people fed and entertained, and they'll tolerate almost anything. Bread and circuses. Grain for the masses. Bloodsport in the arena. Emperors bought calm with spectacle while the republic's old muscles atrophied. The Colosseum wasn't just tourism — it was a pressure valve made of stone. Empires don't only fall to invaders. Sometimes they lull themselves to sleep. Follow for more history that hits different."
+  },
+  {
+    "id": "british-tea-empire",
+    "scenario_id": "empire-twist",
+    "title": "Britain Built an Empire on a Leaf Americans Dump in Harbors",
+    "topic": "Tea, opium, and British imperial trade — Boston Tea Party irony",
+    "keywords": ["British Empire", "tea trade", "Boston Tea Party"],
+    "search_queries": ["British Empire tea", "Boston Tea Party", "East India Company"],
+    "wikimedia_titles": ["Boston Tea Party.jpg", "East India Company.jpg", "Clipper ship.jpg"],
+    "fallback_script": "The British Empire ran on ships, guns — and tea. The East India Company turned a leaf into global power, while American colonists dumped that same leaf into Boston Harbor. One commodity, two revolutions of attitude. Empire sold comfort in a cup. Colonists sold defiance by the crate. Your afternoon drink has a body count and a rebellion in its backstory. Follow for more history that hits different."
+  },
+  {
+    "id": "franz-ferdinand-wrong-turn",
+    "scenario_id": "one-decision",
+    "title": "One Wrong Turn Started World War I",
+    "topic": "Assassination of Archduke Franz Ferdinand — wrong turn in Sarajevo",
+    "keywords": ["Franz Ferdinand", "World War I", "Sarajevo"],
+    "search_queries": ["Franz Ferdinand assassination", "Sarajevo 1914", "World War I"],
+    "wikimedia_titles": ["Archduke Franz Ferdinand of Austria.jpg", "Sarajevo 1914.jpg", "World War I trenches.jpg"],
+    "fallback_script": "A wrong turn. A sandwich shop. A teenager with a pistol. In 1914 Sarajevo, Archduke Franz Ferdinand's driver missed the route — and rolled past Gavrilo Princip. Shots fired. An empire's heir dead. Alliances detonated into World War I. Millions would die because history sometimes hinges on a street corner. Follow for more history that hits different."
+  },
+  {
+    "id": "cuban-missile-seconds",
+    "scenario_id": "cold-war-fact",
+    "title": "The Cold War Almost Ended Over a Submarine Vote",
+    "topic": "Cuban Missile Crisis — Vasili Arkhipov and the submarine near-launch",
+    "keywords": ["Cuban Missile Crisis", "Vasili Arkhipov", "Cold War"],
+    "search_queries": ["Cuban Missile Crisis", "Vasili Arkhipov", "nuclear submarine 1962"],
+    "wikimedia_titles": ["Cuban Missile Crisis.jpg", "John F Kennedy.jpg", "Soviet submarine.jpg"],
+    "fallback_script": "During the Cuban Missile Crisis, a Soviet submarine under US depth charges nearly launched a nuclear torpedo. Protocol needed agreement. Officer Vasili Arkhipov said no. One veto. The world kept spinning. Americans remember Kennedy and Khrushchev on TV. Fewer remember the man in a steel tube who refused to end civilization. Follow for more history that hits different."
+  },
+  {
+    "id": "harriet-tubman-railroad",
+    "scenario_id": "underdog-victory",
+    "title": "She Escaped Slavery — Then Went Back Again and Again",
+    "topic": "Harriet Tubman and Underground Railroad missions",
+    "keywords": ["Harriet Tubman", "Underground Railroad", "abolition"],
+    "search_queries": ["Harriet Tubman", "Underground Railroad", "abolition"],
+    "wikimedia_titles": ["Harriet Tubman by Square Parker 1885.jpg", "Underground Railroad map.jpg"],
+    "fallback_script": "Most people who escaped slavery never went back. Harriet Tubman did — again and again. She guided people through night roads on the Underground Railroad while slave catchers hunted her. During the Civil War she scouted for the Union. America loves freedom stories. Few are this stubborn — or this brave. Follow for more history that hits different."
+  },
+  {
+    "id": "robert-smalls-escape",
+    "scenario_id": "overlooked-hero",
+    "title": "He Stole a Confederate Ship — and Freed His Family",
+    "topic": "Robert Smalls hijacked the CSS Planter in 1862",
+    "keywords": ["Robert Smalls", "Civil War", "CSS Planter"],
+    "search_queries": ["Robert Smalls", "CSS Planter", "Charleston Civil War"],
+    "wikimedia_titles": ["Robert Smalls - Brady-Handy.jpg", "Charleston Harbor.jpg"],
+    "fallback_script": "Before dawn, enslaved pilot Robert Smalls slipped aboard a Confederate steamer in Charleston — the CSS Planter — and steamed past enemy forts with his family hidden below. He knew the signals. He delivered a warship to the Union. Later he became a Congressman. Textbooks skim him. History shouldn't. Follow for more history that hits different."
+  },
+  {
+    "id": "prohibition-irony",
+    "scenario_id": "ironic-ending",
+    "title": "America Banned Alcohol — and Created Gangsters",
+    "topic": "Prohibition's boom in organized crime",
+    "keywords": ["Prohibition", "Al Capone", "18th Amendment"],
+    "search_queries": ["Prohibition", "Al Capone", "speakeasy"],
+    "wikimedia_titles": ["Al Capone in 1930.jpg", "Speakeasy.jpg"],
+    "fallback_script": "In 1920 America tried to legislate virtue. Prohibition banned alcohol — and an illegal empire bloomed. Speakeasies. Bootleggers. Capone. Crime didn't vanish; it professionalized. By 1933 the experiment was repealed. Outlaw a demand and someone will weaponize the supply. Follow for more history that hits different."
+  },
+  {
+    "id": "apollo-11-decision",
+    "scenario_id": "one-decision",
+    "title": "One Decade — From Embarrassment to the Moon",
+    "topic": "Apollo 11 and Kennedy's moonshot",
+    "keywords": ["Apollo 11", "Neil Armstrong", "space race"],
+    "search_queries": ["Apollo 11", "Neil Armstrong", "Saturn V"],
+    "wikimedia_titles": ["Apollo 11 Crew.jpg", "Buzz_Aldrin_Apollo_11_original.jpg"],
+    "fallback_script": "In 1961 America was losing the space race — and Kennedy promised the Moon before the decade ended. Billions. Thousands of engineers. On July 20, 1969, Neil Armstrong stepped onto lunar dust. One political bet became humanity's loudest footprint. Follow for more history that hits different."
+  },
+  {
+    "id": "spartan-300-myth",
+    "scenario_id": "did-you-know",
+    "title": "Thermopylae Wasn't Just 300 Spartans",
+    "topic": "Battle of Thermopylae — allied Greeks beyond the Spartan 300 myth",
+    "keywords": ["Thermopylae", "Sparta", "Persian Wars"],
+    "search_queries": ["Battle of Thermopylae", "Leonidas", "Persian Wars"],
+    "wikimedia_titles": ["Leonidas at Thermopylae.jpg", "Persian Wars map.jpg"],
+    "fallback_script": "Hollywood sold you 300 Spartans alone against Persia. Reality: thousands of other Greeks fought too — Thespians who stayed, allies who bled. The Spartan stand became legend because legends need a clean poster. The real stand was messier — and braver across more city-states than the movie admits. Follow for more history that hits different."
+  },
+  {
+    "id": "napoleon-exile-comeback",
+    "scenario_id": "failed-before-fame",
+    "title": "Exiled to an Island — Then He Took France Back in 100 Days",
+    "topic": "Napoleon's Elba exile and the Hundred Days return",
+    "keywords": ["Napoleon", "Hundred Days", "Elba"],
+    "search_queries": ["Napoleon Elba", "Hundred Days", "Waterloo"],
+    "wikimedia_titles": ["Napoleon Bonaparte.jpg", "Battle of Waterloo.jpg", "Elba island.jpg"],
+    "fallback_script": "They exiled Napoleon to Elba like the story was over. Then he escaped, landed in France, and soldiers sent to stop him joined him instead. The Hundred Days. Europe scrambled. Waterloo finished it — but not before proving one truth: some men don't stay buried by paperwork. Follow for more history that hits different."
+  },
+  {
+    "id": "titanic-unsinkable",
+    "scenario_id": "ironic-ending",
+    "title": "They Called It Unsinkable — Then the Atlantic Disagreed",
+    "topic": "Titanic hubris and the 1912 disaster",
+    "keywords": ["Titanic", "1912", "White Star Line"],
+    "search_queries": ["RMS Titanic", "Titanic sinking", "White Star Line"],
+    "wikimedia_titles": ["RMS Titanic 3.jpg", "Titanic disaster.jpg"],
+    "fallback_script": "They sold the Titanic as practically unsinkable. In 1912 an iceberg filed a dissent. More than 1,500 dead. Lifeboats too few. Class decided who got a seat. The ocean doesn't care about marketing. Hubris makes the best villain — because it smiles for the brochure. Follow for more history that hits different."
+  },
+  {
+    "id": "genghis-peaceful-death",
+    "scenario_id": "ironic-death",
+    "title": "History's Deadliest Conqueror May Have Died Falling Off a Horse",
+    "topic": "Genghis Khan's uncertain death — conqueror undone by ordinary injury theories",
+    "keywords": ["Genghis Khan", "Mongol Empire", "world conquest"],
+    "search_queries": ["Genghis Khan", "Mongol Empire", "Genghis Khan death"],
+    "wikimedia_titles": ["Genghis Khan.jpg", "Mongol Empire map.jpg"],
+    "fallback_script": "Genghis Khan built the largest contiguous land empire in history — then may have died from something almost boring: a fall from a horse, illness, or wounds after battle. Sources disagree. The irony sticks. The man who redrew Eurasia with cavalry might have been finished by a stumble. Empires fear armies. Bodies fear gravity. Follow for more history that hits different."
+  },
+  {
+    "id": "marie-antoinette-cake-myth",
+    "scenario_id": "did-you-know",
+    "title": "Marie Antoinette Probably Never Said \"Let Them Eat Cake\"",
+    "topic": "The cake quote is likely myth — propaganda vs the real French Revolution stakes",
+    "keywords": ["Marie Antoinette", "French Revolution", "history myths"],
+    "search_queries": ["Marie Antoinette", "French Revolution", "let them eat cake"],
+    "wikimedia_titles": ["Marie Antoinette Adult.jpg", "Storming of the Bastille.jpg"],
+    "fallback_script": "\"Let them eat cake.\" Americans love the quote. Historians mostly don't buy it. The line predates Marie Antoinette in other stories — perfect propaganda paint for a hated queen. The Revolution was real. The hunger was real. The Instagram-ready villain line? Probably fan fiction with a guillotine. Follow for more history that hits different."
+  },
+  {
+    "id": "lincoln-failed-before",
+    "scenario_id": "failed-before-fame",
+    "title": "The President Who Lost Almost Everything First",
+    "topic": "Abraham Lincoln's early failures before Emancipation leadership",
+    "keywords": ["Abraham Lincoln", "Emancipation", "Civil War"],
+    "search_queries": ["Abraham Lincoln portrait", "Emancipation Proclamation", "Lincoln Douglas"],
+    "wikimedia_titles": ["Abraham Lincoln O-77 matte collodion print.jpg", "Emancipation proclamation.jpg"],
+    "fallback_script": "Before he saved the Union, Abraham Lincoln looked rejected by it. Lost elections. Lost businesses. Battled darkness. Then the nation cracked — and the prairie lawyer refused to let it die. The Emancipation Proclamation was a wartime hammer. Lincoln didn't arrive destined. He arrived scarred — and still held the country together. Follow for more history that hits different."
+  },
+  {
+    "id": "rosa-parks-bus",
+    "scenario_id": "one-decision",
+    "title": "One Seat on a Bus Changed a Nation",
+    "topic": "Rosa Parks and the Montgomery Bus Boycott spark",
+    "keywords": ["Rosa Parks", "civil rights", "Montgomery"],
+    "search_queries": ["Rosa Parks", "Montgomery Bus Boycott", "civil rights"],
+    "wikimedia_titles": ["Rosaparks.jpg", "Segregation Sign.jpg"],
+    "fallback_script": "She wasn't the first to refuse. She was the spark that held. In 1955 Rosa Parks stayed seated when the law said move. Arrest. Then a boycott lasting over a year. Segregation looked permanent until ordinary people made it expensive. One quiet refusal became a national reckoning. Follow for more history that hits different."
+  },
+  {
+    "id": "louisiana-purchase",
+    "scenario_id": "one-decision",
+    "title": "One Signature Doubled the United States Overnight",
+    "topic": "Louisiana Purchase — Jefferson's deal that remade the map",
+    "keywords": ["Louisiana Purchase", "Thomas Jefferson", "Napoleon"],
+    "search_queries": ["Louisiana Purchase map", "Thomas Jefferson", "Napoleon"],
+    "wikimedia_titles": ["Louisiana Purchase.png", "Thomas Jefferson by Rembrandt Peale, 1800.jpg"],
+    "fallback_script": "In 1803 the United States almost stayed a skinny Atlantic strip. Napoleon needed cash. Jefferson made a bet. For about fifteen million dollars America bought a wilderness empire. One deal. The map doubled. Lewis and Clark walked into a future that hadn't existed the year before. Follow for more history that hits different."
+  },
+  {
+    "id": "berlin-wall-escape",
+    "scenario_id": "cold-war-fact",
+    "title": "Families Tunnelled Under a Wall to Escape Communism",
+    "topic": "Berlin Wall escapes — tunnels, balloons, and Cold War desperation",
+    "keywords": ["Berlin Wall", "Cold War", "East Germany"],
+    "search_queries": ["Berlin Wall", "Berlin tunnel escape", "Cold War Germany"],
+    "wikimedia_titles": ["Berlin Wall.jpg", "Checkpoint Charlie.jpg", "East Germany border.jpg"],
+    "fallback_script": "When the Berlin Wall went up, some Germans went under it. Tunnels. Hidden trucks. Homemade balloons. East German guards shot escapees while the West watched through binoculars. The Cold War wasn't only missiles — it was a concrete line through living rooms. Freedom sometimes measured in dirt under your fingernails. Follow for more history that hits different."
+  },
+  {
+    "id": "caesar-ides-march",
+    "scenario_id": "traitor-twist",
+    "title": "His Friends Stabbed Him — And Named a Calendar Warning",
+    "topic": "Assassination of Julius Caesar on the Ides of March",
+    "keywords": ["Julius Caesar", "Ides of March", "Roman Republic"],
+    "search_queries": ["Julius Caesar", "Ides of March", "Roman Senate"],
+    "wikimedia_titles": ["Death of Caesar Vincenzo Camuccini.jpg", "Julius Caesar.jpg", "Roman Forum.jpg"],
+    "fallback_script": "Beware the Ides of March. Julius Caesar ignored the warning — then his peers turned blades in the Senate. They called it saving the Republic. They got civil war instead. Brutus wanted virtue. History gave him a traitor brand. Sometimes the cure for a strongman is just more chaos with better speeches. Follow for more history that hits different."
+  },
+  {
+    "id": "chernobyl-test",
+    "scenario_id": "ironic-ending",
+    "title": "A \"Safety Test\" Created the Worst Nuclear Disaster",
+    "topic": "Chernobyl 1986 — safety test that triggered catastrophe",
+    "keywords": ["Chernobyl", "nuclear disaster", "Soviet Union"],
+    "search_queries": ["Chernobyl disaster", "Reactor 4", "Soviet nuclear"],
+    "wikimedia_titles": ["Chernobyl Disaster.jpg", "Chernobyl Reactor 4.jpg"],
+    "fallback_script": "They called it a safety test. In April 1986, Chernobyl's Reactor 4 turned a checklist into catastrophe. Lies delayed evacuation. Heroes walked into radiation to bury the fire. The Soviet system prized looking strong over telling truth — until the air itself became evidence. Modern energy has a ghost, and its name is still whispered. Follow for more history that hits different."
+  }
+]

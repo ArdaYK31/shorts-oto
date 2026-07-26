@@ -1,0 +1,8 @@
+[2026-07-26 01:43:00 +0000] START topic=benedict-arnold-traitor title="America's Greatest Hero Turned Its Greatest Traitor"
+[2026-07-26 01:43:00 +0000] DRY-RUN topic=benedict-arnold-traitor platforms={"youtube": true, "instagram": true, "tiktok": true} yt_creds=True ig_creds=False tt_creds=False privacy=public
+[2026-07-26 04:43:30 +0300] START topic=benedict-arnold-traitor title="America's Greatest Hero Turned Its Greatest Traitor"
+[2026-07-26 04:43:30 +0300] DRY-RUN topic=benedict-arnold-traitor platforms={"youtube": true, "instagram": true, "tiktok": true} yt_creds=True ig_creds=False tt_creds=False privacy=public
+[2026-07-26 04:45:14 +0300] START topic=benedict-arnold-traitor title="America's Greatest Hero Turned Its Greatest Traitor"
+[2026-07-26 04:45:14 +0300] DRY-RUN topic=benedict-arnold-traitor platforms={"youtube": true, "instagram": true, "tiktok": true} yt_creds=True ig_creds=False tt_creds=False privacy=public
+[2026-07-26 04:46:48 +0300] START topic=benedict-arnold-traitor title="America's Greatest Hero Turned Its Greatest Traitor" autopilot auto_upload=True require_approval=False
+[2026-07-26 04:46:48 +0300] DRY-RUN topic=benedict-arnold-traitor platforms={"youtube": true, "instagram": true, "tiktok": true} yt_creds=True ig_creds=False tt_creds=False privacy=public require_approval=false

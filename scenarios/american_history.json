@@ -1,0 +1,64 @@
+{
+  "language": "en",
+  "series": "American History Shorts (legacy)",
+  "deprecated": true,
+  "note": "Prefer scenarios/history_hooks.json — broader US-audience History Hooks pack. This file kept for backward compatibility; generate_script loads history_hooks.json first.",
+  "scenarios": [
+    {
+      "id": "failed-before-fame",
+      "name": "Failed Before Fame",
+      "angle": "Someone dismissed as a failure later becomes essential to American history.",
+      "hook_style": "Open with their lowest point before revealing what they became.",
+      "structure": ["rock bottom", "unexpected turn", "decisive contribution", "ironic closer"],
+      "example_topics": ["Ulysses S. Grant", "Abraham Lincoln early failures"]
+    },
+    {
+      "id": "traitor-twist",
+      "name": "Traitor Twist",
+      "angle": "A celebrated hero turns and becomes synonymous with betrayal.",
+      "hook_style": "Start as if praising a hero, then flip the knife.",
+      "structure": ["hero setup", "praise and wounds", "betrayal reveal", "name becomes insult"],
+      "example_topics": ["Benedict Arnold", "Aaron Burr duel aftermath"]
+    },
+    {
+      "id": "refused-power",
+      "name": "Refused Power",
+      "angle": "Someone could have taken a crown or lifelong rule — and walked away.",
+      "hook_style": "Contrast conquerors who seize thrones with the one who said no.",
+      "structure": ["offer of power", "expectation of kings", "refusal", "republic defined"],
+      "example_topics": ["George Washington", "Cincinnatus parallel"]
+    },
+    {
+      "id": "overlooked-hero",
+      "name": "Overlooked Hero",
+      "angle": "A critical figure history textbooks skim past — until you hear what they did.",
+      "hook_style": "You know the famous name. You don't know the person who made it possible.",
+      "structure": ["famous event", "hidden actor", "concrete contribution", "why forgotten"],
+      "example_topics": ["Sybil Ludington", "Robert Smalls"]
+    },
+    {
+      "id": "ironic-ending",
+      "name": "Ironic Ending",
+      "angle": "A plan, prophecy, or ambition ends in the opposite of what anyone expected.",
+      "hook_style": "State the intended outcome, then land the historical punchline.",
+      "structure": ["ambition stated", "momentum builds", "reversal", "irony lands"],
+      "example_topics": ["Titanic unsinkable myth", "Prohibition crime boom"]
+    },
+    {
+      "id": "one-decision",
+      "name": "One Decision",
+      "angle": "A single choice in a room, battlefield, or court rewrites the country's path.",
+      "hook_style": "Zoom into one moment — one vote, one order, one signature.",
+      "structure": ["the fork", "pressure in the room", "the decision", "aftermath cascade"],
+      "example_topics": ["Louisiana Purchase", "Emancipation timing"]
+    },
+    {
+      "id": "underdog-victory",
+      "name": "Underdog Victory",
+      "angle": "Outgunned, outnumbered, or written off — then they win anyway.",
+      "hook_style": "Stack the odds against them in the first two sentences.",
+      "structure": ["impossible odds", "unlikely method", "turning point", "legacy"],
+      "example_topics": ["Battle of New Orleans 1815", "Yorktown"]
+    }
+  ]
+}

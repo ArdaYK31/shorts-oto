@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C · Daylight Atelier</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f0e8dc;
+      --paper: #f7f1e8;
+      --ink: #1c1612;
+      --muted: #6b5e52;
+      --line: #d9cbb8;
+      --copper: #b86b3c;
+      --copper-deep: #8f4e2a;
+      --sage: #4f6f5a;
+      --wash: #e5d6c4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Source Sans 3", sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 100% 80% at 0% 0%, #efe2d0 0%, transparent 55%),
+        radial-gradient(ellipse 80% 50% at 100% 100%, #e8d5c0 0%, transparent 50%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(28, 22, 18, 0.015) 3px,
+          rgba(28, 22, 18, 0.015) 4px
+        ),
+        var(--bg);
+    }
+    .frame {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 22px 60px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+    .brand h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .brand p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .nav {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 8px 12px;
+    }
+    .nav a.on {
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: 0 1px 0 var(--line);
+    }
+    .nav .cta {
+      background: var(--copper);
+      color: #fff8f2;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: 0;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    .nav .cta:hover { background: var(--copper-deep); }
+    .layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+    }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 40px rgba(28, 22, 18, 0.06);
+      padding: 22px;
+    }
+    .card h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .card .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+    .series-hero {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 18px;
+      padding: 16px;
+      background: var(--wash);
+      border: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+    .cover {
+      aspect-ratio: 9/14;
+      background: linear-gradient(165deg, #5c4a38, #2a2118);
+      position: relative;
+    }
+    .cover::after {
+      content: "HISTORY";
+      position: absolute;
+      inset: auto 8px 10px;
+      font-family: "Fraunces", serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: #f2ebe1;
+      opacity: 0.85;
+    }
+    .series-hero h3 {
+      font-family: "Fraunces", serif;
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+    .series-hero p { color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .chip {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      padding: 4px 8px;
+      background: var(--paper);
+      color: var(--muted);
+    }
+    .chip.good { color: var(--sage); border-color: rgba(79,111,90,0.35); }
+    .episodes { display: grid; gap: 10px; }
+    .ep {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 12px;
+      border-top: 1px solid var(--line);
+    }
+    .ep h4 { font-size: 0.95rem; font-weight: 650; margin-bottom: 3px; }
+    .ep p { font-size: 0.82rem; color: var(--muted); }
+    .btns { display: flex; gap: 6px; }
+    .btns button {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 8px 12px;
+      font: 600 0.78rem "Source Sans 3", sans-serif;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .btns .yes {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: #f4faf5;
+    }
+    .btns .no { color: var(--copper-deep); }
+    .preview-block {
+      margin-top: 8px;
+    }
+    .phone-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 8px 0 16px;
+    }
+    .phone {
+      width: min(220px, 100%);
+      aspect-ratio: 9/16;
+      background: linear-gradient(180deg, #6a543f, #2c2218);
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 50px rgba(28,22,18,0.18);
+      position: relative;
+    }
+    .phone .cap {
+      position: absolute;
+      left: 10%; right: 10%;
+      bottom: 26%;
+      text-align: center;
+      color: #fff;
+      font-family: "Fraunces", serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      line-height: 1.2;
+      text-shadow: 0 2px 0 rgba(0,0,0,0.8);
+    }
+    .quote {
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.45;
+      color: var(--ink);
+      border-left: 3px solid var(--copper);
+      padding-left: 14px;
+      margin-bottom: 16px;
+    }
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--copper-deep); }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <header>
+      <div class="brand">
+        <h1>Atelier</h1>
+        <p>Faceless history series — review before the world sees it.</p>
+      </div>
+      <div class="nav">
+        <a class="on" href="#">Series</a>
+        <a href="#">Queue</a>
+        <a href="#">Library</a>
+        <a href="#">Settings</a>
+        <button class="cta">New episode</button>
+      </div>
+    </header>
+    <div class="layout">
+      <section class="card">
+        <h2>American History Vault</h2>
+        <p class="sub">Your flagship series · Kokoro voice · 5 posts / week</p>
+        <div class="series-hero">
+          <div class="cover"></div>
+          <div>
+            <h3>Quiet power. Loud hooks.</h3>
+            <p>Arşiv görselleri, sinematik grade, kelime kelime caption. Her bölüm onaydan geçer.</p>
+            <div class="chips">
+              <span class="chip good">QC strict</span>
+              <span class="chip">45s target</span>
+              <span class="chip">YouTube Unlisted→Public</span>
+            </div>
+          </div>
+        </div>
+        <div class="episodes">
+          <div class="ep">
+            <div>
+              <h4>The Nobody Who Saved America</h4>
+              <p>Ready for approval · 48s · media score 86</p>
+            </div>
+            <div class="btns">
+              <button class="yes">Approve</button>
+              <button class="no">Reject</button>
+            </div>
+          </div>
+          <div class="ep">
+            <div>
+              <h4>The Man Who Refused a Crown</h4>
+              <p>Waiting on fact check</p>
+            </div>
+            <div class="btns">
+              <button>Open</button>
+            </div>
+          </div>
+          <div class="ep">
+            <div>
+              <h4>Hero Turned Traitor</h4>
+              <p>Rendering…</p>
+            </div>
+            <div class="btns">
+              <button disabled style="opacity:.45">Wait</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <aside class="card preview-block">
+        <h2>Now reviewing</h2>
+        <p class="sub">Ulysses S. Grant</p>
+        <div class="phone-wrap">
+          <div class="phone"><div class="cap">Sold firewood<br/>just to eat.</div></div>
+        </div>
+        <p class="quote">“Before he saved the Union, he failed at almost everything.”</p>
+        <div class="btns" style="justify-content:stretch">
+          <button class="yes" style="flex:1">Approve &amp; queue upload</button>
+        </div>
+      </aside>
+    </div>
+    <footer><a href="index.html">← Tüm prototiplere dön</a> · Prototype C · Daylight Atelier</footer>
+  </div>
+</body>
+</html>

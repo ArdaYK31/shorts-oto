@@ -1,0 +1,133 @@
+﻿project:
+  name: chronoshorts-history-hooks
+  series: History Hooks
+  audience: american_viewers
+  language: en
+  aspect_ratio: "9:16"
+  width: 1080
+  height: 1920
+  fps: 30
+  max_duration_sec: 58
+
+paths:
+  topics: topics
+  scripts: scripts
+  audio: audio
+  media_raw: media/raw
+  media_processed: media/processed
+  captions: captions
+  out: out
+  bgm: bgm
+  prompts: prompts
+  scenarios: scenarios
+  seo: seo
+
+script:
+  provider: template
+  ollama_url: http://127.0.0.1:11434
+  ollama_model: llama3.2
+  target_words_min: 80
+  target_words_max: 140
+  prompt_file: prompts/script_system.txt
+  language: en
+
+tts:
+  provider: kokoro
+  # am_fenrir: deeper/fuller than am_michael (A/B vs adam/puck/daniel); + FFmpeg post in tts.py
+  voice: am_fenrir
+  speed: 0.98
+  lang: en-us
+  kokoro_onnx_voice: am_fenrir
+  kokoro_onnx_model: "C:/kokoro-models/kokoro-v1.0.onnx"
+  kokoro_onnx_voices: "C:/kokoro-models/voices-v1.0.bin"
+  edge_voice: en-US-ChristopherNeural
+  edge_rate: "+5%"
+
+media:
+  image_count: 12
+  seconds_per_image: 3.5  # target cut; hard max 5s enforced in assemble/captions
+  ken_burns_zoom: 1.08
+  user_agent: "yt-history-shorts/0.2 (local automation; educational)"
+  score_enabled: true
+  min_width: 700
+  min_height: 500
+  hard_min_width: 600
+  hard_min_height: 450
+  min_score: 20
+
+captions:
+  enabled: true
+  provider: whisper
+  whisper_model: base.en
+  whisper_device: cpu
+  whisper_compute_type: int8
+  words_per_line: 4
+  font_size: 68
+  margin_v: 380
+  primary_color: "&H00FFFFFF"
+  highlight_color: "&H0000FFFF"
+  outline_color: "&H00000000"
+  outline: 5
+  bold: true
+  # Cold-open: big hook caption ~2s, then karaoke
+  hook_seconds: 2.0
+  hook_font_size: 92
+  hook_margin_v: 700
+  hook_color: "&H0000D7FF"
+
+assemble:
+  crf: 17
+  preset: medium
+  crossfade_sec: 0.4
+  loudnorm_i: -14
+  loudnorm_tp: -1.5
+  loudnorm_lra: 11
+  vignette: true
+  grain: true
+  grain_strength: 4
+  contrast: 1.07
+  saturation: 0.94
+  brightness: 0.015
+
+audio_mix:
+  narration_volume: 1.0
+  # Audible soft underscore — ducked under voice (sidechain); hearable in pauses
+  bgm_volume: 0.31
+  bgm_file: "cinematic_ambient_underscore.mp3"
+  bgm_duck: true
+
+quality_gates:
+  min_duration_sec: 20
+  max_duration_sec: 60
+  require_audio: true
+  require_video: true
+
+schedule:
+  timezone: Europe/Istanbul  # GMT+3
+  times: ["00:00", "08:00", "16:00"]
+  auto_upload: true
+  require_approval: false  # FULL AUTOPILOT — never wait for Approve / review queue
+  privacy: public  # YouTube — herkese açık; IG Reels / TikTok feed de public
+
+platforms:
+  youtube: true
+  instagram: true
+  tiktok: true
+
+upload:
+  mode: autopilot  # cloud schedule posts immediately; Atelier Approve is optional/manual only
+  privacy: public
+  category_id: "27"
+  credentials_dir: credentials
+  # Identity only (OAuth) — never a password
+  google_account: efsaneshorts@gmail.com
+  language: en
+  default_tags:
+    - Shorts
+    - history
+    - History Shorts
+    - ChronoShorts
+    - documentary
+    - did you know
+    - world history
+    - American history

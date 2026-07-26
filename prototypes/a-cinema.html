@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>A · Cinema Vault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0e0c0a;
+      --panel: #161310;
+      --panel2: #1c1814;
+      --fg: #f2ebe1;
+      --muted: #9e9488;
+      --gold: #d4b483;
+      --gold-dim: #8a7349;
+      --line: rgba(212, 180, 131, 0.18);
+      --danger: #c45c4a;
+      --ok: #7a9e6e;
+      --review: #c9a227;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "IBM Plex Sans", sans-serif;
+      background:
+        radial-gradient(ellipse 90% 60% at 10% 0%, #2a2118 0%, transparent 50%),
+        radial-gradient(ellipse 70% 40% at 100% 100%, #1a1510 0%, transparent 45%),
+        var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+    }
+    nav {
+      border-right: 1px solid var(--line);
+      padding: 28px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      background: rgba(14, 12, 10, 0.85);
+      backdrop-filter: blur(8px);
+    }
+    .logo {
+      font-family: "Instrument Serif", serif;
+      font-size: 1.65rem;
+      line-height: 1.1;
+      color: var(--gold);
+    }
+    .logo small {
+      display: block;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .nav a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 2px;
+      font-size: 0.92rem;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav a:hover { color: var(--fg); }
+    .nav a.active {
+      color: var(--gold);
+      background: rgba(212, 180, 131, 0.08);
+      border-left: 2px solid var(--gold);
+    }
+    main { padding: 28px 32px 48px; overflow: auto; }
+    header.top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 28px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    header.top h1 {
+      font-family: "Syne", sans-serif;
+      font-weight: 600;
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+    }
+    header.top p { color: var(--muted); margin-top: 6px; font-size: 0.9rem; }
+    .btn {
+      border: 1px solid var(--gold-dim);
+      background: linear-gradient(180deg, #3a3020, #2a2418);
+      color: var(--gold);
+      padding: 10px 18px;
+      font: 600 0.85rem "Syne", sans-serif;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+    }
+    .btn:hover { border-color: var(--gold); }
+    .layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+    }
+    @media (max-width: 980px) {
+      body { grid-template-columns: 1fr; }
+      nav { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--line); }
+      .layout { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 18px;
+    }
+    .panel h2 {
+      font-family: "Instrument Serif", serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 14px;
+      color: var(--gold);
+    }
+    .series {
+      display: grid;
+      gap: 10px;
+    }
+    .series-item {
+      display: grid;
+      grid-template-columns: 72px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      background: var(--panel2);
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .series-item:hover, .series-item.on {
+      border-color: var(--line);
+    }
+    .thumb {
+      width: 72px; height: 96px;
+      background:
+        linear-gradient(160deg, #3a2f24, #1a1510),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='96'%3E%3Crect fill='%232a2118' width='72' height='96'/%3E%3C/svg%3E");
+      background-size: cover;
+      position: relative;
+    }
+    .thumb::after {
+      content: "";
+      position: absolute; inset: 0;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+    .meta h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .meta p { font-size: 0.78rem; color: var(--muted); }
+    .badge {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .badge.review { color: var(--review); border-color: rgba(201,162,39,0.4); }
+    .badge.live { color: var(--ok); border-color: rgba(122,158,110,0.4); }
+    .queue-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+    .queue-row:last-child { border-bottom: 0; }
+    .queue-row h3 { font-size: 0.9rem; margin-bottom: 4px; }
+    .queue-row p { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+    .actions { display: flex; gap: 6px; flex-direction: column; }
+    .mini {
+      font-size: 0.72rem;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--fg);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .mini.ok { border-color: rgba(122,158,110,0.5); color: var(--ok); }
+    .mini.no { border-color: rgba(196,92,74,0.5); color: var(--danger); }
+    .preview {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .phone {
+      aspect-ratio: 9/16;
+      width: 100%;
+      max-width: 200px;
+      background: linear-gradient(180deg, #2c241c, #12100e);
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+    .phone .cap {
+      position: absolute;
+      left: 10%; right: 10%;
+      bottom: 28%;
+      text-align: center;
+      font-family: "Syne", sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-shadow: 0 2px 0 #000, 0 0 8px #000;
+      line-height: 1.2;
+    }
+    .script {
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: var(--muted);
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 14px;
+    }
+    .script strong { color: var(--fg); font-weight: 500; }
+    .back {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .back:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div>
+      <div class="logo">Chronos<div><small>Series Autopilot</small></div></div>
+    </div>
+    <div class="nav">
+      <a class="active" href="#">Series</a>
+      <a href="#">Approval</a>
+      <a href="#">Library</a>
+      <a href="#">YouTube</a>
+      <a href="#">Settings</a>
+    </div>
+    <a class="back" href="index.html">← Prototipler</a>
+  </nav>
+  <main>
+    <header class="top">
+      <div>
+        <h1>American History</h1>
+        <p>1 series · 3 awaiting review · quality gate ON</p>
+      </div>
+      <button class="btn">+ New episode</button>
+    </header>
+    <div class="layout">
+      <section class="panel">
+        <h2>Active series</h2>
+        <div class="series">
+          <div class="series-item on">
+            <div class="thumb"></div>
+            <div class="meta">
+              <h3>American History Vault</h3>
+              <p>Kokoro · 45s · 5× / week · Unlisted first</p>
+            </div>
+            <span class="badge live">Live</span>
+          </div>
+          <div class="series-item">
+            <div class="thumb" style="background:linear-gradient(160deg,#24303a,#101418)"></div>
+            <div class="meta">
+              <h3>Founders &amp; Flaws</h3>
+              <p>Draft · voice TBD</p>
+            </div>
+            <span class="badge">Draft</span>
+          </div>
+        </div>
+        <div class="preview">
+          <div class="phone">
+            <div class="cap">Before he saved<br/>the Union…</div>
+          </div>
+          <div class="script">
+            <strong>Ulysses S. Grant — review script</strong><br/><br/>
+            Before he saved the Union, Ulysses S. Grant failed at almost everything. He left the army. Went broke as a farmer. Sold firewood on street corners just to eat. Then the Civil War came — and the man everyone underestimated became Lincoln’s last hope…
+          </div>
+        </div>
+      </section>
+      <section class="panel">
+        <h2>Approval queue</h2>
+        <div class="queue-row">
+          <div>
+            <h3>The Nobody Who Saved America</h3>
+            <p>QC passed · Whisper captions · -14.1 LUFS · 48s</p>
+          </div>
+          <div class="actions">
+            <button class="mini ok">Approve</button>
+            <button class="mini no">Reject</button>
+          </div>
+        </div>
+        <div class="queue-row">
+          <div>
+            <h3>Offered a Crown — Said No</h3>
+            <p class="badge review" style="display:inline-block;margin-top:6px">Needs fact check</p>
+          </div>
+          <div class="actions">
+            <button class="mini">Open</button>
+          </div>
+        </div>
+        <div class="queue-row">
+          <div>
+            <h3>Hero Turned Traitor</h3>
+            <p>Rendering grade pass…</p>
+          </div>
+          <div class="actions">
+            <button class="mini" disabled style="opacity:.4">Wait</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

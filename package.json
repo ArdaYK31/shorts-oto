@@ -1,0 +1,11 @@
+{
+  "name": "yt-otomatizasyon",
+  "private": true,
+  "description": "American history Shorts pipeline + Atelier Series Autopilot",
+  "scripts": {
+    "web": "npm --prefix apps/web run dev",
+    "web:setup": "npm --prefix apps/web run db:setup",
+    "pipeline": "python src/run_pipeline.py"
+  }
+}
+

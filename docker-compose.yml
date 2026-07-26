@@ -1,0 +1,28 @@
+# Optional VPS / local Docker path (PC-off cloud alternative to GitHub Actions)
+# Usage:
+#   docker compose build
+#   docker compose run --rm shorts
+#
+# Cron on a cheap VPS (Europe/Istanbul):
+#   0 0,8,16 * * * cd /opt/chronoshorts && docker compose run --rm shorts >> logs/cron.log 2>&1
+services:
+  shorts:
+    build: .
+    image: chronoshorts:latest
+    working_dir: /app
+    volumes:
+      - ./credentials:/app/credentials:ro
+      - ./topics:/app/topics
+      - ./logs:/app/logs
+      - ./out:/app/out
+      - hf_cache:/root/.cache/huggingface
+      - torch_cache:/root/.cache/torch
+    environment:
+      - ESPEAK_DATA_PATH=/usr/lib/x86_64-linux-gnu/espeak-ng-data
+      - HF_HOME=/root/.cache/huggingface
+    # Override for smoke: command: ["python", "src/scheduled_run.py", "--dry-run"]
+    command: ["python", "src/scheduled_run.py"]
+
+volumes:
+  hf_cache:
+  torch_cache:
