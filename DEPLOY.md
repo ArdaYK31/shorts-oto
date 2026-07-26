@@ -7,14 +7,18 @@ Public HTTPS status panel for ChronoShorts autopilot:
 - Image budget meter ($30/mo fal.ai)
 - Platform connection flags (no secrets shown)
 
-## Fast path (no Vercel login): GitHub Pages
-Static panel lives in `docs/index.html` and reads
-`https://raw.githubusercontent.com/ArdaYK31/shorts-oto/main/logs/latest.json`.
+## Fast path (no Vercel login): live status NOW
+Open this HTTPS URL (reads `logs/latest.json` from GitHub):
 
+https://cdn.jsdelivr.net/gh/ArdaYK31/shorts-oto@main/docs/index.html
+
+Mirror: https://raw.githack.com/ArdaYK31/shorts-oto/main/docs/index.html
+
+### Optional: GitHub Pages branded URL
+Static panel lives in `docs/index.html`.
 1. Repo → Settings → Pages → Source: **GitHub Actions**
-2. Push triggers `.github/workflows/pages.yml`
-3. Live URL (after first green run):
-   `https://ardayk31.github.io/shorts-oto/`
+2. Re-run workflow `Deploy Status Pages`
+3. Then: `https://ardayk31.github.io/shorts-oto/`
 
 ## Full Next.js app: Vercel
 
