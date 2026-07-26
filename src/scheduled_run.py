@@ -63,6 +63,7 @@ from topic_state import (  # noqa: E402
     mark_uploaded,
 )
 from tts import synthesize  # noqa: E402
+from sfx import ensure_sfx_library  # noqa: E402
 from upload_instagram import credentials_present as ig_creds  # noqa: E402
 from upload_instagram import upload_reel  # noqa: E402
 from upload_tiktok import credentials_present as tt_creds  # noqa: E402
@@ -296,6 +297,8 @@ def run_pipeline(
     meta_path = script_path.parent / f"{stem}.meta.json"
 
     cleanup_temp_mp4s(stem=stem, keep=cfg["paths_resolved"]["out"] / f"{stem}.mp4")
+
+    ensure_sfx_library(cfg)
 
     audio_path = synthesize(script_path)
     fetch_media(meta_path)

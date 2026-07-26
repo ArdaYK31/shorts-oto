@@ -15,6 +15,7 @@ from fetch_media import fetch_media
 from generate_script import generate_script
 from quality_gates import assert_ok
 from config_loader import load_config
+from sfx import ensure_sfx_library
 from tts import synthesize
 
 
@@ -32,6 +33,9 @@ def main() -> None:
 
     # Drop stale intermediates before a new encode
     cleanup_temp_mp4s(stem=stem, keep=cfg["paths_resolved"]["out"] / f"{stem}.mp4")
+
+    # Cache cinematic SFX once (ElevenLabs Sound Gen or local); assemble mixes by beat
+    ensure_sfx_library(cfg)
 
     audio_path = synthesize(script_path)
     fetch_media(meta_path)

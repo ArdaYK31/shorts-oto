@@ -49,24 +49,29 @@ tts:
   # Do not rotate per episode; A/B only via explicit config change
   voice_locked: true
   voice: am_adam
-  speed: 1.05
+  # Match Farzan Films Short (~150–170 WPM documentary urgency)
+  speed: 1.12
   lang: en-us
   kokoro_onnx_voice: am_adam
   kokoro_onnx_model: "C:/kokoro-models/kokoro-v1.0.onnx"
   kokoro_onnx_voices: "C:/kokoro-models/voices-v1.0.bin"
   edge_voice: en-US-ChristopherNeural
-  edge_rate: "+5%"
+  edge_rate: "+8%"
   # PAYG path — key ONLY via GitHub secret / env (never paste in chat or commit)
   elevenlabs:
     # Secret: ELEVENLABS_API_KEY (alias ELEVEN_API_KEY). Multilingual v2 narration.
     model_id: eleven_multilingual_v2
-    # ElevenLabs → Voices → Voice ID (Adam US male premade; replace as needed)
-    voice_id: "pNInz6obpgDQGcFmaJgB"
-    stability: 0.45
-    similarity_boost: 0.75
-    style: 0.15
+    # Brian (premade) — deep resonant American male; best stock match for
+    # documentary-urgency history Shorts (ref: youtube.com/shorts/kq7ByxGRBvs).
+    # Was Adam pNInz6obpgDQGcFmaJgB; Brian reads more narrator / less "chatty AI".
+    voice_id: "nPczCjzI2devNBz1zQrb"
+    voice_name: Brian
+    # Lower stability + higher style = punchier hooks / asides like the reference
+    stability: 0.32
+    similarity_boost: 0.80
+    style: 0.42
     use_speaker_boost: true
-    speed: 1.05
+    speed: 1.12
 
 media:
   # ChronoShorts match: AI painterly stills (see STYLE_GUIDE_CHRONOSHORTS.md)
@@ -159,10 +164,34 @@ assemble:
 
 audio_mix:
   narration_volume: 1.0
-  # Slightly lower for consonant clarity; still audible in pauses with ducking
-  bgm_volume: 0.25
+  # Ref Short ≈ voice ~9 dB over bed; keep BGM audible in pauses with ducking
+  bgm_volume: 0.20
   bgm_file: "cinematic_ambient_underscore.mp3"
   bgm_duck: true
+
+# Cinematic SFX stings timed to viral beats (hook / twist / payoff).
+# Prefer ElevenLabs Sound Generation once → cache under assets/sfx/ (not per video).
+audio:
+  sfx_enabled: true  # mirror of audio.sfx.enabled for quick toggles
+  sfx:
+    enabled: true
+    prefer_elevenlabs: true
+    model_id: eleven_text_to_sound_v2
+    prompt_influence: 0.35
+    volume: 0.20          # under narration; ~0.15–0.25 range
+    cache_dir: assets/sfx
+    # Fractions of narration duration when meta has no claim_at/twist_at/payoff_at
+    hook_at_frac: 0.02
+    twist_at_frac: 0.52
+    payoff_at_frac: 0.90
+    durations:
+      hook: 0.85
+      twist: 1.0
+      payoff: 0.90
+    prompts:
+      hook: "short cinematic whoosh transition, airy sweep, history documentary sting, 0.8 seconds, no voice, no music melody"
+      twist: "soft cinematic impact hit with subtle tension riser tail, dark curiosity, 1.0 seconds, no voice, no melody"
+      payoff: "punchy soft cinematic impact boom, documentary payoff sting, 0.9 seconds, no voice, no melody"
 
 quality_gates:
   min_duration_sec: 20

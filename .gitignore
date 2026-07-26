@@ -72,3 +72,6 @@ secrets/
 **/secrets/
 node_modules/
 out/*.mp4
+
+# Local analysis scratch (yt-dlp / ffprobe; never redistribute)
+_analysis/

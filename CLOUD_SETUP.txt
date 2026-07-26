@@ -84,8 +84,13 @@ C) ElevenLabs TTS (opsiyonel PAYG — secret ekleyince açılır)
     → GitHub → Settings → Secrets and variables → Actions → New repository secret
     → Name: ELEVENLABS_API_KEY  (değeri sohbete YAPISTIRMA — sadece GitHub Secret)
   config.yaml: tts.provider=auto · model_id=eleven_multilingual_v2
+  Voice: Brian (nPczCjzI2devNBz1zQrb) — US documentary narrator; style/stability tuned
+         to Farzan-style Short urgency. Key yoksa / API hata → Kokoro am_adam.
+  SFX: audio.sfx.enabled — ElevenLabs Sound Generation once → assets/sfx/ cache
+       (hook/twist/payoff). Aynı sting her videoda yeniden üretilmez (~$0 ekstra/video).
   Key yoksa / API hata verirse otomatik Kokoro am_adam (zorunlu değil).
   Zorla ücretsiz: tts.provider=kokoro
+  SFX kapat: audio.sfx_enabled: false
 
   CLI (gh kuruluysa):
     gh secret set ELEVENLABS_API_KEY --repo ArdaYK31/shorts-oto

@@ -15,6 +15,7 @@ import tempfile
 from pathlib import Path
 
 from config_loader import load_config
+from sfx import ensure_sfx_library, resolve_sfx_times, sfx_enabled, sfx_volume
 
 # ASCII-only work dir for FFmpeg/libass (Windows non-ASCII home paths break filters).
 # Must NOT hardcode C:\… inside Linux Docker — that made Cloud assemble fail instantly.
@@ -630,61 +631,97 @@ def assemble(
 
     llra = float(ass_cfg.get("loudnorm_lra", 11))
 
+    # --- SFX stings (hook / twist / payoff), cached under assets/sfx/ ---
+    meta_obj: dict = {}
+    meta_early = scripts_dir / f"{stem}.meta.json"
+    if meta_early.exists():
+        try:
+            meta_obj = json.loads(meta_early.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            meta_obj = {}
+    narration_txt = ""
+    script_txt = scripts_dir / f"{stem}.txt"
+    if script_txt.exists():
+        narration_txt = script_txt.read_text(encoding="utf-8")
+
+    sfx_paths: dict = {}
+    sfx_times: dict = {}
+    sv = 0.2
+    if sfx_enabled(cfg):
+        try:
+            sfx_paths = ensure_sfx_library(cfg)
+            sfx_times = resolve_sfx_times(
+                duration, meta=meta_obj, narration=narration_txt, cfg=cfg
+            )
+            sv = sfx_volume(cfg)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[assemble] SFX skipped ({exc})")
+            sfx_paths = {}
+
+    sfx_inputs: list[tuple[str, float, Path]] = []
+    for beat in ("hook", "twist", "payoff"):
+        path = sfx_paths.get(beat)
+        if path and Path(path).exists() and beat in sfx_times:
+            sfx_inputs.append((beat, float(sfx_times[beat]), Path(path)))
+
+    next_idx = narr_idx + 1
+    bgm_idx = None
     if has_bgm:
-
-        bgm_idx = narr_idx + 1
-
+        bgm_idx = next_idx
         inputs.extend(["-stream_loop", "-1", "-i", str(bgm_path)])
+        next_idx += 1
 
+    sfx_indices: list[tuple[str, float, int]] = []
+    for beat, t_sec, path in sfx_inputs:
+        sfx_indices.append((beat, t_sec, next_idx))
+        inputs.extend(["-i", str(path)])
+        next_idx += 1
+
+    # Build base narr (+ optional ducked BGM) → [abase], then overlay SFX → [aout]
+    if has_bgm and bgm_idx is not None:
         if duck:
-
             filter_parts.append(
-
                 f"[{narr_idx}:a]volume={nv},asplit=2[narr_sc][narr_mix];"
-
                 f"[{bgm_idx}:a]volume={bv},afade=t=in:st=0:d=1.2,afade=t=out:st={max(duration - 1.5, 0):.2f}:d=1.4[bg];"
-
                 f"[bg][narr_sc]sidechaincompress="
-
                 f"threshold=0.035:ratio=6:attack=60:release=500:makeup=1.15:knee=8[bgd];"
-
-                f"[narr_mix][bgd]amix=inputs=2:duration=first:dropout_transition=2[amixed];"
-
-                f"[amixed]loudnorm=I={li}:TP={ltp}:LRA={llra}[aout]"
-
+                f"[narr_mix][bgd]amix=inputs=2:duration=first:dropout_transition=2[abase]"
             )
-
             print(f"[assemble] BGM={bgm_path.name} vol={bv} + sidechain duck")
-
         else:
-
             filter_parts.append(
-
                 f"[{narr_idx}:a]volume={nv}[narr];"
-
                 f"[{bgm_idx}:a]volume={bv},afade=t=in:st=0:d=1[bg];"
-
-                f"[narr][bg]amix=inputs=2:duration=first:dropout_transition=2[amixed];"
-
-                f"[amixed]loudnorm=I={li}:TP={ltp}:LRA={llra}[aout]"
-
+                f"[narr][bg]amix=inputs=2:duration=first:dropout_transition=2[abase]"
             )
-
-        audio_map = "[aout]"
-
+            print(f"[assemble] BGM={bgm_path.name} vol={bv} (no duck)")
     else:
-
-        filter_parts.append(
-
-            f"[{narr_idx}:a]volume={nv},loudnorm=I={li}:TP={ltp}:LRA={llra}[aout]"
-
-        )
-
-        audio_map = "[aout]"
-
+        filter_parts.append(f"[{narr_idx}:a]volume={nv}[abase]")
         if bgm_file:
-
             print(f"[assemble] BGM missing ({bgm_file}) - narration only")
+
+    if sfx_indices:
+        sfx_labels = []
+        for i, (beat, t_sec, idx) in enumerate(sfx_indices):
+            ms = max(0, int(round(t_sec * 1000)))
+            lab = f"sfx{i}"
+            # adelay + apad so amix duration follows narration bed
+            filter_parts.append(
+                f"[{idx}:a]volume={sv},aformat=sample_fmts=fltp:channel_layouts=mono,"
+                f"adelay={ms}|{ms},apad[{lab}]"
+            )
+            sfx_labels.append(f"[{lab}]")
+            print(f"[assemble] SFX {beat} @{t_sec:.2f}s vol={sv}")
+        n_mix = 1 + len(sfx_labels)
+        mix_in = "[abase]" + "".join(sfx_labels)
+        filter_parts.append(
+            f"{mix_in}amix=inputs={n_mix}:duration=first:dropout_transition=0:normalize=0[amixed];"
+            f"[amixed]loudnorm=I={li}:TP={ltp}:LRA={llra}[aout]"
+        )
+    else:
+        filter_parts.append(f"[abase]loudnorm=I={li}:TP={ltp}:LRA={llra}[aout]")
+
+    audio_map = "[aout]"
 
     staged_ass: Path | None = None
 

@@ -1,20 +1,23 @@
-﻿# BGM license
-
-## Active track
+﻿# Active track
 File: cinematic_ambient_underscore.mp3
 Source: Pixabay CDN (royalty-free music download)
 URL: https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3
 License: Pixabay Content License — free for commercial/non-commercial use in videos;
          no attribution required (https://pixabay.com/service/license/)
-Notes: Soft cinematic ambient underscore for ducked narration mix (bgm_volume ~0.15).
+Notes: Soft cinematic ambient underscore for ducked narration mix (bgm_volume ~0.20).
+       Mood match for dark-curiosity / history-tension Shorts beds.
 
-## Short reference (not used)
-Reference Short: https://www.youtube.com/shorts/s81uMW8ZKmI
-Sound name: NOT scraped — user forbade opening/playing the Short in browser.
-Action: Used a legal Pixabay cinematic ambient track as a mood-matched substitute
-        instead of ripping copyrighted YouTube Short audio.
+## Style reference (audio NOT redistributed)
+Reference Short: https://www.youtube.com/shorts/kq7ByxGRBvs
+Channel: Farzan Films — documentary-urgency narration + ducked underscore.
+Action: Legal Pixabay bed retained; YouTube audio never copied into this repo.
 
 ## Fallback retained
 File: soft_cinematic_pad.mp3
 Source: Generated locally with FFmpeg (layered sine chord pad + tremolo + filtered pink noise)
 License: CC0 / public domain equivalent — original synthetic underscore for this project
+
+## Optional upgrade keywords (if replacing bed)
+Pixabay / Epidemic Sound search: "dark documentary underscore", "history tension ambient",
+"cinematic curiosity pad", "epic soft drone no melody"
+Drop replacement MP3 into bgm/ and set audio_mix.bgm_file in config.yaml.
