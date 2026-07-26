@@ -46,8 +46,9 @@ tts:
 
 media:
   # ChronoShorts match: AI painterly stills (see STYLE_GUIDE_CHRONOSHORTS.md)
-  # wikimedia | ai_local | ai_api — default ai_local ($0; Pollinations fallback if no Diffusers)
-  provider: ai_local
+  # Cloud default: fal.ai Flux Schnell (~$0.003–0.006/img → ~$6–10/mo @ ~1000 imgs; cap $30)
+  # wikimedia | ai_local | ai_api
+  provider: ai_api
   style_prompt_file: prompts/image_style.txt
   ai_local:
     model: stabilityai/sd-turbo
@@ -55,8 +56,19 @@ media:
     guidance: 0.0
     allow_free_api_fallback: true  # Pollinations HTTP if torch/diffusers missing
   ai_api:
-    backend: pollinations  # $0 no key; paid backends not wired yet
-  image_count: 12
+    # fal_flux_schnell | pollinations — fal needs FAL_KEY or IMAGE_API_KEY secret
+    backend: fal_flux_schnell
+    fal_endpoint: "fal-ai/flux/schnell"
+    width: 768
+    height: 1344
+    num_inference_steps: 4
+    budget:
+      monthly_cap_usd: 30.0
+      # Conservative estimate (Schnell ~$0.003/MP; 768x1344 ≈ 1–2 MP billed)
+      cost_per_image_usd: 0.006
+      # Soft stop: if month spend would exceed cap, fall back to Pollinations ($0)
+      fallback_when_over_budget: true
+  image_count: 11
   seconds_per_image: 3.0  # ChronoShorts ~3s cuts; hard max 5s in assemble/captions
   ken_burns_zoom: 1.06
   user_agent: "yt-history-shorts/0.3 (local automation; educational)"

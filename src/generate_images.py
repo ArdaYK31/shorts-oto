@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-"""ChronoShorts-style AI still generation (local Diffusers and/or free Pollinations)."""
+"""ChronoShorts-style AI stills: fal.ai Flux (paid, budgeted) + Pollinations/local fallback."""
 
 import hashlib
+import os
 import re
 import time
 from pathlib import Path
@@ -12,6 +13,7 @@ from urllib.parse import quote
 import requests
 from PIL import Image
 
+from budget import can_afford, record_images, remaining_usd
 from config_loader import load_config
 
 _STYLE_CACHE: str | None = None
@@ -39,7 +41,6 @@ def _load_style_prefix(cfg: dict[str, Any]) -> str:
     root = cfg["_root"]
     path = root / cfg["media"].get("style_prompt_file", "prompts/image_style.txt")
     raw = path.read_text(encoding="utf-8") if path.exists() else ""
-    # Use lines under STYLE PREFIX until blank/NEGATIVE
     lines: list[str] = []
     capture = False
     for line in raw.splitlines():
@@ -99,6 +100,90 @@ def _session(ua: str) -> requests.Session:
     s = requests.Session()
     s.headers.update({"User-Agent": ua, "Accept": "image/*,*/*;q=0.8"})
     return s
+
+
+def _fal_api_key() -> str | None:
+    for name in ("FAL_KEY", "IMAGE_API_KEY", "FAL_API_KEY"):
+        val = (os.environ.get(name) or "").strip()
+        if val:
+            return val
+    return None
+
+
+def generate_via_fal(
+    prompts: list[str],
+    dest_dir: Path,
+    stem: str,
+    session: requests.Session,
+    *,
+    endpoint: str = "fal-ai/flux/schnell",
+    width: int = 768,
+    height: int = 1344,
+    steps: int = 4,
+    negative: str = "",
+) -> list[Path]:
+    """Paid fal.ai Flux Schnell (~$0.003/MP). Needs FAL_KEY / IMAGE_API_KEY."""
+    key = _fal_api_key()
+    if not key:
+        raise RuntimeError("FAL_KEY / IMAGE_API_KEY missing")
+
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    url = f"https://fal.run/{endpoint.lstrip('/')}"
+    headers = {
+        "Authorization": f"Key {key}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+    out: list[Path] = []
+    for i, prompt in enumerate(prompts):
+        seed = int(hashlib.md5(f"{stem}-{i}".encode()).hexdigest()[:8], 16) % 10_000_000
+        body: dict[str, Any] = {
+            "prompt": prompt[:2000],
+            "image_size": {"width": int(width), "height": int(height)},
+            "num_inference_steps": int(steps),
+            "enable_safety_checker": True,
+            "num_images": 1,
+            "seed": seed,
+        }
+        if negative:
+            body["negative_prompt"] = negative[:800]
+        dest = dest_dir / f"{stem}_ai_{i:02d}.jpg"
+        print(f"[ai] fal Flux {i+1}/{len(prompts)} ({endpoint})")
+        last_err: Exception | None = None
+        for attempt in range(3):
+            try:
+                r = session.post(url, headers=headers, json=body, timeout=180)
+                if r.status_code >= 400:
+                    raise RuntimeError(f"fal HTTP {r.status_code}: {r.text[:400]}")
+                data = r.json()
+                images = data.get("images") or []
+                if not images:
+                    raise RuntimeError(f"fal empty images: {str(data)[:300]}")
+                img_url = images[0].get("url") if isinstance(images[0], dict) else None
+                if not img_url:
+                    raise RuntimeError("fal response missing image url")
+                with session.get(img_url, stream=True, timeout=120) as img_r:
+                    img_r.raise_for_status()
+                    with dest.open("wb") as f:
+                        for chunk in img_r.iter_content(1024 * 256):
+                            if chunk:
+                                f.write(chunk)
+                with Image.open(dest) as im:
+                    im.verify()
+                # Re-encode as JPEG if PNG
+                with Image.open(dest) as im:
+                    rgb = im.convert("RGB")
+                    rgb.save(dest, format="JPEG", quality=92)
+                out.append(dest)
+                last_err = None
+                break
+            except Exception as exc:  # noqa: BLE001
+                last_err = exc
+                time.sleep(1.5 * (attempt + 1))
+        if last_err is not None:
+            print(f"[ai] fal failed scene {i}: {last_err}")
+        time.sleep(0.15)
+    return out
 
 
 def generate_via_pollinations(
@@ -185,7 +270,6 @@ def generate_via_diffusers(
         try:
             image = pipe(**kwargs).images[0]
         except Exception:
-            # Some turbo pipelines dislike custom H/W — retry square then crop later
             kwargs.pop("height", None)
             kwargs.pop("width", None)
             image = pipe(**kwargs).images[0]
@@ -202,31 +286,71 @@ def generate_ai_stills(meta: dict[str, Any], need: int) -> list[Path]:
     """
     cfg = load_config()
     media = cfg.get("media") or {}
-    root = cfg["_root"]
     raw_dir = cfg["paths_resolved"]["media_raw"]
     stem = _safe_stem(str(meta.get("id") or "scene"))
     prompts = build_scene_prompts(meta, need, cfg)
     negative = _load_negative(cfg)
     ua = media.get("user_agent", "yt-history-shorts/0.3")
-    provider = str(media.get("provider", "ai_local")).lower()
+    provider = str(media.get("provider", "ai_api")).lower()
     session = _session(ua)
+    api = media.get("ai_api") or {}
+    width = int(api.get("width") or 768)
+    height = int(api.get("height") or 1344)
 
     paths: list[Path] = []
+    used_paid = False
 
     if provider == "ai_api":
-        backend = str((media.get("ai_api") or {}).get("backend", "pollinations")).lower()
-        if backend in {"pollinations", "free"}:
-            paths = generate_via_pollinations(prompts, raw_dir, stem, session)
-        else:
-            raise RuntimeError(
-                f"ai_api.backend={backend} not configured (use pollinations for $0, "
-                "or add a paid backend later)."
-            )
+        backend = str(api.get("backend") or "fal_flux_schnell").lower()
+        fal_key = _fal_api_key()
+        budget_ok = can_afford(need, cfg)
+        want_fal = backend in {
+            "fal",
+            "fal_flux",
+            "fal_flux_schnell",
+            "flux",
+            "flux_schnell",
+        }
+
+        if want_fal and fal_key and budget_ok:
+            try:
+                paths = generate_via_fal(
+                    prompts,
+                    raw_dir,
+                    stem,
+                    session,
+                    endpoint=str(api.get("fal_endpoint") or "fal-ai/flux/schnell"),
+                    width=width,
+                    height=height,
+                    steps=int(api.get("num_inference_steps") or 4),
+                    negative=negative,
+                )
+                used_paid = True
+            except Exception as exc:  # noqa: BLE001
+                print(f"[ai] fal failed ({exc}); falling back to Pollinations")
+                paths = []
+
+        if not paths:
+            if want_fal and not fal_key:
+                print("[ai] FAL_KEY missing — using free Pollinations fallback")
+            elif want_fal and not budget_ok:
+                print(
+                    f"[ai] Monthly image budget exhausted "
+                    f"(remaining ${remaining_usd(cfg):.2f}) — Pollinations fallback"
+                )
+            if not paths:
+                paths = generate_via_pollinations(
+                    prompts, raw_dir, stem, session, width=width, height=height
+                )
+
+        if used_paid and paths:
+            record_images(len(paths), cfg)
+
         if len(paths) < 4:
             raise RuntimeError(f"ai_api produced too few images: {len(paths)}")
         return paths[:need]
 
-    # ai_local (default): try Diffusers, optional free HTTP fallback
+    # ai_local: Diffusers, optional free HTTP fallback
     local_cfg = media.get("ai_local") or {}
     model_id = str(local_cfg.get("model", "stabilityai/sd-turbo"))
     steps = int(local_cfg.get("steps", 4))
@@ -241,7 +365,9 @@ def generate_ai_stills(meta: dict[str, Any], need: int) -> list[Path]:
         print(f"[ai] Local Diffusers unavailable ({exc})")
         if allow_fallback:
             print("[ai] Falling back to free Pollinations API (still $0, AI style)")
-            paths = generate_via_pollinations(prompts, raw_dir, stem, session)
+            paths = generate_via_pollinations(
+                prompts, raw_dir, stem, session, width=width, height=height
+            )
         else:
             raise RuntimeError(f"ai_local failed and free fallback disabled: {exc}") from exc
 
@@ -251,7 +377,6 @@ def generate_ai_stills(meta: dict[str, Any], need: int) -> list[Path]:
 
 
 def process_ai_to_vertical(raw_paths: list[Path], stem: str, need: int) -> list[Path]:
-    # Lazy import avoids circular dependency with fetch_media
     from fetch_media import fit_cover_jpg
 
     cfg = load_config()
@@ -275,7 +400,6 @@ def process_ai_to_vertical(raw_paths: list[Path], stem: str, need: int) -> list[
         except OSError as exc:
             print(f"[ai] SKIP unreadable {raw.name}: {exc}")
     if len(processed) < need and processed:
-        # Cycle-fill like Wikimedia path
         guard = 0
         while len(processed) < need and guard < need * 3:
             guard += 1

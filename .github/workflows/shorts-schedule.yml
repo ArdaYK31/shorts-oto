@@ -4,6 +4,7 @@
 #
 # Each run: Docker render once → SEO → upload IMMEDIATELY (no human Approve / no review queue)
 # YouTube public + Instagram Reels + TikTok when secrets exist.
+# Images: fal.ai Flux Schnell via FAL_KEY (budget ~$30/mo); Pollinations if key missing.
 # Do NOT add GitHub Environment protection rules that require manual approval.
 # Secrets never committed. Missing IG/TT secrets → skip those platforms gracefully.
 
@@ -96,6 +97,8 @@ jobs:
           TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
           TIKTOK_PRIVACY_LEVEL: PUBLIC_TO_EVERYONE
           TIKTOK_MODE: ${{ secrets.TIKTOK_MODE }}
+          FAL_KEY: ${{ secrets.FAL_KEY }}
+          IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY }}
         run: |
           set -euo pipefail
           ARGS=()
@@ -112,6 +115,8 @@ jobs:
             -e TIKTOK_ACCESS_TOKEN \
             -e TIKTOK_PRIVACY_LEVEL \
             -e TIKTOK_MODE \
+            -e FAL_KEY \
+            -e IMAGE_API_KEY \
             -e ESPEAK_DATA_PATH=/usr/lib/x86_64-linux-gnu/espeak-ng-data \
             -e HF_HOME=/root/.cache/huggingface \
             -v "$PWD/credentials:/app/credentials:ro" \
@@ -123,15 +128,27 @@ jobs:
             chronoshorts:latest \
             python src/scheduled_run.py "${ARGS[@]+"${ARGS[@]}"}"
 
-      - name: Persist used topics + schedule log
+      - name: Upload job logs artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chronoshorts-logs
+          path: |
+            logs/latest.json
+            logs/jobs.jsonl
+            logs/budget.json
+            logs/schedule.log
+          if-no-files-found: warn
+
+      - name: Persist used topics + status logs
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add topics/used logs/schedule.log || true
+          git add topics/used logs/schedule.log logs/latest.json logs/jobs.jsonl logs/budget.json || true
           if git diff --staged --quiet; then
             echo "No state changes to commit"
           else
-            git commit -m "chore(schedule): persist used topic + log [skip ci]"
+            git commit -m "chore(schedule): persist used topic + status logs [skip ci]"
             git push
           fi

@@ -20,7 +20,7 @@ export function LoginForm() {
       setError("Wrong password");
       return;
     }
-    router.push("/series");
+    router.push("/status");
     router.refresh();
   }
 

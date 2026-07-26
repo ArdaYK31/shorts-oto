@@ -104,7 +104,7 @@ export default async function SettingsPage() {
         <div className="mb-6 border border-line p-4">
           <h3 className="font-semibold">Voice</h3>
           <p className="mt-1 text-sm text-muted">
-            Production TTS: Kokoro <code>am_fenrir</code> (cloud Docker + local
+            Production TTS: Kokoro <code>am_adam</code> (cloud Docker + local
             .venv312). ESPEAK via apt / <code>C:\espeak-ng-data</code>.
           </p>
         </div>

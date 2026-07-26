@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/auth";
 
 export default async function HomePage() {
-  if (await isAuthenticated()) redirect("/series");
+  if (await isAuthenticated()) redirect("/status");
 
   return (
     <main className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-6 py-16">
@@ -14,32 +14,32 @@ export default async function HomePage() {
         Atelier
       </h1>
       <p className="mt-5 max-w-xl text-lg text-muted">
-        Faceless American history Shorts — English content, local Kokoro + Whisper.
-        Cloud schedule is full autopilot (public, no Approve wait). Zero paid video APIs.
+        Faceless history Shorts for a US audience — ChronoShorts AI stills, Kokoro voice,
+        full cloud autopilot (public, no Approve wait). Status panel tracks schedule, jobs,
+        and the $30/mo image budget.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">
         <Link href="/login" className="btn btn-primary px-6 py-3">
           Enter workspace
         </Link>
-        <Link href="/series" className="btn px-6 py-3">
-          Series list
+        <Link href="/status" className="btn px-6 py-3">
+          Status panel
         </Link>
       </div>
       <ul className="mt-14 grid gap-4 text-sm text-muted md:grid-cols-3">
         <li className="card p-4">
-          <strong className="text-ink">Beat-synced scenes</strong>
-          <p className="mt-1">Whisper beats drive Ken Burns cuts.</p>
-        </li>
-        <li className="card p-4">
-          <strong className="text-ink">Optional queue</strong>
-          <p className="mt-1">Local preview only — cloud never waits.</p>
-        </li>
-        <li className="card p-4">
           <strong className="text-ink">3× daily cloud</strong>
-          <p className="mt-1">YT + IG + TT public via GitHub Actions.</p>
+          <p className="mt-1">00:00 / 08:00 / 16:00 Istanbul via GitHub Actions.</p>
+        </li>
+        <li className="card p-4">
+          <strong className="text-ink">fal.ai Flux budget</strong>
+          <p className="mt-1">~$0.006/img target · $30/mo cap · Pollinations fallback.</p>
+        </li>
+        <li className="card p-4">
+          <strong className="text-ink">Live status</strong>
+          <p className="mt-1">Jobs, platforms, budget meter on /status.</p>
         </li>
       </ul>
     </main>
   );
 }
-

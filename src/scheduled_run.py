@@ -51,6 +51,7 @@ from cleanup_temps import cleanup_temp_mp4s  # noqa: E402
 from config_loader import load_config  # noqa: E402
 from fetch_media import fetch_media  # noqa: E402
 from generate_script import generate_script, load_queue, pick_topic  # noqa: E402
+from job_status import append_job, write_snapshot  # noqa: E402
 from quality_gates import assert_ok  # noqa: E402
 from seo_adapt import load_seo, platform_preview  # noqa: E402
 from tts import synthesize  # noqa: E402
@@ -262,13 +263,24 @@ def main() -> int:
     flags = platform_flags(cfg)
 
     topic_id = None
+    title = None
     try:
+        write_snapshot(cfg)
         topic_id = pick_next_topic_id(cfg, args.topic_id)
         topic = pick_topic(cfg, topic_id)
+        title = topic.get("title") or topic_id
         append_log(
             cfg,
-            f"START topic={topic_id} title={topic.get('title', '')!r} "
+            f"START topic={topic_id} title={title!r} "
             f"autopilot auto_upload={auto_upload} require_approval={require_approval}",
+        )
+        append_job(
+            {
+                "topic_id": topic_id,
+                "title": title,
+                "status": "queued",
+                "platforms": {},
+            }
         )
 
         if args.dry_run:
@@ -279,6 +291,14 @@ def main() -> int:
                 f"tt_creds={tt_creds()} privacy={resolve_privacy(cfg)} "
                 f"require_approval=false",
             )
+            append_job(
+                {
+                    "topic_id": topic_id,
+                    "title": title,
+                    "status": "dry_run",
+                    "platforms": {},
+                }
+            )
             print(f"[dry-run] Topic: {topic_id}")
             print(f"[dry-run] Title: {topic.get('title')}")
             print(f"[dry-run] Platforms: {flags}")
@@ -288,6 +308,14 @@ def main() -> int:
             print(f"[dry-run] TT creds: {tt_creds()}")
             return 0
 
+        append_job(
+            {
+                "topic_id": topic_id,
+                "title": title,
+                "status": "rendering",
+                "platforms": {},
+            }
+        )
         video_path, seo_path = run_pipeline(topic_id, cfg)
         # Never honor SEO approval.status=pending — cloud path always uploads
         try:
@@ -318,18 +346,44 @@ def main() -> int:
                 f"OK pipeline-only topic={topic_id} video={video_path.name} "
                 f"(--skip-upload flag)",
             )
+            append_job(
+                {
+                    "topic_id": topic_id,
+                    "title": title,
+                    "status": "rendered",
+                    "video": video_path.name,
+                    "platforms": {},
+                    "note": "skip_upload",
+                }
+            )
             return 0
         if not auto_upload:
-            # Config mis-set: still force upload on schedule path unless --skip-upload
             append_log(
                 cfg,
                 "WARN auto_upload=false ignored on scheduled_run — forcing upload",
             )
 
         results = upload_all_platforms(cfg, video_path, seo_path)
+        links = {
+            "youtube": (
+                f"https://youtu.be/{results['youtube']}" if results.get("youtube") else None
+            ),
+            "instagram": results.get("instagram"),
+            "tiktok": results.get("tiktok"),
+        }
         append_log(
             cfg,
             f"DONE topic={topic_id} autopilot=true results={json.dumps(results)}",
+        )
+        append_job(
+            {
+                "topic_id": topic_id,
+                "title": title,
+                "status": "uploaded",
+                "video": video_path.name,
+                "platforms": results,
+                "links": links,
+            }
         )
         return 0
 
@@ -339,9 +393,27 @@ def main() -> int:
             return 0
         msg = str(exc) if exc.args else f"SystemExit({code})"
         append_log(cfg, f"FAIL topic={topic_id or '?'} error={msg}")
+        append_job(
+            {
+                "topic_id": topic_id,
+                "title": title,
+                "status": "failed",
+                "error": msg,
+                "platforms": {},
+            }
+        )
         return code if code else 1
     except Exception as exc:  # noqa: BLE001
         append_log(cfg, f"FAIL topic={topic_id or '?'} error={exc!r}")
+        append_job(
+            {
+                "topic_id": topic_id,
+                "title": title,
+                "status": "failed",
+                "error": repr(exc),
+                "platforms": {},
+            }
+        )
         traceback.print_exc()
         return 1
 

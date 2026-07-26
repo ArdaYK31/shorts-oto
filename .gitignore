@@ -42,10 +42,13 @@ scripts/*.meta.json
 seo/*.json
 !seo/.gitkeep
 
-# Logs: allow schedule.log persistence from Actions; ignore other noise
+# Logs: allow schedule/status persistence from Actions; ignore other noise
 logs/*
 !logs/.gitkeep
 !logs/schedule.log
+!logs/latest.json
+!logs/jobs.jsonl
+!logs/budget.json
 
 # OS / IDE
 Thumbs.db
