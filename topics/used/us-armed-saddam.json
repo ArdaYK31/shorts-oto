@@ -1,0 +1,25 @@
+{
+  "id": "us-armed-saddam",
+  "title": "Did You Know? The US Once Backed Saddam Hussein",
+  "topic": "Cold War realpolitik — US and Western support for Iraq during the Iran–Iraq War era",
+  "language": "en",
+  "keywords": [
+    "Saddam Hussein",
+    "Iran-Iraq War",
+    "Cold War"
+  ],
+  "search_queries": [
+    "Saddam Hussein 1980s",
+    "Iran Iraq War",
+    "Donald Rumsfeld Saddam"
+  ],
+  "wikimedia_titles": [
+    "Saddam Hussein in 1998.png",
+    "Iran-Iraq War.jpg",
+    "Donald Rumsfeld.jpg"
+  ],
+  "pd_fallback_urls": [],
+  "scenario_id": "did-you-know",
+  "provider": "template",
+  "script_file": "us-armed-saddam.txt"
+}

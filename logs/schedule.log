@@ -28,3 +28,9 @@
 [2026-07-26 10:37:50 +0300] SKIP instagram: missing credentials
 [2026-07-26 10:37:50 +0300] SKIP tiktok: missing credentials
 [2026-07-26 10:37:50 +0300] FAIL topic=benedict-arnold-traitor error=RuntimeError("Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'")
+[2026-07-26 17:39:13 +0300] CLAIMED unique topic=us-armed-saddam title='Did You Know? The US Once Backed Saddam Hussein' path=/app/topics/used/us-armed-saddam.json (each cron slot must upload a DIFFERENT Short)
+[2026-07-26 17:39:13 +0300] START topic=us-armed-saddam title='Did You Know? The US Once Backed Saddam Hussein' autopilot auto_upload=True require_approval=False
+[2026-07-26 17:42:48 +0300] FAIL youtube error=OSError(30, 'Read-only file system')
+[2026-07-26 17:42:48 +0300] SKIP instagram: missing credentials
+[2026-07-26 17:42:48 +0300] SKIP tiktok: missing credentials
+[2026-07-26 17:42:48 +0300] FAIL topic=us-armed-saddam error=RuntimeError("Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'")

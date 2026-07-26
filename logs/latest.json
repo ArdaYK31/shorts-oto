@@ -9,9 +9,9 @@
     "16:00"
   ],
   "next_runs": [
-    "2026-07-26T16:00:00+03:00",
     "2026-07-27T00:00:00+03:00",
-    "2026-07-27T08:00:00+03:00"
+    "2026-07-27T08:00:00+03:00",
+    "2026-07-27T16:00:00+03:00"
   ],
   "platforms_connected": {
     "youtube": true,
@@ -21,22 +21,47 @@
   },
   "budget": {
     "month": "2026-07",
-    "spent_usd": 0.102,
+    "spent_usd": 0.168,
     "cap_usd": 30.0,
-    "images_generated": 17,
+    "images_generated": 28,
     "cost_per_image_usd": 0.006,
     "provider": "fal_flux_schnell"
   },
   "latest_job": {
-    "topic_id": "benedict-arnold-traitor",
-    "title": "America's Greatest Hero Turned Its Greatest Traitor",
+    "topic_id": "us-armed-saddam",
+    "title": "Did You Know? The US Once Backed Saddam Hussein",
     "status": "failed",
     "error": "RuntimeError(\"Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'\")",
     "platforms": {},
-    "ts": "2026-07-26T10:37:50.285447+03:00",
-    "updated_at": "2026-07-26T10:37:50.285447+03:00"
+    "ts": "2026-07-26T17:42:48.306036+03:00",
+    "updated_at": "2026-07-26T17:42:48.306036+03:00"
   },
   "recent_jobs": [
+    {
+      "topic_id": "us-armed-saddam",
+      "title": "Did You Know? The US Once Backed Saddam Hussein",
+      "status": "failed",
+      "error": "RuntimeError(\"Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'\")",
+      "platforms": {},
+      "ts": "2026-07-26T17:42:48.306036+03:00",
+      "updated_at": "2026-07-26T17:42:48.306036+03:00"
+    },
+    {
+      "topic_id": "us-armed-saddam",
+      "title": "Did You Know? The US Once Backed Saddam Hussein",
+      "status": "rendering",
+      "platforms": {},
+      "ts": "2026-07-26T17:39:13.184677+03:00",
+      "updated_at": "2026-07-26T17:39:13.184677+03:00"
+    },
+    {
+      "topic_id": "us-armed-saddam",
+      "title": "Did You Know? The US Once Backed Saddam Hussein",
+      "status": "queued",
+      "platforms": {},
+      "ts": "2026-07-26T17:39:13.174265+03:00",
+      "updated_at": "2026-07-26T17:39:13.174265+03:00"
+    },
     {
       "topic_id": "benedict-arnold-traitor",
       "title": "America's Greatest Hero Turned Its Greatest Traitor",
@@ -157,5 +182,5 @@
     }
   ],
   "actions_url": "https://github.com/ArdaYK31/shorts-oto/actions",
-  "updated_at": "2026-07-26T10:37:50.285447+03:00"
+  "updated_at": "2026-07-26T17:42:48.306036+03:00"
 }
