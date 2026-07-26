@@ -38,9 +38,9 @@ script:
   viral_structure: ["claim", "evidence", "relevance", "twist", "payoff"]
 
 tts:
-  # elevenlabs | kokoro | kokoro_onnx — elevenlabs needs GitHub secret ELEVENLABS_API_KEY
-  provider: elevenlabs
-  fallback: kokoro  # if key missing / API error → Kokoro am_adam
+  # kokoro | kokoro_onnx — keep free Kokoro am_adam (no ElevenLabs / paid TTS by default)
+  provider: kokoro
+  fallback: kokoro
   # LOCKED brand voice — ChronoShorts clear US male documentary narrator (Kokoro path)
   # Do not rotate per episode; A/B only via explicit config change
   voice_locked: true
@@ -52,12 +52,9 @@ tts:
   kokoro_onnx_voices: "C:/kokoro-models/voices-v1.0.bin"
   edge_voice: en-US-ChristopherNeural
   edge_rate: "+5%"
+  # Optional paid path kept in code but NOT default — enable only with explicit config + secret
   elevenlabs:
-    # NEVER put the API key in config or chat — GitHub → Settings → Secrets → Actions
-    # Secret name: ELEVENLABS_API_KEY (alias: ELEVEN_API_KEY). PAYG ~$5/mo at Shorts volume.
-    # Model: Multilingual v2 — storytelling / narration quality, cost-efficient on PAYG
     model_id: eleven_multilingual_v2
-    # ElevenLabs → Voices → copy Voice ID (Adam US male premade default below; replace as needed)
     voice_id: "pNInz6obpgDQGcFmaJgB"
     stability: 0.45
     similarity_boost: 0.75
@@ -93,7 +90,7 @@ media:
   seconds_per_image: 3.0  # ChronoShorts 2–4s cuts; hard max 4s in assemble
   scene_max_sec: 4.0
   scene_min_sec: 2.0
-  ken_burns_zoom: 1.06
+  ken_burns_zoom: 1.10
   user_agent: "yt-history-shorts/0.3 (local automation; educational)"
   score_enabled: true
   min_width: 700
@@ -108,30 +105,31 @@ captions:
   whisper_model: base.en
   whisper_device: cpu
   whisper_compute_type: int8
-  # ChronoShorts: 1 centered word, white + thick black outline
+  # Lower-middle safe zone (above ~300px Shorts UI); amber active-word karaoke
   words_per_line: 1
-  font_name: Arial
-  font_size: 96
-  alignment: 5  # ASS middle-center
-  margin_v: 0
-  primary_color: "&H00FFFFFF"
-  highlight_color: "&H00FFFFFF"  # no yellow karaoke flash
+  font_name: Montserrat
+  font_file: assets/fonts/Montserrat-Bold.ttf
+  font_size: 92
+  alignment: 2  # ASS bottom-center (lower-middle with margin_v)
+  margin_v: 340  # keep karaoke clear of YouTube/IG bottom chrome
+  primary_color: "&H0000B0FF"  # amber/yellow after sung (BGR)
+  highlight_color: "&H00FFFFFF"  # white before karaoke fill
   outline_color: "&H00000000"
   outline: 7
   shadow: 0
   bold: true
   # Karaoke from first word at t≈0 (no cold-open delay)
   hook_seconds: 0
-  hook_font_size: 104
-  hook_margin_v: 0
-  hook_color: "&H00FFFFFF"
+  hook_font_size: 100
+  hook_margin_v: 340
+  hook_color: "&H0000B0FF"
   karaoke_snap_to_zero: true
   karaoke_max_lead_sec: 0.45
-  # Frame-1 CLAIM card (the fact itself — never bare "DID YOU KNOW?")
+  # Frame-1 CLAIM card — top third, clear of lower ~300px UI
   claim_card: true
   claim_seconds: 2.6
   claim_font_size: 72
-  claim_margin_v: 280
+  claim_margin_v: 220
   claim_alignment: 8  # top-center
   claim_color: "&H00FFFFFF"
   claim_outline: 8
@@ -145,16 +143,18 @@ assemble:
   loudnorm_tp: -1.5
   loudnorm_lra: 11
   vignette: true
+  vignette_angle: "PI/6"  # softer than PI/5
+  warm_midtones: true
   grain: true
   grain_strength: 4
   contrast: 1.07
-  saturation: 0.94
-  brightness: 0.015
+  saturation: 0.96
+  brightness: 0.02
 
 audio_mix:
   narration_volume: 1.0
-  # Audible soft underscore — ducked under voice (sidechain); hearable in pauses
-  bgm_volume: 0.31
+  # Slightly lower for consonant clarity; still audible in pauses with ducking
+  bgm_volume: 0.25
   bgm_file: "cinematic_ambient_underscore.mp3"
   bgm_duck: true
 
