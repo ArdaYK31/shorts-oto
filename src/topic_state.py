@@ -47,9 +47,17 @@ def load_uploaded_ids(cfg: dict) -> set[str]:
     return ids
 
 
+# Permanently banned topic ids — never pick, never force-upload.
+HARD_BANNED_TOPIC_IDS: frozenset[str] = frozenset(
+    {
+        "cleopatra-not-egyptian",  # freeze-at-end; user forbid upload
+    }
+)
+
+
 def blocked_ids(cfg: dict) -> set[str]:
     """Topics that must not be picked again until queue cycles."""
-    return load_used_ids(cfg) | load_uploaded_ids(cfg)
+    return load_used_ids(cfg) | load_uploaded_ids(cfg) | set(HARD_BANNED_TOPIC_IDS)
 
 
 def mark_claimed(cfg: dict, topic: dict[str, Any], *, reason: str = "claimed") -> Path:

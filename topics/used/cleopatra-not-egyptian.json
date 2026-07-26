@@ -34,5 +34,8 @@
     "relevance",
     "twist",
     "payoff"
-  ]
+  ],
+  "status": "banned",
+  "banned_at": "2026-07-26T20:35:00+00:00",
+  "note": "Never upload: freeze bug / user block"
 }

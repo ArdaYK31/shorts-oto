@@ -56,6 +56,7 @@ from job_status import append_job, write_snapshot  # noqa: E402
 from quality_gates import check_output  # noqa: E402
 from seo_adapt import load_seo, platform_preview  # noqa: E402
 from topic_state import (  # noqa: E402
+    HARD_BANNED_TOPIC_IDS,
     blocked_ids,
     clear_used,
     mark_claimed,
@@ -221,7 +222,14 @@ def platform_flags(cfg: dict) -> dict[str, bool]:
 def pick_next_topic_id(cfg: dict, topic_id: str | None = None) -> str:
     """Each cron slot must get a DIFFERENT topic — never re-upload the same video."""
     if topic_id:
-        return topic_id
+        if topic_id in HARD_BANNED_TOPIC_IDS:
+            print(
+                f"[schedule] REFUSING banned topic_id={topic_id} "
+                f"(HARD_BANNED_TOPIC_IDS) — picking next eligible instead"
+            )
+            # Fall through to normal unique pick (ignore force/CLI for banned ids)
+        else:
+            return topic_id
 
     queue = load_queue(cfg)
     if not queue:
@@ -458,6 +466,12 @@ def main() -> int:
             print(f"[schedule] {msg}")
             return 0
         forced_tid = None if args.topic_id else load_force_next_topic()
+        if forced_tid and forced_tid in HARD_BANNED_TOPIC_IDS:
+            clear_force_next_topic(reason=f"banned topic={forced_tid}")
+            print(
+                f"[schedule] cleared force_next_topic — banned id={forced_tid}"
+            )
+            forced_tid = None
         topic_id = pick_next_topic_id(cfg, args.topic_id or forced_tid)
         if forced_tid and topic_id == forced_tid:
             append_log(

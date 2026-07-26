@@ -500,7 +500,8 @@ def assemble(
 
         inputs.extend(["-loop", "1", "-t", f"{seg_input:.4f}", "-i", str(img)])
 
-        frames = max(int(seg_input * fps), 1)
+        # round(): int() truncation made clips short → xfade offset past end → freeze
+        frames = max(int(round(seg_input * fps)), 1)
 
         filter_parts.append(_ken_burns_filter(i, frames, w, h, fps, zoom, modes[i % len(modes)]))
 
@@ -630,6 +631,19 @@ def assemble(
 
         video_map = "[vgraded]"
 
+    # Lock A/V to narration length. Without this, xfade/zoompan float drift or
+    # unreliable -shortest leaves a frozen last frame after audio ends.
+    dur_s = f"{min(duration, hard_max):.4f}"
+    filter_parts.append(
+        f"{video_map}trim=duration={dur_s},setpts=PTS-STARTPTS,fps={fps}[vfinal]"
+    )
+    filter_parts.append(
+        f"{audio_map}atrim=duration={dur_s},asetpts=PTS-STARTPTS[afinal]"
+    )
+    video_map = "[vfinal]"
+    audio_map = "[afinal]"
+    print(f"[assemble] Hard-trimmed A/V to {dur_s}s (no post-narration freeze)")
+
     filter_complex = ";".join(filter_parts)
 
     out_path = out_dir / f"{stem}.mp4"
@@ -700,11 +714,11 @@ def assemble(
 
         "48000",
 
-        "-shortest",
-
+        # Output length = narration (not hard_max). -shortest alone is unreliable
+        # with filter_complex and can leave a frozen tail.
         "-t",
 
-        f"{hard_max:.3f}",
+        f"{min(duration, hard_max):.3f}",
 
         "-movflags",
 

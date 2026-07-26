@@ -1,6 +1,6 @@
 {
-  "topic_id": "cleopatra-not-egyptian",
+  "topic_id": "oxford-older-aztecs",
   "upload_at": "2026-07-27T00:00:00+03:00",
-  "note": "Prototype preview now (workflow_dispatch preview_only); same topic uploads at 00:00 Istanbul. Do not clear until uploaded.",
-  "preview_topic_id": "cleopatra-not-egyptian"
+  "note": "Replaces banned cleopatra-not-egyptian for 00:00 Istanbul. Cleopatra permanently blocked (freeze bug / never upload).",
+  "replaced": "cleopatra-not-egyptian"
 }

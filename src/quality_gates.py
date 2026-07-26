@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -17,6 +19,39 @@ def _ffprobe_duration(path: Path) -> float:
         str(path),
     ]
     return float(subprocess.check_output(cmd, text=True).strip())
+
+
+
+def _ffprobe_av_durations(path: Path) -> tuple[float | None, float | None]:
+    """Return (video_stream_duration, audio_stream_duration) best-effort."""
+    cmd = [
+        "ffprobe",
+        "-v",
+        "error",
+        "-show_entries",
+        "stream=codec_type,duration",
+        "-of",
+        "json",
+        str(path),
+    ]
+    try:
+        data = json.loads(subprocess.check_output(cmd, text=True))
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError):
+        return None, None
+    v = a = None
+    for s in data.get("streams") or []:
+        dur = s.get("duration")
+        if dur is None:
+            continue
+        try:
+            d = float(dur)
+        except (TypeError, ValueError):
+            continue
+        if s.get("codec_type") == "video" and v is None:
+            v = d
+        elif s.get("codec_type") == "audio" and a is None:
+            a = d
+    return v, a
 
 
 def check_output(video_path: Path, cfg: dict[str, Any]) -> dict[str, Any]:
@@ -70,6 +105,18 @@ def check_output(video_path: Path, cfg: dict[str, Any]) -> dict[str, Any]:
             )
             result["warnings"].append(warn)
             print(f"[quality_gates] WARN {warn}")
+        v_dur, a_dur = _ffprobe_av_durations(video_path)
+        result["video_stream_sec"] = v_dur
+        result["audio_stream_sec"] = a_dur
+        if v_dur is not None and a_dur is not None:
+            drift = abs(v_dur - a_dur)
+            # Frozen tail: video longer than audio (or vice versa) after narration
+            if drift > 0.35:
+                result["ok"] = False
+                result["errors"].append(
+                    f"A/V duration mismatch video={v_dur:.2f}s audio={a_dur:.2f}s "
+                    f"drift={drift:.2f}s (freeze/hang risk)"
+                )
     except Exception as exc:  # noqa: BLE001
         result["ok"] = False
         result["errors"].append(f"ffprobe failed: {exc}")
