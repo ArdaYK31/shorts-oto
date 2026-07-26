@@ -54,6 +54,12 @@ from generate_script import generate_script, load_queue, pick_topic  # noqa: E40
 from job_status import append_job, write_snapshot  # noqa: E402
 from quality_gates import assert_ok  # noqa: E402
 from seo_adapt import load_seo, platform_preview  # noqa: E402
+from topic_state import (  # noqa: E402
+    blocked_ids,
+    clear_used,
+    mark_claimed,
+    mark_uploaded,
+)
 from tts import synthesize  # noqa: E402
 from upload_instagram import credentials_present as ig_creds  # noqa: E402
 from upload_instagram import upload_reel  # noqa: E402
@@ -97,27 +103,34 @@ def platform_flags(cfg: dict) -> dict[str, bool]:
 
 
 def pick_next_topic_id(cfg: dict, topic_id: str | None = None) -> str:
+    """Each cron slot must get a DIFFERENT topic — never re-upload the same video."""
     if topic_id:
         return topic_id
 
     queue = load_queue(cfg)
     if not queue:
-        raise SystemExit("topics/queue.json is empty — add American history topics")
+        raise SystemExit("topics/queue.json is empty — add topics first")
 
-    used_dir = cfg["paths_resolved"]["topics"] / "used"
-    used_dir.mkdir(parents=True, exist_ok=True)
-    used_ids = {p.stem for p in used_dir.glob("*.json")}
-
+    blocked = blocked_ids(cfg)
     for item in queue:
-        if item["id"] not in used_ids:
+        if item["id"] not in blocked:
+            print(
+                f"[schedule] UNIQUE topic selected: {item['id']} "
+                f"(blocked={len(blocked)} prior used/uploaded)"
+            )
             return item["id"]
 
-    print("[schedule] All topics used — cycling queue (clearing topics/used)")
-    for p in used_dir.glob("*.json"):
-        try:
-            p.unlink()
-        except OSError as exc:
-            print(f"[schedule] Could not clear {p}: {exc}")
+    print(
+        "[schedule] All topics used/uploaded — cycling used/ "
+        "(uploaded.jsonl kept so we still prefer fresh if queue grows)"
+    )
+    clear_used(cfg)
+    blocked = blocked_ids(cfg)
+    for item in queue:
+        if item["id"] not in blocked:
+            return item["id"]
+    # Full cycle exhausted — allow re-run from start of queue
+    print("[schedule] Full cycle complete — restarting from first topic")
     return queue[0]["id"]
 
 
@@ -269,6 +282,14 @@ def main() -> int:
         topic_id = pick_next_topic_id(cfg, args.topic_id)
         topic = pick_topic(cfg, topic_id)
         title = topic.get("title") or topic_id
+        # Claim immediately so the next cron cannot pick the same topic
+        # even if this run fails mid-pipeline (used/ is committed by Actions).
+        claimed_path = mark_claimed(cfg, topic)
+        append_log(
+            cfg,
+            f"CLAIMED unique topic={topic_id} title={title!r} path={claimed_path} "
+            f"(each cron slot must upload a DIFFERENT Short)",
+        )
         append_log(
             cfg,
             f"START topic={topic_id} title={title!r} "
@@ -364,6 +385,12 @@ def main() -> int:
             )
 
         results = upload_all_platforms(cfg, video_path, seo_path)
+        mark_uploaded(
+            cfg,
+            topic_id,
+            youtube_id=results.get("youtube"),
+            title=title,
+        )
         links = {
             "youtube": (
                 f"https://youtu.be/{results['youtube']}" if results.get("youtube") else None
@@ -373,7 +400,8 @@ def main() -> int:
         }
         append_log(
             cfg,
-            f"DONE topic={topic_id} autopilot=true results={json.dumps(results)}",
+            f"DONE unique topic={topic_id} autopilot=true "
+            f"results={json.dumps(results)} marked_uploaded=true",
         )
         append_job(
             {

@@ -140,15 +140,23 @@ jobs:
             logs/schedule.log
           if-no-files-found: warn
 
-      - name: Persist used topics + status logs
+      - name: Persist used/uploaded topics + status logs
+        # Always run: even partial success must keep mark_claimed so next cron
+        # does not re-pick the same topic (fixes 3× same Short / day).
         if: always()
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add topics/used logs/schedule.log logs/latest.json logs/jobs.jsonl logs/budget.json || true
+          mkdir -p topics/used logs
+          # Claim markers + upload ledger + logs (never credentials)
+          git add topics/used topics/uploaded.jsonl \
+            logs/schedule.log logs/latest.json logs/jobs.jsonl logs/budget.json || true
           if git diff --staged --quiet; then
             echo "No state changes to commit"
           else
-            git commit -m "chore(schedule): persist used topic + status logs [skip ci]"
+            echo "Persisting topic rotation state (used/ + uploaded.jsonl) so next slot gets a DIFFERENT video"
+            git status --short
+            git commit -m "chore(schedule): persist unique topic claim + upload ledger [skip ci]"
             git push
           fi
