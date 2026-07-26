@@ -21,22 +21,65 @@
   },
   "budget": {
     "month": "2026-07",
-    "spent_usd": 0.168,
+    "spent_usd": 0.234,
     "cap_usd": 30.0,
-    "images_generated": 28,
+    "images_generated": 39,
     "cost_per_image_usd": 0.006,
     "provider": "fal_flux_schnell"
   },
   "latest_job": {
     "topic_id": "us-armed-saddam",
     "title": "Did You Know? The US Once Backed Saddam Hussein",
-    "status": "failed",
-    "error": "RuntimeError(\"Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'\")",
-    "platforms": {},
-    "ts": "2026-07-26T17:42:48.306036+03:00",
-    "updated_at": "2026-07-26T17:42:48.306036+03:00"
+    "status": "uploaded",
+    "video": "us-armed-saddam.mp4",
+    "platforms": {
+      "youtube": "_dlnMgEGjC4",
+      "instagram": null,
+      "tiktok": null
+    },
+    "links": {
+      "youtube": "https://youtu.be/_dlnMgEGjC4",
+      "instagram": null,
+      "tiktok": null
+    },
+    "ts": "2026-07-26T19:45:48.943432+03:00",
+    "updated_at": "2026-07-26T19:45:48.943432+03:00"
   },
   "recent_jobs": [
+    {
+      "topic_id": "us-armed-saddam",
+      "title": "Did You Know? The US Once Backed Saddam Hussein",
+      "status": "uploaded",
+      "video": "us-armed-saddam.mp4",
+      "platforms": {
+        "youtube": "_dlnMgEGjC4",
+        "instagram": null,
+        "tiktok": null
+      },
+      "links": {
+        "youtube": "https://youtu.be/_dlnMgEGjC4",
+        "instagram": null,
+        "tiktok": null
+      },
+      "ts": "2026-07-26T19:45:48.943432+03:00",
+      "updated_at": "2026-07-26T19:45:48.943432+03:00"
+    },
+    {
+      "topic_id": "us-armed-saddam",
+      "title": "Did You Know? The US Once Backed Saddam Hussein",
+      "status": "rendering",
+      "platforms": {},
+      "ts": "2026-07-26T19:42:37.728816+03:00",
+      "updated_at": "2026-07-26T19:42:37.728816+03:00"
+    },
+    {
+      "topic_id": "us-armed-saddam",
+      "title": "Did You Know? The US Once Backed Saddam Hussein",
+      "status": "queued",
+      "platforms": {},
+      "ts": "2026-07-26T19:42:37.722087+03:00",
+      "updated_at": "2026-07-26T19:42:37.722087+03:00"
+    },
     {
       "topic_id": "us-armed-saddam",
       "title": "Did You Know? The US Once Backed Saddam Hussein",
@@ -182,5 +225,5 @@
     }
   ],
   "actions_url": "https://github.com/ArdaYK31/shorts-oto/actions",
-  "updated_at": "2026-07-26T17:42:48.306036+03:00"
+  "updated_at": "2026-07-26T19:45:48.943432+03:00"
 }

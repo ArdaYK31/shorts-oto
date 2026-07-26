@@ -34,3 +34,9 @@
 [2026-07-26 17:42:48 +0300] SKIP instagram: missing credentials
 [2026-07-26 17:42:48 +0300] SKIP tiktok: missing credentials
 [2026-07-26 17:42:48 +0300] FAIL topic=us-armed-saddam error=RuntimeError("Platform upload failures: youtube:[Errno 30] Read-only file system: '/app/credentials/youtube_token.json'")
+[2026-07-26 19:42:37 +0300] CLAIMED unique topic=us-armed-saddam title='Did You Know? The US Once Backed Saddam Hussein' path=/app/topics/used/us-armed-saddam.json (each cron slot must upload a DIFFERENT Short)
+[2026-07-26 19:42:37 +0300] START topic=us-armed-saddam title='Did You Know? The US Once Backed Saddam Hussein' autopilot auto_upload=True require_approval=False
+[2026-07-26 19:45:48 +0300] OK youtube id=_dlnMgEGjC4 url=https://youtu.be/_dlnMgEGjC4
+[2026-07-26 19:45:48 +0300] SKIP instagram: missing credentials
+[2026-07-26 19:45:48 +0300] SKIP tiktok: missing credentials
+[2026-07-26 19:45:48 +0300] DONE unique topic=us-armed-saddam autopilot=true results={"youtube": "_dlnMgEGjC4", "instagram": null, "tiktok": null} marked_uploaded=true

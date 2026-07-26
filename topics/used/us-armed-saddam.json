@@ -21,5 +21,7 @@
   "pd_fallback_urls": [],
   "scenario_id": "did-you-know",
   "provider": "template",
-  "script_file": "us-armed-saddam.txt"
+  "script_file": "us-armed-saddam.txt",
+  "status": "uploaded",
+  "youtube_id": "_dlnMgEGjC4"
 }
