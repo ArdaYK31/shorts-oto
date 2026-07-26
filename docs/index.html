@@ -3,122 +3,526 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Atelier · ChronoShorts Status</title>
+  <title>Atelier · Shorts Autopilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f0e8dc; --paper: #f7f1e8; --ink: #1c1612; --muted: #6b5e52;
-      --line: #d9cbb8; --copper: #b86b3c; --sage: #4f6f5a; --wash: #e5d6c4;
+      --slate: #121820;
+      --slate-mid: #1a2330;
+      --mist: #e7eef5;
+      --panel: rgba(232, 238, 245, 0.92);
+      --ink: #10161f;
+      --muted: #5c6a7a;
+      --line: rgba(16, 22, 31, 0.12);
+      --amber: #c4893a;
+      --amber-deep: #9a6828;
+      --ok: #3d6b55;
+      --wash: #d5dee8;
+      --film: rgba(196, 137, 58, 0.08);
     }
-    * { box-sizing: border-box; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0; color: var(--ink);
-      font-family: "Segoe UI", Georgia, serif;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Sora", sans-serif;
       background:
-        radial-gradient(ellipse 100% 80% at 0% 0%, #efe2d0 0%, transparent 55%),
-        var(--bg);
-      min-height: 100vh; padding: 2rem 1.25rem 3rem;
+        radial-gradient(ellipse 90% 70% at 8% -10%, rgba(196, 137, 58, 0.22) 0%, transparent 52%),
+        radial-gradient(ellipse 70% 55% at 100% 0%, rgba(90, 120, 150, 0.35) 0%, transparent 48%),
+        radial-gradient(ellipse 60% 50% at 70% 110%, rgba(18, 24, 32, 0.55) 0%, transparent 55%),
+        linear-gradient(165deg, #2a3544 0%, var(--slate) 42%, #0d1218 100%);
+      padding: 0 1.25rem 3.5rem;
+      overflow-x: hidden;
     }
-    .wrap { max-width: 960px; margin: 0 auto; }
-    h1 { font-size: 2.2rem; margin: 0.25rem 0 0.5rem; letter-spacing: -0.02em; }
-    .muted { color: var(--muted); font-size: 0.95rem; }
-    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 1.5rem; }
-    .chip {
-      border: 1px solid var(--line); background: var(--paper);
-      padding: 0.25rem 0.6rem; font-size: 0.75rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 255, 255, 0.015) 2px,
+          rgba(255, 255, 255, 0.015) 3px
+        );
+      animation: grain-drift 18s linear infinite;
     }
-    .chip.ok { color: var(--sage); border-color: rgba(79,111,90,.35); }
-    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-    .card {
-      background: var(--paper); border: 1px solid var(--line);
-      box-shadow: 0 12px 40px rgba(28,22,18,.06); padding: 1.1rem 1.2rem;
+
+    @keyframes grain-drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-24px); }
     }
-    h2 { margin: 0 0 0.35rem; font-size: 1.25rem; }
-    .bar { height: 12px; border: 1px solid var(--line); background: var(--wash); margin-top: 0.75rem; }
-    .bar > i { display: block; height: 100%; background: var(--sage); }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-    th { color: var(--muted); font-weight: 600; }
-    a { color: var(--copper); }
-    .wide { grid-column: 1 / -1; }
+
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+
+    .stage {
+      max-width: 920px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* —— Hero: brand first —— */
+    .hero {
+      padding: 3.25rem 0 2rem;
+      animation: rise-in 0.7s ease-out both;
+    }
+
+    .hero-brand {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(3.4rem, 11vw, 5.6rem);
+      font-weight: 400;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--mist);
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-brand em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .hero-line {
+      margin-top: 1rem;
+      max-width: 28rem;
+      color: rgba(231, 238, 245, 0.72);
+      font-size: 1.02rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.35rem;
+      align-items: center;
+    }
+
+    .hero-cta a {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.7rem 1.15rem;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .hero-cta .primary {
+      background: var(--amber);
+      color: #140f08;
+    }
+
+    .hero-cta .primary:hover { background: #d49a4a; }
+
+    .hero-cta .ghost {
+      border: 1px solid rgba(231, 238, 245, 0.28);
+      color: var(--mist);
+    }
+
+    .hero-cta .ghost:hover {
+      border-color: rgba(231, 238, 245, 0.55);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .live-dot {
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 50%;
+      background: #6fbf8a;
+      display: inline-block;
+      margin-right: 0.4rem;
+      animation: pulse-soft 2.4s ease-in-out infinite;
+    }
+
+    /* —— Status strip (not a card clutter) —— */
+    .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem 1.1rem;
+      align-items: center;
+      padding: 0.85rem 0 1.5rem;
+      border-bottom: 1px solid rgba(231, 238, 245, 0.12);
+      color: rgba(231, 238, 245, 0.65);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      animation: rise-in 0.75s ease-out 0.08s both;
+    }
+
+    .status-bar .tag {
+      color: rgba(231, 238, 245, 0.88);
+    }
+
+    .status-bar .tag.ok { color: #8fd4a8; }
+    .status-bar .tag.warn { color: #e0b56a; }
+
+    /* —— Sections —— */
+    .board {
+      display: grid;
+      gap: 1.15rem;
+      margin-top: 1.75rem;
+      animation: rise-in 0.8s ease-out 0.14s both;
+    }
+
+    @media (min-width: 720px) {
+      .board {
+        grid-template-columns: 1fr 1fr;
+      }
+      .span-2 { grid-column: 1 / -1; }
+    }
+
+    section.block {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+      padding: 1.35rem 1.4rem 1.45rem;
+      backdrop-filter: blur(10px);
+    }
+
+    section.block h2 {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      margin-bottom: 1rem;
+    }
+
+    .next-list {
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .next-list li {
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .next-list li:last-child { border-bottom: 0; }
+
+    .link-row {
+      margin-top: 1rem;
+      font-size: 0.88rem;
+    }
+
+    .link-row a {
+      color: var(--amber-deep);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .link-row a:hover { border-bottom-color: var(--amber-deep); }
+
+    .budget-figure {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin: 0.35rem 0 0.5rem;
+    }
+
+    .budget-meta {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .bar {
+      height: 10px;
+      background: var(--wash);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .bar > i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--amber-deep), var(--amber));
+      transition: width 0.6s ease;
+    }
+
+    .platforms {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .plat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.92rem;
+    }
+
+    .plat:last-child { border-bottom: 0; }
+
+    .plat .state {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .plat .state.on { color: var(--ok); }
+
+    table.jobs {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    table.jobs th {
+      text-align: left;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.45rem 0.35rem 0.65rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    table.jobs td {
+      padding: 0.85rem 0.35rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    table.jobs tr:last-child td { border-bottom: 0; }
+
+    table.jobs strong {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    table.jobs .muted {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    table.jobs a {
+      color: var(--amber-deep);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    table.jobs a:hover { text-decoration: underline; }
+
+    .latest-spotlight {
+      background:
+        linear-gradient(135deg, var(--film), transparent 55%),
+        var(--panel);
+    }
+
+    .latest-spotlight .title {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(1.35rem, 3vw, 1.75rem);
+      line-height: 1.2;
+      margin: 0.4rem 0 0.65rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ok);
+      border: 1px solid rgba(61, 107, 85, 0.35);
+      padding: 0.28rem 0.55rem;
+      background: rgba(61, 107, 85, 0.08);
+    }
+
+    .badge.err {
+      color: #9a3d32;
+      border-color: rgba(154, 61, 50, 0.35);
+      background: rgba(154, 61, 50, 0.08);
+    }
+
+    .foot {
+      margin-top: 1.75rem;
+      color: rgba(231, 238, 245, 0.45);
+      font-size: 0.8rem;
+      animation: rise-in 0.85s ease-out 0.2s both;
+    }
+
+    .err-box {
+      padding: 1.5rem;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .err-box a { color: var(--amber-deep); font-weight: 600; }
+
+    @media (max-width: 560px) {
+      .hero { padding-top: 2.4rem; }
+      section.block { padding: 1.15rem 1.1rem; }
+      table.jobs th:nth-child(1),
+      table.jobs td:nth-child(1) { display: none; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <p class="muted" style="text-transform:uppercase;letter-spacing:.16em;font-weight:700;font-size:.8rem;color:var(--copper)">Atelier control panel</p>
-    <h1>Autopilot status</h1>
-    <p class="muted">Schedule 00:00 / 08:00 / 16:00 Europe/Istanbul · public YouTube · no approval · fal.ai $30/mo budget</p>
-    <div class="row" id="chips"></div>
-    <div class="grid" id="grid"></div>
-    <p class="muted" style="margin-top:1.5rem" id="meta"></p>
+  <div class="stage">
+    <header class="hero">
+      <h1 class="hero-brand">Atelier<em>.</em></h1>
+      <p class="hero-line">History Shorts autopilot — render, caption, and publish on the Istanbul clock.</p>
+      <div class="hero-cta">
+        <a class="primary" id="actionsLink" href="https://github.com/ArdaYK31/shorts-oto/actions" target="_blank" rel="noreferrer">Open Actions</a>
+        <a class="ghost" href="https://github.com/ArdaYK31/shorts-oto" target="_blank" rel="noreferrer">Repository</a>
+      </div>
+    </header>
+
+    <div class="status-bar" id="statusBar" aria-live="polite">
+      <span><span class="live-dot" aria-hidden="true"></span>Loading status…</span>
+    </div>
+
+    <div class="board" id="board"></div>
+    <p class="foot" id="meta"></p>
   </div>
+
   <script>
     const RAW = "https://raw.githubusercontent.com/ArdaYK31/shorts-oto/main/logs/latest.json";
     const ACTIONS = "https://github.com/ArdaYK31/shorts-oto/actions";
+
     const fmt = (iso) => {
       if (!iso) return "—";
-      try { return new Date(iso).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" }); }
-      catch { return iso; }
+      try {
+        return new Date(iso).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" });
+      } catch {
+        return iso;
+      }
     };
+
+    const esc = (s) => String(s ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
     async function load() {
       let data;
       try {
         const r = await fetch(RAW + "?t=" + Date.now(), { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
         data = await r.json();
       } catch (e) {
-        document.getElementById("grid").innerHTML = `<div class="card wide"><p>Status yüklenemedi. <a href="${ACTIONS}">Actions</a> · ${e}</p></div>`;
+        document.getElementById("board").innerHTML =
+          `<div class="span-2 err-box"><p>Status yüklenemedi. <a href="${ACTIONS}">Actions</a> · ${esc(e.message || e)}</p></div>`;
+        document.getElementById("statusBar").innerHTML = `<span class="tag warn">Offline</span>`;
         return;
       }
+
       const spent = Number(data.budget?.spent_usd || 0);
       const cap = Number(data.budget?.cap_usd || 30);
       const pct = Math.min(100, Math.round((spent / Math.max(cap, 0.01)) * 100));
       const p = data.platforms_connected || {};
-      document.getElementById("chips").innerHTML = [
-        ["Autopilot ON", true],
-        [data.privacy || "public", true],
-        ["no approval", !data.require_approval],
-      ].map(([t, ok]) => `<span class="chip ${ok ? "ok" : ""}">${t}</span>`).join("");
-      const jobs = (data.recent_jobs || []).slice(0, 15);
-      document.getElementById("grid").innerHTML = `
-        <section class="card">
+      const latest = data.latest_job || (data.recent_jobs || [])[0] || null;
+      const jobs = (data.recent_jobs || []).slice(0, 12);
+      const schedule = (data.schedule_times || ["00:00", "08:00", "16:00"]).join(" · ");
+
+      document.getElementById("statusBar").innerHTML = [
+        `<span class="tag ok"><span class="live-dot" aria-hidden="true"></span>Autopilot</span>`,
+        `<span class="tag">${esc(data.privacy || "public")}</span>`,
+        `<span class="tag">${data.require_approval ? "approval on" : "no approval"}</span>`,
+        `<span>${esc(data.timezone || "Europe/Istanbul")} · ${esc(schedule)}</span>`,
+      ].join("");
+
+      const ytLatest = latest?.links?.youtube
+        || (latest?.platforms?.youtube ? ("https://youtu.be/" + latest.platforms.youtube) : null);
+
+      const latestHtml = latest ? `
+        <section class="block span-2 latest-spotlight">
+          <h2>Latest job</h2>
+          <p class="sub">Most recent pipeline result</p>
+          <span class="badge ${String(latest.status || "").includes("fail") || latest.error ? "err" : ""}">${esc(latest.status || "—")}</span>
+          <p class="title">${esc(latest.title || latest.topic_id || "—")}</p>
+          <p class="sub">${esc(latest.topic_id || "")} · ${esc(fmt(latest.updated_at || latest.ts))}</p>
+          ${ytLatest ? `<p class="link-row"><a href="${esc(ytLatest)}" target="_blank" rel="noreferrer">Watch on YouTube Shorts →</a></p>` : ""}
+          ${latest.error ? `<p class="sub">${esc(latest.error)}</p>` : ""}
+        </section>` : "";
+
+      document.getElementById("board").innerHTML = `
+        ${latestHtml}
+        <section class="block">
           <h2>Schedule</h2>
-          <p class="muted">${data.timezone || "Europe/Istanbul"} · ${(data.schedule_times || []).join(" · ")}</p>
-          <ul>${(data.next_runs || []).map(r => `<li><strong>${fmt(r)}</strong></li>`).join("") || "<li class='muted'>—</li>"}</ul>
-          <p><a href="${ACTIONS}" target="_blank" rel="noreferrer">GitHub Actions</a></p>
+          <p class="sub">${esc(data.timezone || "Europe/Istanbul")} · next slots</p>
+          <ul class="next-list">
+            ${(data.next_runs || []).map((r) => `<li>${esc(fmt(r))}</li>`).join("") || "<li class='sub'>—</li>"}
+          </ul>
+          <p class="link-row"><a href="${ACTIONS}" target="_blank" rel="noreferrer">GitHub Actions →</a></p>
         </section>
-        <section class="card">
-          <h2>Image budget</h2>
-          <p class="muted">${data.budget?.provider || "fal"} · ${data.budget?.month || ""} · ~$${Number(data.budget?.cost_per_image_usd || 0.006).toFixed(3)}/img</p>
-          <p><strong>$${spent.toFixed(2)} / $${cap.toFixed(0)}</strong> · ${data.budget?.images_generated || 0} images · ${pct}%</p>
-          <div class="bar"><i style="width:${pct}%"></i></div>
+        <section class="block">
+          <h2>fal budget</h2>
+          <p class="sub">${esc(data.budget?.provider || "fal")} · ${esc(data.budget?.month || "")} · ~$${Number(data.budget?.cost_per_image_usd || 0.006).toFixed(3)}/img</p>
+          <p class="budget-figure">$${spent.toFixed(2)} <span style="font-size:1rem;color:var(--muted)">/ $${cap.toFixed(0)}</span></p>
+          <p class="budget-meta">${esc(data.budget?.images_generated || 0)} images · ${pct}% of monthly cap</p>
+          <div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
         </section>
-        <section class="card wide">
+        <section class="block span-2">
           <h2>Platforms</h2>
-          <p class="muted">Presence only — secrets never shown</p>
-          <div class="row">
-            ${[["youtube","YouTube"],["instagram","Instagram"],["tiktok","TikTok"],["fal","FAL_KEY"]].map(([k,l]) =>
-              `<span class="chip ${p[k] ? "ok" : ""}">${l}: ${p[k] ? "present" : "missing"}</span>`).join("")}
+          <p class="sub">Credential presence only — secrets never shown</p>
+          <div class="platforms">
+            ${[["youtube", "YouTube"], ["instagram", "Instagram"], ["tiktok", "TikTok"], ["fal", "fal.ai"]].map(([k, l]) =>
+              `<div class="plat"><span>${l}</span><span class="state ${p[k] ? "on" : ""}">${p[k] ? "present" : "missing"}</span></div>`
+            ).join("")}
           </div>
         </section>
-        <section class="card wide">
+        <section class="block span-2">
           <h2>Recent jobs</h2>
-          <table>
-            <thead><tr><th>When</th><th>Topic</th><th>Status</th><th>Links</th></tr></thead>
+          <p class="sub">Pipeline history from logs/latest.json</p>
+          <table class="jobs">
+            <thead><tr><th>When</th><th>Topic</th><th>Status</th><th>Link</th></tr></thead>
             <tbody>
-              ${jobs.length ? jobs.map(j => {
+              ${jobs.length ? jobs.map((j) => {
                 const yt = j.links?.youtube || (j.platforms?.youtube ? ("https://youtu.be/" + j.platforms.youtube) : null);
                 return `<tr>
-                  <td>${fmt(j.updated_at || j.ts)}</td>
-                  <td><strong>${j.title || j.topic_id || "—"}</strong><br><span class="muted">${j.topic_id || ""}</span></td>
-                  <td>${j.status || "—"}${j.error ? `<br><span class="muted">${j.error}</span>` : ""}</td>
-                  <td>${yt ? `<a href="${yt}" target="_blank" rel="noreferrer">YT</a>` : "—"}</td>
+                  <td class="muted">${esc(fmt(j.updated_at || j.ts))}</td>
+                  <td><strong>${esc(j.title || j.topic_id || "—")}</strong><span class="muted">${esc(j.topic_id || "")}</span></td>
+                  <td>${esc(j.status || "—")}${j.error ? `<br><span class="muted">${esc(j.error)}</span>` : ""}</td>
+                  <td>${yt ? `<a href="${esc(yt)}" target="_blank" rel="noreferrer">Shorts</a>` : "—"}</td>
                 </tr>`;
-              }).join("") : `<tr><td colspan="4" class="muted">No jobs yet — waiting for Actions commit of logs/latest.json</td></tr>`}
+              }).join("") : `<tr><td colspan="4" class="muted">No jobs yet — waiting for Actions to publish logs/latest.json</td></tr>`}
             </tbody>
           </table>
         </section>`;
-      document.getElementById("meta").textContent = "Updated " + fmt(data.updated_at) + " · source logs/latest.json";
+
+      document.getElementById("meta").textContent =
+        "Updated " + fmt(data.updated_at) + " · source logs/latest.json · refreshes every 30s";
     }
+
     load();
     setInterval(load, 30000);
   </script>
