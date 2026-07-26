@@ -8,6 +8,7 @@ from typing import Any
 import requests
 
 from config_loader import load_config
+from fact_gate import FactGateError, assert_source, resolve_claim
 from seo_pack import write_seo_pack
 
 
@@ -99,12 +100,20 @@ def generate_with_ollama(cfg: dict[str, Any], topic: dict[str, Any], scenario: d
             f"\nScenario template: {scenario.get('name')} ({scenario.get('id')})\n"
             f"Angle: {scenario.get('angle')}\n"
             f"Hook style: {scenario.get('hook_style')}\n"
+            f"Structure: {scenario.get('structure')}\n"
         )
+    claim = resolve_claim(topic)
+    source = assert_source(topic)
     user = (
         f"Topic: {topic['topic']}\n"
         f"Suggested title vibe: {topic['title']}\n"
+        f"MANDATORY CLAIM (must land in sentence 1): {claim}\n"
+        f"Verified source (do not invent beyond this): {source}\n"
+        f"Hook hint: {topic.get('hook') or claim}\n"
         f"{scenario_hint}"
-        "Write the narration now in English only."
+        "Write the narration now in English only.\n"
+        "Structure: Claim → Evidence → Relevance → Twist → Payoff.\n"
+        "75–130 words. No filler."
     )
     url = cfg["script"]["ollama_url"].rstrip("/") + "/api/chat"
     payload = {
@@ -121,16 +130,26 @@ def generate_with_ollama(cfg: dict[str, Any], topic: dict[str, Any], scenario: d
     return content
 
 
-def _clamp_script_words(narration: str, max_words: int) -> str:
+def _word_count(text: str) -> int:
+    return len([w for w in text.split() if w])
+
+
+def _clamp_script_words(narration: str, min_words: int, max_words: int) -> str:
     """Keep spoken length inside Shorts budget (defense before TTS)."""
     words = narration.split()
-    if len(words) <= max_words:
-        return narration.strip()
-    cut = " ".join(words[:max_words]).rstrip(".,;:")
-    if not cut.endswith("."):
-        cut += "."
-    print(f"[script] Clamped narration {len(words)} → {max_words} words for Shorts duration")
-    return cut
+    n = len(words)
+    if n > max_words:
+        cut = " ".join(words[:max_words]).rstrip(".,;:")
+        if not cut.endswith("."):
+            cut += "."
+        print(f"[script] Clamped narration {n} → {max_words} words for Shorts duration")
+        return cut
+    if n < min_words:
+        print(
+            f"[script] WARN word count {n} < target min {min_words} "
+            f"(proceeding; prefer fuller Claim→Payoff next topic)"
+        )
+    return narration.strip()
 
 
 def generate_script(topic_id: str | None = None) -> Path:
@@ -140,6 +159,15 @@ def generate_script(topic_id: str | None = None) -> Path:
         print("[script] Warning: project.language forced to en for video content")
     topic = pick_topic(cfg, topic_id)
     scenario = pick_scenario(cfg, topic)
+
+    # P0 fact gate — before any TTS / media spend
+    try:
+        source = assert_source(topic)
+    except FactGateError as exc:
+        print(str(exc))
+        raise SystemExit(2) from exc
+
+    claim = resolve_claim(topic)
     provider = cfg["script"]["provider"]
 
     if provider == "ollama":
@@ -151,8 +179,12 @@ def generate_script(topic_id: str | None = None) -> Path:
     else:
         narration = topic["fallback_script"]
 
-    max_words = int((cfg.get("script") or {}).get("target_words_max", 140))
-    narration = _clamp_script_words(str(narration).strip(), max_words)
+    script_cfg = cfg.get("script") or {}
+    min_words = int(script_cfg.get("target_words_min", 75))
+    max_words = int(script_cfg.get("target_words_max", 130))
+    narration = _clamp_script_words(str(narration).strip(), min_words, max_words)
+    # Re-resolve claim against final narration if topic.claim empty
+    claim = resolve_claim(topic, narration)
 
     scripts_dir = cfg["paths_resolved"]["scripts"]
     scripts_dir.mkdir(parents=True, exist_ok=True)
@@ -165,6 +197,9 @@ def generate_script(topic_id: str | None = None) -> Path:
         "title": topic["title"],
         "topic": topic["topic"],
         "language": "en",
+        "claim": claim,
+        "hook": topic.get("hook") or claim,
+        "source": source,
         "keywords": topic.get("keywords", []),
         "search_queries": topic.get("search_queries", []),
         "wikimedia_titles": topic.get("wikimedia_titles", []),
@@ -172,10 +207,17 @@ def generate_script(topic_id: str | None = None) -> Path:
         "scenario_id": scenario["id"] if scenario else topic.get("scenario_id"),
         "provider": provider,
         "script_file": str(txt_path.name),
+        "word_count": _word_count(narration),
+        "us_audience_score": topic.get("us_audience_score"),
+        "series_hint": (cfg.get("project") or {}).get("series") or "History Hooks",
+        "viral_structure": ["claim", "evidence", "relevance", "twist", "payoff"],
     }
     meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding="utf-8")
-    write_seo_pack(topic, narration, scenario_id=meta.get("scenario_id"))
-    print(f"[script] Wrote {txt_path} (English)")
+    write_seo_pack(topic, narration, scenario_id=meta.get("scenario_id"), meta=meta)
+    print(
+        f"[script] Wrote {txt_path} (English) words={meta['word_count']} "
+        f"claim={claim[:60]!r} source_ok=1"
+    )
     return txt_path
 
 

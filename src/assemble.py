@@ -146,7 +146,7 @@ def _ken_burns_filter(
 
     )
 
-def _expand_scene_durs(durs: list[float], max_sec: float = 5.0, target: float = 3.5) -> list[float]:
+def _expand_scene_durs(durs: list[float], max_sec: float = 4.0, target: float = 3.0) -> list[float]:
 
     """Subdivide any scene longer than max_sec into ~target slices (never > max_sec)."""
 
@@ -210,9 +210,9 @@ def _load_beats(cap_dir: Path, stem: str, duration: float) -> list[float] | None
 
     durs = [d * (duration / total) for d in durs]
 
-    # Prefer more cuts: split any still longer than 5s across multiple images
+    # Prefer more cuts: split any still longer than 4s across multiple images
 
-    durs = _expand_scene_durs(durs, max_sec=5.0, target=3.5)
+    durs = _expand_scene_durs(durs, max_sec=4.0, target=3.0)
 
     total2 = sum(durs)
 
@@ -220,9 +220,9 @@ def _load_beats(cap_dir: Path, stem: str, duration: float) -> list[float] | None
 
         durs = [d * (duration / total2) for d in durs]
 
-        # Re-clamp after rescale in case float drift pushes a slice over 5s
+        # Re-clamp after rescale in case float drift pushes a slice over 4s
 
-        durs = _expand_scene_durs(durs, max_sec=5.0, target=3.5)
+        durs = _expand_scene_durs(durs, max_sec=4.0, target=3.0)
 
         total3 = sum(durs)
 
@@ -246,9 +246,9 @@ def _scene_durations(
 
     if beat_durs:
 
-        # Hard cap: no static scene longer than 5s
+        # Hard cap: no static scene longer than 4s (viral 2–4s cuts)
 
-        durs = _expand_scene_durs(list(beat_durs), max_sec=5.0, target=3.5)
+        durs = _expand_scene_durs(list(beat_durs), max_sec=4.0, target=3.0)
 
         total = sum(durs)
 
@@ -256,7 +256,7 @@ def _scene_durations(
 
             durs = [d * (duration / total) for d in durs]
 
-            durs = _expand_scene_durs(durs, max_sec=5.0, target=3.5)
+            durs = _expand_scene_durs(durs, max_sec=4.0, target=3.0)
 
             total2 = sum(durs)
 
@@ -268,19 +268,19 @@ def _scene_durations(
 
         mapped = [images[i % len(images)] for i in range(n)]
 
-        print(f"[assemble] Beat-sync: {n} scenes (max scene <=5s)")
+        print(f"[assemble] Beat-sync: {n} scenes (max scene <=4s, Ken Burns)")
 
         return mapped, durs
 
-    # Prefer ~2.5–4s cuts; never exceed 5s per still
+    # Prefer ~2–4s cuts; never exceed scene_max
 
-    target_sec = max(2.5, min(target_sec, 4.0))
+    target_sec = max(2.0, min(target_sec, 4.0))
 
     ideal_count = max(int(round(duration / target_sec)), 1)
 
-    # Ensure equal slices never exceed 5s
+    # Ensure equal slices never exceed 4s
 
-    min_count = max(int(__import__("math").ceil(duration / 5.0)), 1)
+    min_count = max(int(__import__("math").ceil(duration / 4.0)), 1)
 
     ideal_count = max(ideal_count, min_count)
 

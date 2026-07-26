@@ -174,11 +174,29 @@ def synthesize(script_path: Path | None = None) -> Path:
     wav_path = audio_dir / f"{script_path.stem}.wav"
     out_path = audio_dir / f"{script_path.stem}.mp3"
     provider = cfg["tts"]["provider"]
-    voice = cfg["tts"].get("voice", "am_adam")
-    speed = float(cfg["tts"].get("speed", 1.05))
+    tts_cfg = cfg.get("tts") or {}
+    # Brand voice lock — ChronoShorts US narrator (am_adam)
+    brand_voice = "am_adam"
+    voice = str(tts_cfg.get("voice") or brand_voice)
+    if bool(tts_cfg.get("voice_locked", True)):
+        if voice != brand_voice:
+            print(
+                f"[tts] voice_locked=true — forcing {brand_voice} "
+                f"(config had {voice!r})"
+            )
+            voice = brand_voice
+        onnx_v = str(tts_cfg.get("kokoro_onnx_voice") or voice)
+        if onnx_v != brand_voice:
+            print(f"[tts] voice_locked=true — onnx voice forced to {brand_voice}")
+    if not voice.startswith("am_"):
+        print(f"[tts] WARN non-US voice {voice!r}; ChronoShorts expects am_*")
+    speed = float(tts_cfg.get("speed", 1.05))
 
     if provider == "kokoro":
-        print(f"[tts] Kokoro voice={voice} speed={speed} ESPEAK_DATA_PATH={os.environ.get('ESPEAK_DATA_PATH')}")
+        print(
+            f"[tts] Kokoro LOCKED voice={voice} speed={speed} lang=en-us "
+            f"ESPEAK_DATA_PATH={os.environ.get('ESPEAK_DATA_PATH')}"
+        )
         try:
             _synthesize_kokoro(
                 text,
@@ -194,19 +212,19 @@ def synthesize(script_path: Path | None = None) -> Path:
             _synthesize_kokoro_onnx(
                 text,
                 wav_path,
-                voice=cfg["tts"].get("kokoro_onnx_voice") or voice,
+                voice=voice,
                 model=model,
                 voices=voices,
                 speed=speed,
             )
     elif provider == "kokoro_onnx":
-        print(f"[tts] Using kokoro-onnx voice={voice} speed={speed}")
+        print(f"[tts] Using kokoro-onnx LOCKED voice={voice} speed={speed}")
         model = cfg["tts"].get("kokoro_onnx_model") or r"C:\kokoro-models\kokoro-v1.0.onnx"
         voices = cfg["tts"].get("kokoro_onnx_voices") or r"C:\kokoro-models\voices-v1.0.bin"
         _synthesize_kokoro_onnx(
             text,
             wav_path,
-            voice=cfg["tts"].get("kokoro_onnx_voice") or voice,
+            voice=voice,
             model=model,
             voices=voices,
             speed=speed,

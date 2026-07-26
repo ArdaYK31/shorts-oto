@@ -72,8 +72,8 @@
       "id": "did-you-know",
       "name": "Did You Know",
       "angle": "One surprising fact Americans share — punchy curiosity.",
-      "hook_style": "Open with the disbelief line: 'The US once…' / 'Cleopatra wasn't…'",
-      "structure": ["shock fact", "why true", "context sting", "follow CTA"],
+      "hook_style": "Open with the disbelief CLAIM (optional 'Did you know' opener; claim is mandatory).",
+      "structure": ["claim", "evidence", "relevance", "twist", "payoff"],
       "example_topics": ["US armed Saddam", "Oxford older than Aztecs", "Cleopatra closer to iPhone than pyramids"]
     },
     {

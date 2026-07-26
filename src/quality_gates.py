@@ -20,16 +20,28 @@ def _ffprobe_duration(path: Path) -> float:
 
 
 def check_output(video_path: Path, cfg: dict[str, Any]) -> dict[str, Any]:
-    """Simple quality gates: file exists + duration bounds."""
+    """Quality gates: file exists + duration bounds + preferred 30–45s warn."""
     gates = cfg.get("quality_gates") or {}
+    script_cfg = cfg.get("script") or {}
     min_d = float(gates.get("min_duration_sec", 20))
     max_d = float(gates.get("max_duration_sec", 60))
+    pref_min = float(
+        gates.get("preferred_duration_sec_min")
+        or script_cfg.get("target_duration_sec_min")
+        or 30
+    )
+    pref_max = float(
+        gates.get("preferred_duration_sec_max")
+        or script_cfg.get("target_duration_sec_max")
+        or 45
+    )
     require_video = bool(gates.get("require_video", True))
 
     result: dict[str, Any] = {
         "ok": True,
         "path": str(video_path),
         "errors": [],
+        "warnings": [],
         "duration_sec": None,
     }
 
@@ -51,6 +63,13 @@ def check_output(video_path: Path, cfg: dict[str, Any]) -> dict[str, Any]:
         if duration > max_d:
             result["ok"] = False
             result["errors"].append(f"Duration {duration:.1f}s > max {max_d}s")
+        if result["ok"] and (duration < pref_min or duration > pref_max):
+            warn = (
+                f"Duration {duration:.1f}s outside preferred viral window "
+                f"{pref_min:.0f}–{pref_max:.0f}s (still within hard cap)"
+            )
+            result["warnings"].append(warn)
+            print(f"[quality_gates] WARN {warn}")
     except Exception as exc:  # noqa: BLE001
         result["ok"] = False
         result["errors"].append(f"ffprobe failed: {exc}")

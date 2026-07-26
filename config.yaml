@@ -26,15 +26,22 @@ script:
   provider: template
   ollama_url: http://127.0.0.1:11434
   ollama_model: llama3.2
-  target_words_min: 70
-  target_words_max: 110
+  # Viral Shorts budget: ~30–45s spoken ≈ 75–130 words (hard clamp at max)
+  target_words_min: 75
+  target_words_max: 130
+  target_duration_sec_min: 30
+  target_duration_sec_max: 45
   prompt_file: prompts/script_system.txt
+  viral_prompt_file: prompts/script_viral.txt
   language: en
+  require_source: true  # fact gate before TTS — never invent sources
+  viral_structure: ["claim", "evidence", "relevance", "twist", "payoff"]
 
 tts:
   provider: kokoro
-  # ChronoShorts: clear US male documentary narrator (not ultra-deep gravel)
-  # A/B: am_michael, am_onyx; deeper drama: am_fenrir @ 1.0
+  # LOCKED brand voice — ChronoShorts clear US male documentary narrator
+  # Do not rotate per episode; A/B only via explicit config change
+  voice_locked: true
   voice: am_adam
   speed: 1.05
   lang: en-us
@@ -69,7 +76,9 @@ media:
       # Soft stop: if month spend would exceed cap, fall back to Pollinations ($0)
       fallback_when_over_budget: true
   image_count: 11
-  seconds_per_image: 3.0  # ChronoShorts ~3s cuts; hard max 5s in assemble/captions
+  seconds_per_image: 3.0  # ChronoShorts 2–4s cuts; hard max 4s in assemble
+  scene_max_sec: 4.0
+  scene_min_sec: 2.0
   ken_burns_zoom: 1.06
   user_agent: "yt-history-shorts/0.3 (local automation; educational)"
   score_enabled: true
@@ -97,11 +106,22 @@ captions:
   outline: 7
   shadow: 0
   bold: true
-  # ChronoShorts jumps straight into center words (no long cold-open banner)
+  # Karaoke from first word at t≈0 (no cold-open delay)
   hook_seconds: 0
   hook_font_size: 104
   hook_margin_v: 0
   hook_color: "&H00FFFFFF"
+  karaoke_snap_to_zero: true
+  karaoke_max_lead_sec: 0.45
+  # Frame-1 CLAIM card (the fact itself — never bare "DID YOU KNOW?")
+  claim_card: true
+  claim_seconds: 2.6
+  claim_font_size: 72
+  claim_margin_v: 280
+  claim_alignment: 8  # top-center
+  claim_color: "&H00FFFFFF"
+  claim_outline: 8
+  claim_max_chars: 72
 
 assemble:
   crf: 17
@@ -126,9 +146,12 @@ audio_mix:
 
 quality_gates:
   min_duration_sec: 20
-  max_duration_sec: 60
+  max_duration_sec: 60  # hard Shorts cap (≤59s soft via project.max_duration_sec)
+  preferred_duration_sec_min: 30
+  preferred_duration_sec_max: 45
   require_audio: true
   require_video: true
+  require_source: true
 
 schedule:
   timezone: Europe/Istanbul  # GMT+3
@@ -150,12 +173,9 @@ upload:
   # Identity only (OAuth) — never a password
   google_account: efsaneshorts@gmail.com
   language: en
+  # P0 SEO: max 3 tags total (seo_pack enforces). Prefer Shorts + topical.
   default_tags:
     - Shorts
     - history
     - History Shorts
-    - ChronoShorts
-    - documentary
-    - did you know
-    - world history
-    - American history
+  max_tags: 3

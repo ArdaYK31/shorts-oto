@@ -51,6 +51,7 @@ from cleanup_temps import cleanup_temp_mp4s  # noqa: E402
 from config_loader import load_config  # noqa: E402
 from fetch_media import fetch_media  # noqa: E402
 from generate_script import generate_script, load_queue, pick_topic  # noqa: E402
+from fact_gate import FactGateError, assert_source, topic_source  # noqa: E402
 from job_status import append_job, write_snapshot  # noqa: E402
 from quality_gates import check_output  # noqa: E402
 from seo_adapt import load_seo, platform_preview  # noqa: E402
@@ -158,14 +159,38 @@ def pick_next_topic_id(cfg: dict, topic_id: str | None = None) -> str:
     if not queue:
         raise SystemExit("topics/queue.json is empty — add topics first")
 
+    require_source = bool((cfg.get("script") or {}).get("require_source", True)) or bool(
+        (cfg.get("quality_gates") or {}).get("require_source", True)
+    )
     blocked = blocked_ids(cfg)
+    skipped_no_source = 0
     for item in queue:
-        if item["id"] not in blocked:
+        if item["id"] in blocked:
+            continue
+        if require_source and not topic_source(item):
+            skipped_no_source += 1
             print(
-                f"[schedule] UNIQUE topic selected: {item['id']} "
-                f"(blocked={len(blocked)} prior used/uploaded)"
+                f"[fact_gate] SKIP (no source) topic={item['id']} — "
+                f"add source to queue.json before TTS"
             )
-            return item["id"]
+            continue
+        # us_audience_score is a schema hint for topic authors / future ranking
+        score = item.get("us_audience_score")
+        score_bit = f" us_score={score}" if score is not None else ""
+        print(
+            f"[schedule] UNIQUE topic selected: {item['id']}{score_bit} "
+            f"(blocked={len(blocked)} prior used/uploaded"
+            f"{f', skipped_no_source={skipped_no_source}' if skipped_no_source else ''})"
+        )
+        return item["id"]
+
+    if skipped_no_source and skipped_no_source >= len(
+        [i for i in queue if i["id"] not in blocked]
+    ):
+        raise SystemExit(
+            "[fact_gate] No unused topics with a 'source' field. "
+            "Add real citations to topics/queue.json (do not invent)."
+        )
 
     print(
         "[schedule] All topics used/uploaded — cycling used/ "
@@ -174,8 +199,11 @@ def pick_next_topic_id(cfg: dict, topic_id: str | None = None) -> str:
     clear_used(cfg)
     blocked = blocked_ids(cfg)
     for item in queue:
-        if item["id"] not in blocked:
-            return item["id"]
+        if item["id"] in blocked:
+            continue
+        if require_source and not topic_source(item):
+            continue
+        return item["id"]
     # Full cycle exhausted — allow re-run from start of queue
     print("[schedule] Full cycle complete — restarting from first topic")
     return queue[0]["id"]
@@ -363,6 +391,23 @@ def main() -> int:
         topic_id = pick_next_topic_id(cfg, args.topic_id)
         topic = pick_topic(cfg, topic_id)
         title = topic.get("title") or topic_id
+        # Fact gate BEFORE claim — soft-fail without burning a used/ slot
+        try:
+            assert_source(topic)
+        except FactGateError as exc:
+            msg = str(exc)
+            print(msg)
+            append_log(cfg, msg)
+            append_job(
+                {
+                    "topic_id": topic_id,
+                    "title": title,
+                    "status": "skipped_no_source",
+                    "platforms": {},
+                    "note": msg,
+                }
+            )
+            return 0
         # Claim immediately so the next cron cannot pick the same topic
         # even if this run fails mid-pipeline (used/ is committed by Actions).
         claimed_path = mark_claimed(cfg, topic)
