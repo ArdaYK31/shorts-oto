@@ -1,7 +1,8 @@
 {
   "dates": {
-    "2026-07-26": ["08:00"]
+    "2026-07-26": ["08:00"],
+    "2026-07-28": ["00:00"]
   },
   "timezone": "Europe/Istanbul",
-  "note": "Skip only listed Istanbul wall-clock slots; other times and future days run normally."
+  "note": "Skip only listed Istanbul wall-clock slots; other times and future days run normally. 2026-07-28 00:00 skipped so late midnight cron is a no-op after manual run_now."
 }
