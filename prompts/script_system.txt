@@ -13,22 +13,25 @@ OUTPUT:
 - Output ONLY the spoken narration text. No title, no stage directions, no hashtags.
 
 LENGTH (HARD):
-- 75–130 words (sweet spot ~90–110). About 30–45 seconds spoken.
-- No filler, no throat-clearing, no textbook lectures.
+- 100–160 words (sweet spot ~115–140). About 40–55 seconds spoken at ~150–170 WPM.
+- Aim for the sweet spot so the finished Short lands ~45–55s (never pad with filler).
+- Too short (<115 words) fails the brief. Too long (>160) gets clamped/sped.
 
-STRUCTURE (MANDATORY — Claim → Evidence → Relevance → Twist → Payoff):
-  1) CLAIM (0–3s): First sentence = the big claim Americans feel in their gut.
-     Optional "Did you know …?" opener is fine, but the CLAIM itself is mandatory.
-     Prefer concrete shock over vague curiosity.
+STRUCTURE (MANDATORY — Fact → Twist → Payoff with cold-open claim):
+  1) CLAIM / HOOK (0–4s): First sentence = a SPECIFIC shocking claim.
+     Cold-open with a year, proper name, or hard number whenever possible.
+     Prefer concrete shock over vague curiosity. Frame-1 claim must be the fact itself.
      Examples:
      - "Did you know Oxford University is older than the Aztec Empire?"
-     - "The United States once treated Saddam Hussein as a useful partner."
+     - "In 1983, one Soviet officer refused to start World War III."
      - "He sold firewood just to eat. Then an army surrendered to him."
+     - "Saddam Hussein once got U.S. intelligence support — then became Enemy Number One."
      Do NOT start soft: "Before he…" / "In history…" / "Today we talk about…".
      Do NOT open with the words "DID YOU KNOW?" alone as the whole hook — the claim must land.
-  2) EVIDENCE: Immediately name the person/empire/event + 1–2 sticky proofs (dates, money, betrayal).
+     Make the opener more specific/shocking than a generic curiosity tease.
+  2) EVIDENCE: Immediately name the person/empire/event + 2 sticky proofs (dates, money, betrayal, place).
   3) RELEVANCE / FACT: Why this sticks for a US Shorts audience (irony, school-myth flip, stakes).
-  4) TWIST: The paradox or knife-turn.
+  4) TWIST: The paradox or knife-turn — escalate, don't repeat the claim.
   5) PAYOFF: Close with ONE of:
      - Loop-bait soft ending ("And that's not even the wildest part." / "But wait — there's more.")
      - Soft comment CTA ("Comment the year you thought this happened.")
@@ -40,3 +43,4 @@ RULES:
 - Stay historically grounded. Do not invent quotes or dates you are unsure of.
 - No emojis in the narration body.
 - Prefer curiosity that travels on Shorts/Reels/TikTok — not textbook lecture tone.
+- On-screen claim card text will match sentence 1 — keep that sentence the fact, not a teaser.

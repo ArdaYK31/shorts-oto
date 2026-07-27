@@ -7,7 +7,7 @@
   width: 1080
   height: 1920
   fps: 30
-  max_duration_sec: 58  # Shorts soft max (≤60s); assemble/upload warn if over
+  max_duration_sec: 58  # Hard-trim ≤59s Shorts (cushion under gate max 59)
 
 paths:
   topics: topics
@@ -26,11 +26,12 @@ script:
   provider: template
   ollama_url: http://127.0.0.1:11434
   ollama_model: llama3.2
-  # Viral Shorts budget: ~30–45s spoken ≈ 75–130 words (hard clamp at max)
-  target_words_min: 75
-  target_words_max: 130
-  target_duration_sec_min: 30
-  target_duration_sec_max: 45
+  # Viral Shorts budget: ~40–55s spoken ≈ 115–160 words @ ~150–170 WPM (TTS ~1.05)
+  target_words_min: 115
+  target_words_max: 160
+  target_words_sweet: 125  # expand short templates toward this before clamp
+  target_duration_sec_min: 40
+  target_duration_sec_max: 55
   prompt_file: prompts/script_system.txt
   viral_prompt_file: prompts/script_viral.txt
   language: en
@@ -49,8 +50,8 @@ tts:
   # Do not rotate per episode; A/B only via explicit config change
   voice_locked: true
   voice: am_adam
-  # Match Farzan Films Short (~150–170 WPM documentary urgency)
-  speed: 1.12
+  # ~150–170 WPM feel without over-compressing 40–55s scripts
+  speed: 1.05
   lang: en-us
   kokoro_onnx_voice: am_adam
   kokoro_onnx_model: "C:/kokoro-models/kokoro-v1.0.onnx"
@@ -71,7 +72,7 @@ tts:
     similarity_boost: 0.80
     style: 0.42
     use_speaker_boost: true
-    speed: 1.12
+    speed: 1.05
 
 media:
   # ChronoShorts match: AI painterly stills (see STYLE_GUIDE_CHRONOSHORTS.md)
@@ -194,10 +195,10 @@ audio:
       payoff: "punchy soft cinematic impact boom, documentary payoff sting, 0.9 seconds, no voice, no melody"
 
 quality_gates:
-  min_duration_sec: 20
-  max_duration_sec: 60  # hard Shorts cap (≤59s soft via project.max_duration_sec)
-  preferred_duration_sec_min: 30
-  preferred_duration_sec_max: 45
+  min_duration_sec: 35  # hard fail if far under target
+  max_duration_sec: 59  # hard Shorts cap (assemble hard-trims to project.max ≤58)
+  preferred_duration_sec_min: 40  # soft warn below viral window
+  preferred_duration_sec_max: 55
   require_audio: true
   require_video: true
   require_source: true

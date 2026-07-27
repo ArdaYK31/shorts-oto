@@ -55,20 +55,20 @@ def _ffprobe_av_durations(path: Path) -> tuple[float | None, float | None]:
 
 
 def check_output(video_path: Path, cfg: dict[str, Any]) -> dict[str, Any]:
-    """Quality gates: file exists + duration bounds + preferred 30–45s warn."""
+    """Quality gates: file exists + duration bounds + preferred 40–55s warn."""
     gates = cfg.get("quality_gates") or {}
     script_cfg = cfg.get("script") or {}
-    min_d = float(gates.get("min_duration_sec", 20))
-    max_d = float(gates.get("max_duration_sec", 60))
+    min_d = float(gates.get("min_duration_sec", 35))
+    max_d = float(gates.get("max_duration_sec", 59))
     pref_min = float(
         gates.get("preferred_duration_sec_min")
         or script_cfg.get("target_duration_sec_min")
-        or 30
+        or 40
     )
     pref_max = float(
         gates.get("preferred_duration_sec_max")
         or script_cfg.get("target_duration_sec_max")
-        or 45
+        or 55
     )
     require_video = bool(gates.get("require_video", True))
 

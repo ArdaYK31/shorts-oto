@@ -310,7 +310,7 @@ def run_pipeline(
     if not gate["ok"]:
         msg = "[quality_gates] FAILED: " + "; ".join(gate["errors"])
         # Preview-only (--skip-upload): keep artifact success as exit 0.
-        # Cron uploads still hard-fail so a >60s Short never goes public.
+        # Cron uploads still hard-fail so a >59s Short never goes public.
         if enforce_quality_gates:
             raise SystemExit(msg)
         print(f"[quality_gates] WARN (skip-upload preview, artifact kept): {msg}")

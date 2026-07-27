@@ -385,8 +385,8 @@ def synthesize(script_path: Path | None = None) -> Path:
         or gates.get("max_duration_sec")
         or 58
     )
-    # Leave a small cushion so assemble/xfade + gate (60s) never fail schedule uploads.
-    hard_max = min(max_sec, float(gates.get("max_duration_sec", 60)) - 1.0)
+    # Leave a small cushion so assemble/xfade + gate (59s) never fail schedule uploads.
+    hard_max = min(max_sec, float(gates.get("max_duration_sec", 59)) - 1.0)
     hard_max = max(hard_max, 20.0)
     enforce_max_duration(out_path, hard_max)
     print(f"[tts] Wrote {out_path}")

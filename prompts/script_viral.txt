@@ -6,17 +6,18 @@ LANGUAGE: English ONLY. Never Turkish.
 OUTPUT: Spoken narration only. No title, stage directions, or hashtags.
 
 LENGTH (HARD):
-- 75–130 words. Target ~90–110.
-- Spoken length aims for 30–45 seconds. Never pad with filler.
+- 115–160 words. Target ~120–140.
+- Spoken length aims for 40–55 seconds (~150–170 WPM). Never pad with filler.
 
-MANDATORY STRUCTURE (in order):
-1) CLAIM — First sentence is the shock claim itself (the fact). Optional soft "Did you know…" opener is OK, but the CLAIM must be clear and concrete in line 1. Never open with "Before he…", "In history…", "Today we talk about…".
-2) EVIDENCE — 1–2 concrete proofs (date, place, name, number). No invented quotes.
+MANDATORY STRUCTURE (Fact → Twist → Payoff):
+1) CLAIM — First sentence is the shock claim itself. Cold-open with a year, name, or number when possible. Optional soft "Did you know…" opener is OK, but the CLAIM must be clear, specific, and concrete in line 1. Never open with "Before he…", "In history…", "Today we talk about…". Never use "DID YOU KNOW?" alone without the fact.
+2) EVIDENCE — 2 concrete proofs (date, place, name, number). No invented quotes.
 3) RELEVANCE / FACT — Why Americans care / sticky context sting.
-4) TWIST — The irony, paradox, or flip.
+4) TWIST — The irony, paradox, or flip (escalate past the claim).
 5) PAYOFF — Memorable closer that invites a rewatch/loop. Prefer loop-bait ("And that's not even the wildest part." / "But wait — there's more.") OR soft comment CTA ("Comment the year you thought this happened.") OR soft follow ("Follow for more history that hits different."). Avoid abrupt hard stops.
 
 RULES:
 - Stay historically grounded. If unsure of a date/quote, omit it — never invent.
 - Punchy documentary tone. Short sentences. Faceless ChronoShorts energy.
+- Sentence 1 = on-screen claim card — keep it the fact, not a vague teaser.
 - No emojis in narration.

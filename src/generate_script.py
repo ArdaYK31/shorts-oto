@@ -112,8 +112,10 @@ def generate_with_ollama(cfg: dict[str, Any], topic: dict[str, Any], scenario: d
         f"Hook hint: {topic.get('hook') or claim}\n"
         f"{scenario_hint}"
         "Write the narration now in English only.\n"
-        "Structure: Claim → Evidence → Relevance → Twist → Payoff.\n"
-        "75–130 words. No filler."
+        "Structure: Fact/Claim → Evidence → Relevance → Twist → Payoff.\n"
+        "Cold-open sentence 1 with a year, name, or number when possible — "
+        "specific shocking claim (this becomes the on-screen claim card).\n"
+        "115–160 words (sweet spot ~120–140) for ~40–55 seconds spoken. No filler."
     )
     url = cfg["script"]["ollama_url"].rstrip("/") + "/api/chat"
     payload = {
@@ -132,6 +134,91 @@ def generate_with_ollama(cfg: dict[str, Any], topic: dict[str, Any], scenario: d
 
 def _word_count(text: str) -> int:
     return len([w for w in text.split() if w])
+
+
+def _sentences(text: str) -> list[str]:
+    parts = re.split(r"(?<=[.!?])\s+", re.sub(r"\s+", " ", text.strip()))
+    return [p.strip() for p in parts if p.strip()]
+
+
+def _expand_short_script(topic: dict[str, Any], narration: str, min_words: int) -> str:
+    """Pad short template fallbacks to ~40–55s without inventing new historical claims.
+
+    Only reuses claim / topic / hook / keywords already on the topic card, plus
+    neutral connective tissue (no new dates, quotes, or events).
+    """
+    text = re.sub(r"\s+", " ", (narration or "").strip())
+    if _word_count(text) >= min_words:
+        return text
+
+    claim = resolve_claim(topic, text).rstrip(".!?")
+    topic_line = str(topic.get("topic") or "").strip().rstrip(".!?")
+    hook = str(topic.get("hook") or "").strip().rstrip(".!?")
+    keywords = [str(k).strip() for k in (topic.get("keywords") or []) if str(k).strip()]
+    sents = _sentences(text)
+
+    # Cold-open: claim first if narration doesn't already lead with it
+    if claim:
+        lead = (sents[0] if sents else "").lower()
+        claim_l = claim.lower()
+        if not lead or (claim_l[:24] not in lead and lead[:24] not in claim_l):
+            sents.insert(0, f"{claim}.")
+
+    extras: list[str] = []
+    if topic_line:
+        extras.append(f"The core story: {topic_line}.")
+    if keywords:
+        named = ", ".join(keywords[:3])
+        extras.append(
+            f"Hold onto the names — {named} — because that is where the proof lives."
+        )
+    if hook and hook.lower() not in text.lower():
+        extras.append(f"The sticky angle: {hook}.")
+    extras.extend(
+        [
+            "That detail alone flips the timeline most people carry around.",
+            "School myths flatten centuries into a blur — this one does not.",
+            "Keep the dates and places; they are the receipts.",
+            "The twist is not a rumor. It is the record staring back.",
+        ]
+    )
+
+    body = list(sents)
+    payoff_idx = None
+    for i, s in enumerate(body):
+        low = s.lower()
+        if any(
+            k in low
+            for k in ("follow for", "comment the", "wildest part", "but wait")
+        ):
+            payoff_idx = i
+            break
+    insert_at = payoff_idx if payoff_idx is not None else len(body)
+    for block in extras:
+        if _word_count(" ".join(body)) >= min_words:
+            break
+        if block.lower().rstrip(".") in " ".join(body).lower():
+            continue
+        body.insert(insert_at, block if block.endswith((".", "!", "?")) else block + ".")
+        insert_at += 1
+
+    if not any("follow for" in s.lower() or "wildest part" in s.lower() for s in body):
+        body.append("And that's not even the wildest part.")
+
+    expanded = " ".join(body)
+    guard = 0
+    while _word_count(expanded) < min_words and claim and guard < 3:
+        guard += 1
+        sting = f"Again: {claim}."
+        parts = _sentences(expanded)
+        parts.insert(max(len(parts) - 1, 1), sting)
+        expanded = " ".join(parts)
+
+    print(
+        f"[script] Expanded short template {_word_count(text)} -> "
+        f"{_word_count(expanded)} words for 40-55s target"
+    )
+    return expanded.strip()
 
 
 def _clamp_script_words(narration: str, min_words: int, max_words: int) -> str:
@@ -180,9 +267,13 @@ def generate_script(topic_id: str | None = None) -> Path:
         narration = topic["fallback_script"]
 
     script_cfg = cfg.get("script") or {}
-    min_words = int(script_cfg.get("target_words_min", 75))
-    max_words = int(script_cfg.get("target_words_max", 130))
-    narration = _clamp_script_words(str(narration).strip(), min_words, max_words)
+    min_words = int(script_cfg.get("target_words_min", 115))
+    max_words = int(script_cfg.get("target_words_max", 160))
+    # Template fallbacks are often ~45–90 words — expand toward sweet spot
+    # (~125) so TTS lands in the 40–55s window without over-aggressive atempo.
+    expand_to = max(min_words, int(script_cfg.get("target_words_sweet", 125)))
+    narration = _expand_short_script(topic, str(narration).strip(), expand_to)
+    narration = _clamp_script_words(narration, min_words, max_words)
     # Re-resolve claim against final narration if topic.claim empty
     claim = resolve_claim(topic, narration)
 

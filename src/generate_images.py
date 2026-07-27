@@ -19,19 +19,75 @@ from config_loader import load_config
 _STYLE_CACHE: str | None = None
 _HOOK_CACHE: str | None = None
 
-SCENE_BEATS: list[str] = [
-    "wide establishing hero tableau, strong composition, environmental storytelling",
-    "wide establishing shot, epic environment, atmospheric depth",
-    "character in action, storytelling moment, dynamic pose",
-    "intimate interior scene, lantern or window light, Rembrandt lighting",
-    "crowd or army context in background, main figure in focus",
-    "symbolic object and figure, cinematic still, rich textures",
-    "low-angle heroic framing, monumental architecture",
-    "quiet contemplative moment before history changes",
-    "aftermath or turning-point scene, emotional gravity",
-    "close environmental detail with period props, cinematic grade",
-    "journey or travel scene through period landscape",
-    "final iconic tableau, powerful silhouette or stance",
+# Positive anti-trash constraints (Flux ignores negatives — keep in prompt body).
+_ANTI_HAND_GAZE = (
+    "hands secondary never focal, no palm gazing, no examining own hands, "
+    "no awkward hand close-ups, eyes looking into the scene or at distant action"
+)
+
+# Narrative-linked composition templates keyed to viral structure beats.
+# Each entry: (role_label, composition_directive)
+SCENE_BEATS: list[tuple[str, str]] = [
+    (
+        "hook",
+        "wide establishing hero tableau visualizing the shock claim, "
+        "monumental scale or decisive contrast, environmental storytelling",
+    ),
+    (
+        "evidence",
+        "wide establishing period environment with maps documents architecture "
+        "or dated landmarks proving the claim, atmospheric depth",
+    ),
+    (
+        "evidence",
+        "cause-and-effect beat: period props letters seals coins weapons or "
+        "architecture that matches the named proof, medium-wide framing",
+    ),
+    (
+        "relevance",
+        "crowd silhouette army procession or public square showing stakes for "
+        "ordinary people, main subject in context not isolated palm-gazing",
+    ),
+    (
+        "evidence",
+        "interior study archive throne room or war room with period documents "
+        "and lantern Rembrandt light, objects carry the story",
+    ),
+    (
+        "twist",
+        "turning-point tableau: visual paradox or knife-turn of the story, "
+        "dynamic medium-wide action or silhouette confrontation",
+    ),
+    (
+        "twist",
+        "low-angle monumental architecture or battlefield aftermath that "
+        "escalates the irony, powerful environmental scale",
+    ),
+    (
+        "relevance",
+        "journey or travel through period landscape linking places named "
+        "in the narration, continuity of era and costume",
+    ),
+    (
+        "payoff",
+        "aftermath or consequence scene with emotional gravity, wide or "
+        "silhouette framing, story resolved visually",
+    ),
+    (
+        "payoff",
+        "close environmental detail of a decisive period object only "
+        "(seal map broken chain crown document) — no hand close-ups",
+    ),
+    (
+        "payoff",
+        "final iconic silhouette or stance against epic skyline, loop-bait "
+        "energy, strong composition tied to the claim",
+    ),
+    (
+        "evidence",
+        "crowd or army context behind a clear central figure in period dress, "
+        "faces looking outward, documentary still",
+    ),
 ]
 
 
@@ -119,22 +175,64 @@ def _topic_seed(stem: str) -> int:
     return int(hashlib.md5(stem.encode()).hexdigest()[:8], 16) % 10_000_000
 
 
+def _split_narration_beats(text: str, want: int) -> list[str]:
+    """Split narration into ~want beat snippets for image prompt grounding."""
+    cleaned = re.sub(r"\s+", " ", (text or "").strip())
+    if not cleaned:
+        return []
+    parts = re.split(r"(?<=[.!?])\s+", cleaned)
+    parts = [p.strip() for p in parts if p.strip()]
+    if not parts:
+        return [cleaned[:180]]
+    if len(parts) >= want:
+        return [p[:180] for p in parts[:want]]
+    # Stretch fewer sentences across want slots
+    out: list[str] = []
+    for i in range(want):
+        out.append(parts[min(i, len(parts) - 1)][:180])
+    return out
+
+
+def _load_narration_for_meta(meta: dict[str, Any], cfg: dict[str, Any]) -> str:
+    """Prefer on-disk script so image beats track spoken narration."""
+    scripts = cfg.get("paths_resolved", {}).get("scripts")
+    stem = str(meta.get("id") or "").strip()
+    if scripts and stem:
+        path = Path(scripts) / f"{stem}.txt"
+        if path.exists():
+            return path.read_text(encoding="utf-8").strip()
+    return str(meta.get("narration") or meta.get("script") or "").strip()
+
+
 def build_scene_prompts(meta: dict[str, Any], count: int, cfg: dict[str, Any]) -> list[str]:
     style = _load_style_prefix(cfg)
-    hook = _load_hook_prefix(cfg)
+    hook_prefix = _load_hook_prefix(cfg)
     title = (meta.get("title") or meta.get("id") or "historical figure").strip()
+    claim = (meta.get("claim") or meta.get("hook") or title).strip()
+    topic = (meta.get("topic") or title).strip()
     keywords = [str(k) for k in (meta.get("keywords") or [])][:5]
     kw = ", ".join(keywords)
-    topic_bit = f"subject: {title}"
+    continuity = (
+        f"same era and subject continuity across episode, subject: {title}, "
+        f"topic: {topic}"
+    )
     if kw:
-        topic_bit += f", themes: {kw}"
+        continuity += f", themes: {kw}"
+
+    narration = _load_narration_for_meta(meta, cfg)
+    narr_beats = _split_narration_beats(narration, count)
     prompts: list[str] = []
     for i in range(count):
-        beat = SCENE_BEATS[i % len(SCENE_BEATS)]
-        if i == 0 and hook:
-            prompts.append(f"{style}. {hook}. {topic_bit}. Scene: {beat}.")
-        else:
-            prompts.append(f"{style}. {topic_bit}. Scene: {beat}.")
+        role, composition = SCENE_BEATS[i % len(SCENE_BEATS)]
+        beat_text = narr_beats[i] if i < len(narr_beats) else claim
+        if i == 0:
+            beat_text = claim or beat_text
+        narrative = f"script beat ({role}): {beat_text}"
+        parts = [style, continuity, narrative, f"Scene: {composition}", _ANTI_HAND_GAZE]
+        if i == 0 and hook_prefix:
+            parts.insert(1, hook_prefix)
+            parts.append(f"visualizes claim: {claim}")
+        prompts.append(". ".join(p.rstrip(".") for p in parts if p) + ".")
     return prompts
 
 

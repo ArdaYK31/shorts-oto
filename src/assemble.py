@@ -438,7 +438,7 @@ def assemble(
 
     gates = cfg.get("quality_gates") or {}
 
-    gate_max = float(gates.get("max_duration_sec", 60))
+    gate_max = float(gates.get("max_duration_sec", 59))
 
     # Hard cap narration before scenes so quality_gates cannot fail schedule uploads.
 
