@@ -173,6 +173,9 @@ jobs:
             if [ "${{ inputs.skip_upload }}" = "true" ] || [ "$ACTION" = "preview_only" ]; then
               ARGS+=(--skip-upload)
             fi
+            # Manual run_now must upload even if today's cron slot is marked skipped
+            # (skip_slots still blocks the late schedule cron so there is no double upload).
+            if [ "$ACTION" = "run_now" ]; then ARGS+=(--ignore-skip-slot); fi
             if [ -n "${{ inputs.topic_id }}" ]; then ARGS+=(--topic-id "${{ inputs.topic_id }}"); fi
           fi
           mkdir -p .cache/huggingface .cache/torch logs out topics/used

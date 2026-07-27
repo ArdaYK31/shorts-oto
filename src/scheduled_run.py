@@ -430,6 +430,11 @@ def main() -> int:
         action="store_true",
         help="Full pipeline only; no platform uploads",
     )
+    parser.add_argument(
+        "--ignore-skip-slot",
+        action="store_true",
+        help="Manual run_now: do not honor logs/skip_slots.json (cron still honors it)",
+    )
     args = parser.parse_args()
 
     cfg = load_config()
@@ -452,7 +457,9 @@ def main() -> int:
     forced_tid = None
     try:
         write_snapshot(cfg)
-        skip_slot = should_skip_slot(cfg)
+        skip_slot = None if args.ignore_skip_slot else should_skip_slot(cfg)
+        if args.ignore_skip_slot:
+            print("[schedule] ignore-skip-slot: manual run_now bypasses skip_slots.json")
         if skip_slot:
             msg = f"SKIP slot {skip_slot} today"
             append_log(cfg, msg)
