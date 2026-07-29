@@ -51,7 +51,27 @@ def pick_scenario(cfg: dict[str, Any], topic: dict[str, Any]) -> dict[str, Any] 
         want = "traitor-twist"
     elif any(k in topic_blob for k in ("cold-war", "petrov", "missile", "berlin")):
         want = "cold-war-fact"
-    elif any(k in topic_blob for k in ("ww2", "wwii", "mincemeat", "navajo", "onoda")):
+    elif any(
+        k in topic_blob
+        for k in (
+            "ww2",
+            "wwii",
+            "world war ii",
+            "world-war-ii",
+            "mincemeat",
+            "navajo",
+            "onoda",
+            "ghost-army",
+            "fu-go",
+            "balloon-bomb",
+            "bat-bomb",
+            "chaff",
+            "window-radar",
+            "exploding-rat",
+            "death-whisper",
+            "artillery-whisper",
+        )
+    ):
         want = "ww2-hook"
     elif any(k in topic_blob for k in ("empire", "rome", "british-tea", "colosseum")):
         want = "empire-twist"
@@ -104,6 +124,22 @@ def generate_with_ollama(cfg: dict[str, Any], topic: dict[str, Any], scenario: d
         )
     claim = resolve_claim(topic)
     source = assert_source(topic)
+    ww2_mode = (scenario or {}).get("id") == "ww2-hook" or "ww2" in (
+        (topic.get("id") or "") + (topic.get("scenario_id") or "")
+    ).lower()
+    if ww2_mode:
+        structure_line = (
+            "Structure: Mid-action cold open → Pressure → Twist → Sting → Payoff.\n"
+            "SURPRISE mode: drop viewer mid-event. Minimize proper nouns "
+            "(max 1–2 names). Focus on situation/twist — not biography or classroom why.\n"
+            "Sentence 1 = mid-action shock claim (on-screen claim card).\n"
+        )
+    else:
+        structure_line = (
+            "Structure: Fact/Claim → Evidence → Relevance → Twist → Payoff.\n"
+            "Cold-open sentence 1 with a year, name, or number when possible — "
+            "specific shocking claim (this becomes the on-screen claim card).\n"
+        )
     user = (
         f"Topic: {topic['topic']}\n"
         f"Suggested title vibe: {topic['title']}\n"
@@ -112,9 +148,10 @@ def generate_with_ollama(cfg: dict[str, Any], topic: dict[str, Any], scenario: d
         f"Hook hint: {topic.get('hook') or claim}\n"
         f"{scenario_hint}"
         "Write the narration now in English only.\n"
-        "Structure: Fact/Claim → Evidence → Relevance → Twist → Payoff.\n"
-        "Cold-open sentence 1 with a year, name, or number when possible — "
-        "specific shocking claim (this becomes the on-screen claim card).\n"
+        "SIMPLE ENGLISH (HARD): CEFR B1–B2 max. Short sentences. Common words only. "
+        "No academic/doc jargon (nevertheless, subsequently, profound, geopolitical…). "
+        "Use a rare word only if truly needed.\n"
+        f"{structure_line}"
         "115–160 words (sweet spot ~120–140) for ~40–55 seconds spoken. No filler."
     )
     url = cfg["script"]["ollama_url"].rstrip("/") + "/api/chat"
@@ -164,24 +201,38 @@ def _expand_short_script(topic: dict[str, Any], narration: str, min_words: int) 
         if not lead or (claim_l[:24] not in lead and lead[:24] not in claim_l):
             sents.insert(0, f"{claim}.")
 
+    ww2_mode = str(topic.get("scenario_id") or "").lower() == "ww2-hook" or any(
+        k in f"{topic.get('id') or ''} {topic_line}".lower()
+        for k in ("ww2", "wwii", "world war ii")
+    )
     extras: list[str] = []
-    if topic_line:
+    if topic_line and not ww2_mode:
         extras.append(f"The core story: {topic_line}.")
-    if keywords:
+    if keywords and not ww2_mode:
         named = ", ".join(keywords[:3])
         extras.append(
             f"Hold onto the names — {named} — because that is where the proof lives."
         )
     if hook and hook.lower() not in text.lower():
         extras.append(f"The sticky angle: {hook}.")
-    extras.extend(
-        [
-            "That detail alone flips the timeline most people carry around.",
-            "School myths flatten centuries into a blur — this one does not.",
-            "Keep the dates and places; they are the receipts.",
-            "The twist is not a rumor. It is the record staring back.",
-        ]
-    )
+    if ww2_mode:
+        extras.extend(
+            [
+                "No school lesson — just the moment that should not have happened.",
+                "Stay in the scene: what they heard, risked, and never saw coming.",
+                "The twist hits harder when you do not name every boss in the room.",
+                "War stories stick when they surprise — not when they teach.",
+            ]
+        )
+    else:
+        extras.extend(
+            [
+                "That one detail flips the story most people think they know.",
+                "School stories flatten the past — this one does not.",
+                "Keep the dates and places; they prove it happened.",
+                "The twist is not a rumor. It is in the record.",
+            ]
+        )
 
     body = list(sents)
     payoff_idx = None
@@ -301,7 +352,12 @@ def generate_script(topic_id: str | None = None) -> Path:
         "word_count": _word_count(narration),
         "us_audience_score": topic.get("us_audience_score"),
         "series_hint": (cfg.get("project") or {}).get("series") or "History Hooks",
-        "viral_structure": ["claim", "evidence", "relevance", "twist", "payoff"],
+        "viral_structure": (
+            ["mid_action", "pressure", "twist", "sting", "payoff"]
+            if (scenario and scenario.get("id") == "ww2-hook")
+            or str(topic.get("scenario_id") or "") == "ww2-hook"
+            else ["claim", "evidence", "relevance", "twist", "payoff"]
+        ),
     }
     meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding="utf-8")
     write_seo_pack(topic, narration, scenario_id=meta.get("scenario_id"), meta=meta)

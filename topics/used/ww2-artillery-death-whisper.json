@@ -1,0 +1,38 @@
+{
+  "id": "ww2-artillery-death-whisper",
+  "title": "They Thought a Ghost Saved Them in the Trench",
+  "topic": "WW2/WW1 artillery 'death whisper' — soldiers hear a voice telling them to drop before a shell hits; later linked to low-frequency ground rumble from heavy guns",
+  "language": "en",
+  "claim": "He heard whispers telling him to lie flat — then a shell killed everyone still standing.",
+  "hook": "A voice. A drop. Then the blast — and the ghost was physics.",
+  "source": "Battlefield accounts of artillery acoustic/precursor cues; low-frequency ground-borne rumble from heavy guns discussed in military acoustics / popular science retellings of the 'death whisper' phenomenon (WWI–WWII trench lore).",
+  "keywords": [
+    "artillery",
+    "trench warfare",
+    "World War II"
+  ],
+  "search_queries": [
+    "WWII artillery trench night",
+    "heavy artillery barrage",
+    "soldiers in trench explosion"
+  ],
+  "wikimedia_titles": [
+    "Battle of the Somme 1 July WWI Imperial War Museum.jpg",
+    "Artillery barrage WWII.jpg",
+    "Infantry in trench WWII.jpg"
+  ],
+  "pd_fallback_urls": [],
+  "scenario_id": "ww2-hook",
+  "provider": "template",
+  "script_file": "ww2-artillery-death-whisper.txt",
+  "word_count": 129,
+  "us_audience_score": 0.94,
+  "series_hint": "History Hooks",
+  "viral_structure": [
+    "mid_action",
+    "pressure",
+    "twist",
+    "sting",
+    "payoff"
+  ]
+}

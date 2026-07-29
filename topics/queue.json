@@ -1,5 +1,221 @@
 [
   {
+    "id": "ww2-artillery-death-whisper",
+    "scenario_id": "ww2-hook",
+    "title": "They Thought a Ghost Saved Them in the Trench",
+    "topic": "WW2/WW1 artillery 'death whisper' — soldiers hear a voice telling them to drop before a shell hits; later linked to low-frequency ground rumble from heavy guns",
+    "keywords": [
+      "artillery",
+      "trench warfare",
+      "World War II"
+    ],
+    "search_queries": [
+      "WWII artillery trench night",
+      "heavy artillery barrage",
+      "soldiers in trench explosion"
+    ],
+    "wikimedia_titles": [
+      "Battle of the Somme 1 July WWI Imperial War Museum.jpg",
+      "Artillery barrage WWII.jpg",
+      "Infantry in trench WWII.jpg"
+    ],
+    "pd_fallback_urls": [],
+    "fallback_script": "He heard whispers telling him to lie flat — and the second he did, a shell killed everyone still standing in his trench. He walked back to camp sure a death spirit had saved him. Then other men said they heard the same voice right before a blast. Fear spread fast through the lines. Men started dropping at any strange sound. Years later, people found a simpler answer. Big guns send a deep shake through the ground before the hit. That shake can feel like a voice speaking under your boots. Not a ghost. Just physics wearing a mask. He lived because he dropped in time while the others stayed up. And that is not even the wildest part.",
+    "claim": "He heard whispers telling him to lie flat — then a shell killed everyone still standing.",
+    "hook": "A voice. A drop. Then the blast — and the ghost was physics.",
+    "source": "Battlefield accounts of artillery acoustic/precursor cues; low-frequency ground-borne rumble from heavy guns discussed in military acoustics / popular science retellings of the 'death whisper' phenomenon (WWI–WWII trench lore).",
+    "us_audience_score": 0.94
+  },
+  {
+    "id": "ww2-ghost-army-rubber-tanks",
+    "scenario_id": "ww2-hook",
+    "title": "They Fooled Hitler With Rubber Tanks",
+    "topic": "US Ghost Army (23rd Headquarters Special Troops) used inflatable tanks, fake radio traffic, and sound trucks to divert German forces in Europe 1944–45",
+    "keywords": [
+      "Ghost Army",
+      "inflatable tanks",
+      "WWII deception"
+    ],
+    "search_queries": [
+      "WWII inflatable tank decoy",
+      "Ghost Army rubber tank",
+      "WWII deception dummy armor"
+    ],
+    "wikimedia_titles": [
+      "Dummy tanks WWII.jpg",
+      "Inflatable tank WWII.jpg",
+      "Normandy 1944.jpg"
+    ],
+    "pd_fallback_urls": [],
+    "fallback_script": "They rolled rubber tanks onto a hill and waited. From the sky, the armor looked real. Trucks played fake engine noise all night. Fake radio talk sold a whole army that was not there. Enemy scouts counted ghosts — and real enemy units moved to fight them. Artists and builders made the lie while the real army slipped away. Near the end of the war in Europe, a trick moved whole divisions. The battlefield believed the fake first. Follow for more history that hits different.",
+    "claim": "They rolled rubber tanks onto a hill — and the enemy moved real armies to fight ghosts.",
+    "hook": "Fake tanks. Real panic.",
+    "source": "National WWII Museum / Smithsonian accounts of the Ghost Army (23rd Headquarters Special Troops); US inflatable tank and sonic deception ops, 1944–45.",
+    "us_audience_score": 0.96
+  },
+  {
+    "id": "ww2-fu-go-balloon-bombs",
+    "scenario_id": "ww2-hook",
+    "title": "A Balloon From Japan Killed a Picnic in Oregon",
+    "topic": "Japanese Fu-Go balloon bombs reached the US mainland; May 1945 Oregon picnic deaths were the only mainland WW2 combat fatalities in the contiguous US",
+    "keywords": [
+      "Fu-Go",
+      "balloon bomb",
+      "Oregon WWII"
+    ],
+    "search_queries": [
+      "Japanese balloon bomb Oregon",
+      "Fu-Go balloon WWII",
+      "WWII balloon bomb forest"
+    ],
+    "wikimedia_titles": [
+      "Japanese balloon bomb Fu-Go.jpg",
+      "Oregon forest WWII.jpg",
+      "Pacific war map.jpg"
+    ],
+    "pd_fallback_urls": [],
+    "fallback_script": "A Sunday picnic in the Oregon woods found a strange balloon in the trees. Curious hands reached for it. The blast killed a woman and five children — the only war deaths on the US mainland like that. The weapon had ridden high winds across the ocean: a quiet paper balloon carrying bombs. Officials hid the story so the enemy would think the balloons failed. Silence became part of the defense. A picnic. A balloon. A war that suddenly felt next door. And that's not even the wildest part.",
+    "claim": "A Sunday picnic in Oregon found a strange balloon — and it killed six people.",
+    "hook": "War arrived as a picnic surprise.",
+    "source": "NPS / Smithsonian / Oregon historical accounts of Fu-Go balloon bombs; Bly, Oregon incident, May 5, 1945.",
+    "us_audience_score": 0.97
+  },
+  {
+    "id": "ww2-exploding-coal-rats",
+    "scenario_id": "ww2-hook",
+    "title": "Spies Hid Bombs Inside Dead Rats",
+    "topic": "British SOE exploding rat sabotage plan — dead rats packed with plastic explosive meant to be shoveled into enemy boiler furnaces",
+    "keywords": [
+      "SOE",
+      "sabotage",
+      "WWII espionage"
+    ],
+    "search_queries": [
+      "WWII exploding rat SOE",
+      "sabotage coal furnace WWII",
+      "British SOE gadgets"
+    ],
+    "wikimedia_titles": [
+      "SOE WWII agents.jpg",
+      "Steam locomotive WWII.jpg",
+      "WWII factory boiler.jpg"
+    ],
+    "pd_fallback_urls": [],
+    "fallback_script": "They filled dead rats with explosives and planned to leave them in coal piles. One shovel into a fire — boom — a train or factory boiler goes quiet. Workers would grab the dead rats without thinking. Then the shipment got caught. The twist? The other side found the rats… and then wasted huge time searching every coal pile for more. The bombs barely needed to go off. Panic did the damage. War can turn a dead rat into a big distraction. Follow for more history that hits different.",
+    "claim": "They filled dead rats with explosives and hid them in coal piles.",
+    "hook": "One shovel into a fire — then panic did the rest.",
+    "source": "Imperial War Museums / SOE accounts of the exploding-rat sabotage device (WWII British special operations).",
+    "us_audience_score": 0.9
+  },
+  {
+    "id": "ww2-window-chaff-vanished",
+    "scenario_id": "ww2-hook",
+    "title": "They Vanished From Radar With Metal Strips",
+    "topic": "Allied 'Window' chaff — strips of metal foil dropped from bombers to blind German radar during WWII night raids",
+    "keywords": [
+      "Window chaff",
+      "radar countermeasure",
+      "WWII bombers"
+    ],
+    "search_queries": [
+      "WWII Window chaff foil",
+      "bomber stream night raid",
+      "radar countermeasures WWII"
+    ],
+    "wikimedia_titles": [
+      "Lancaster bomber WWII.jpg",
+      "Radar WWII night sky.jpg",
+      "Bomber stream WWII.jpg"
+    ],
+    "pd_fallback_urls": [],
+    "fallback_script": "Night bombers opened their doors and dumped clouds of metal strips into the dark. On enemy screens, one raid suddenly looked like a thousand. Operators stared at a sky full of ghosts. Real planes slipped through while the defenses chased glitter. A handful of foil strips — lighter than a weapon — blinded a whole radar net. The air war became a magic trick with physics. And that's not even the wildest part.",
+    "claim": "Night bombers dumped clouds of metal strips — and vanished into a sky full of ghosts on enemy radar.",
+    "hook": "Foil strips turned one raid into a thousand ghosts.",
+    "source": "RAF / IWM accounts of Operation Window (chaff) first major use Hamburg 1943; Allied radar countermeasures WWII.",
+    "us_audience_score": 0.92
+  },
+  {
+    "id": "ww2-bat-bomb-plan",
+    "scenario_id": "ww2-hook",
+    "title": "America Almost Burned Cities With Bats",
+    "topic": "Project X-Ray bat bomb — US plan to drop hibernating bats carrying tiny incendiaries over Japanese cities",
+    "keywords": [
+      "bat bomb",
+      "Project X-Ray",
+      "WWII weapons"
+    ],
+    "search_queries": [
+      "WWII bat bomb Project X-Ray",
+      "incendiary bat WWII",
+      "Carlsbad bat bomb test"
+    ],
+    "wikimedia_titles": [
+      "Mexican free-tailed bats.jpg",
+      "Incendiary bomb WWII.jpg",
+      "WWII aircraft bomb bay.jpg"
+    ],
+    "pd_fallback_urls": [],
+    "fallback_script": "The plan sounded crazy on purpose: drop thousands of sleeping bats over an enemy city, each tied to a tiny timed firebomb. At dawn the bats would hide in roofs and attics — then the timers would start fires. Tests burned a hangar on a US airfield when bats got loose. Bosses canceled it for bigger bombs. For a moment, the war almost used animals as an air force. Follow for more history that hits different.",
+    "claim": "The plan: drop thousands of bats with tiny firebombs to hide in roofs — then burn a city from inside.",
+    "hook": "Animals as an air force. Mid-plan cold open.",
+    "source": "US military Project X-Ray (bat bomb) documentation; National Archives / popular histories of WWII experimental weapons.",
+    "us_audience_score": 0.93
+  },
+  {
+    "id": "ww2-noman-mercy-rescue",
+    "scenario_id": "ww2-hook",
+    "title": "A White Flag Walked Into No Man's Land",
+    "topic": "Gallipoli battlefield mercy incident — enemy soldier risks death to return a wounded man across no man's land (sparse naming)",
+    "keywords": [
+      "no man's land",
+      "white flag",
+      "battlefield mercy"
+    ],
+    "search_queries": [
+      "Gallipoli no mans land rescue",
+      "WWI white flag trench",
+      "battlefield ceasefire wounded"
+    ],
+    "wikimedia_titles": [
+      "Gallipoli ANZAC.jpg",
+      "No mans land WWI.jpg",
+      "Trenches Gallipoli.jpg"
+    ],
+    "pd_fallback_urls": [],
+    "fallback_script": "A wounded man screamed so loud both sides heard him — and nobody moved. Then a white flag rose on the other side. An enemy soldier dropped his gun and ran into no man's land. Guns followed him. Fingers stayed off the triggers. He lifted the dying man, carried him to the other trench, handed him over, and walked back the way he came. Nobody fired. The war started again like someone had paused a film. Mercy lasted one trip across the mud. And that's not even the wildest part.",
+    "claim": "A wounded man screamed in no man's land — then an enemy walked out with no gun to carry him home.",
+    "hook": "White flag. Empty hands. Mid-rescue cold open.",
+    "source": "Gallipoli campaign oral histories / documented battlefield-mercy anecdotes of Turkish soldiers returning wounded ANZACs; grounded in campaign context (popular wartime anecdote).",
+    "us_audience_score": 0.91
+  },
+  {
+    "id": "ww2-holdout-jungle-decades",
+    "scenario_id": "ww2-hook",
+    "title": "He Kept Fighting Decades After the War Ended",
+    "topic": "Japanese holdout soldiers in Pacific jungles continued guerrilla war years after 1945 surrender; leaflets ignored as enemy propaganda",
+    "keywords": [
+      "holdout soldier",
+      "Pacific jungle",
+      "WWII aftermath"
+    ],
+    "search_queries": [
+      "Japanese holdout soldier jungle",
+      "WWII soldier fought after war",
+      "Pacific island holdout 1970s"
+    ],
+    "wikimedia_titles": [
+      "Japanese surrender 1945.jpg",
+      "Philippine jungle.jpg",
+      "WWII Pacific island.jpg"
+    ],
+    "pd_fallback_urls": [],
+    "fallback_script": "The war was over. Papers said so. Planes dropped news from the sky. He treated every message as a trap and kept fighting from the jungle for decades. Patrols hunted a ghost who still believed his side lived. Only when his old commander flew in and ordered him to stop did the gun finally lower. Loyalty outlived the calendar. The last battlefield was a mind that refused the ending. Follow for more history that hits different.",
+    "claim": "The war was over — but he kept fighting from the jungle for decades.",
+    "hook": "The papers lied, he decided. Mid-fight cold open.",
+    "source": "Accounts of Japanese holdouts after 1945 (e.g. Hiroo Onoda, Lubang; broader Pacific holdout phenomenon) — Britannica / contemporary reportage.",
+    "us_audience_score": 0.89
+  },
+  {
     "id": "ulysses-grant-nobody",
     "scenario_id": "failed-before-fame",
     "title": "Firewood Seller to Lee's Conqueror: Ulysses Grant",
@@ -188,7 +404,7 @@
   {
     "id": "operation-mincemeat",
     "scenario_id": "ww2-hook",
-    "title": "WWII's Weirdest Spy Trick: A Dead Man With Fake Plans",
+    "title": "They Floated a Corpse With Fake Invasion Plans",
     "topic": "Operation Mincemeat — British deception using a corpse to fool Hitler",
     "keywords": [
       "Operation Mincemeat",
@@ -205,16 +421,16 @@
       "Winston Churchill 1941.jpg",
       "World War II montage.jpg"
     ],
-    "fallback_script": "In World War II, British intelligence dressed a corpse as an officer, planted fake invasion plans on the body, and floated it toward the enemy. Operation Mincemeat. Hitler bought the lie. Attention shifted. Sicily got hit harder than expected. A dead stranger helped save thousands of living soldiers. War isn't only tanks — sometimes it's theater with a body as the prop. Follow for more history that hits different.",
-    "claim": "British intelligence used a corpse with fake plans to fool Hitler before Sicily.",
-    "hook": "WWII's weirdest spy trick.",
+    "fallback_script": "They dressed a dead body like an officer, put fake invasion plans in a bag, and pushed him into the sea. Fishermen found him. Enemy spies thought they got lucky. Armies moved to guard the wrong coast. When the real landing hit somewhere else, the lie had already worked. A dead stranger moved an army. War is not only tanks — sometimes the trick is a body. And that's not even the wildest part.",
+    "claim": "They dressed a dead body like an officer, planted fake plans, and floated him toward the enemy.",
+    "hook": "Mid-trick: a body as the weapon.",
     "source": "UK National Archives / Operation Mincemeat (1943); Ewen Montagu accounts.",
     "us_audience_score": 0.88
   },
   {
     "id": "navajo-code-talkers",
     "scenario_id": "ww2-hook",
-    "title": "The Unbreakable WWII Code Was a Native Language",
+    "title": "The Unbreakable Code Wasn't a Machine",
     "topic": "Navajo Code Talkers — US Marines' unbreakable battlefield code",
     "keywords": [
       "Navajo Code Talkers",
@@ -231,15 +447,15 @@
       "Iwo Jima flag raising.jpg",
       "US Marines WWII.jpg"
     ],
-    "fallback_script": "Japan cracked codes. Then the US Marines turned to Navajo. Code Talkers built a spoken cipher from their language — fast, flexible, unbroken. In the Pacific, messages flew while enemy cryptographers hit a wall. America had tried to erase Native languages. In WWII, one of them helped win battles. Irony doesn't get louder than that. Follow for more history that hits different.",
-    "claim": "The unbreakable WWII code was a Native American language.",
-    "hook": "Marines turned Navajo into a cipher Japan never cracked.",
+    "fallback_script": "Enemy code breakers were winning — until frontline radios started speaking a language they could not touch. Messages flew in seconds. Attacks lined up. The code was not a machine. It was a people and a tongue the other side had never trained for. The twist cut deep: a language once punished at home became unbreakable in the Pacific. It was not math. It was culture under fire. Follow for more history that hits different.",
+    "claim": "Frontline radios started speaking a language enemy code breakers could not touch.",
+    "hook": "Unbreakable — and it was not a machine.",
     "source": "US Marine Corps / National Museum of the American Indian — Navajo Code Talkers.",
     "us_audience_score": 0.95
   },
   {
     "id": "hiroo-onoda",
-    "scenario_id": "ironic-ending",
+    "scenario_id": "ww2-hook",
     "title": "He Fought WWII Until 1974 — Then Still Saluted",
     "topic": "Hiroo Onoda held out in the Philippines decades after Japan surrendered",
     "keywords": [
@@ -257,9 +473,9 @@
       "Japanese surrender 1945.jpg",
       "Philippines jungle.jpg"
     ],
-    "fallback_script": "World War II ended in 1945. Hiroo Onoda kept fighting until 1974. On a Philippine island he hid, raided, and refused every leaflet calling him home — convinced it was enemy propaganda. Only his former commander ordering him to stand down ended the war for him. Loyalty can outlive the war that created it. Follow for more history that hits different.",
-    "claim": "Hiroo Onoda kept fighting World War II until 1974.",
-    "hook": "Loyalty outlived the war.",
+    "fallback_script": "The war was over. Papers said so. He burned them as enemy tricks and kept fighting from the trees for decades. Raids. Ambushes. A private war that refused to end. Only a direct order from his old commander stopped it. The gun lowered. The world had moved on without him. Loyalty can outlive the war that made it. And that's not even the wildest part.",
+    "claim": "The war was over — he kept fighting from the trees for decades.",
+    "hook": "Enemy lies, he decided. Mid-holdout cold open.",
     "source": "Hiroo Onoda, No Surrender (1974); Philippine holdout accounts.",
     "us_audience_score": 0.86
   },

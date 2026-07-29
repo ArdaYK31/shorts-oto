@@ -94,11 +94,11 @@
     },
     {
       "id": "ww2-hook",
-      "name": "WWII Hook",
-      "angle": "World War II story with a US-audience cold open.",
-      "hook_style": "Lead with the detail Hollywood skipped.",
-      "structure": ["cold open", "named figure/event", "3 facts", "sting"],
-      "example_topics": ["Navajo Code Talkers", "Operation Mincemeat", "Hiroo Onoda"]
+      "name": "WWII Surprise",
+      "angle": "WW2 interesting incident — SURPRISE the viewer, do not lecture. Simple B1–B2 English.",
+      "hook_style": "Cold-open mid-action. Sparse naming. Twist for shock, not classroom why. Easy words only.",
+      "structure": ["mid-action cold open", "pressure details", "twist/reveal", "sting payoff"],
+      "example_topics": ["Ghost Army inflatables", "artillery death whispers", "Fu-Go balloon bombs", "exploding coal rats"]
     }
   ]
 }

@@ -297,7 +297,7 @@ def _run_elevenlabs_or_fallback(
         if mode == "auto":
             print(
                 "[tts] auto: no ELEVENLABS_API_KEY / ELEVEN_API_KEY — "
-                "using Kokoro am_adam (add GitHub secret to enable PAYG ElevenLabs)"
+                f"using Kokoro {voice} (add GitHub secret to enable PAYG ElevenLabs)"
             )
         else:
             print(
@@ -345,24 +345,19 @@ def synthesize(script_path: Path | None = None) -> Path:
     out_path = audio_dir / f"{script_path.stem}.mp3"
     provider = str(cfg["tts"]["provider"]).strip().lower()
     tts_cfg = cfg.get("tts") or {}
-    # Brand voice lock — ChronoShorts US narrator (am_adam) for Kokoro paths only
-    brand_voice = "am_adam"
-    voice = str(tts_cfg.get("voice") or brand_voice)
+    # Brand voice lock — Zack D–style young US storyteller (config voice; Kokoro paths)
+    brand_voice = str(tts_cfg.get("voice") or "am_michael")
+    voice = brand_voice
     if bool(tts_cfg.get("voice_locked", True)):
-        if voice != brand_voice:
-            print(
-                f"[tts] voice_locked=true — forcing {brand_voice} "
-                f"(config had {voice!r})"
-            )
-            voice = brand_voice
         onnx_v = str(tts_cfg.get("kokoro_onnx_voice") or voice)
         if onnx_v != brand_voice:
             print(f"[tts] voice_locked=true — onnx voice forced to {brand_voice}")
+            tts_cfg = {**tts_cfg, "kokoro_onnx_voice": brand_voice}
     if not voice.startswith("am_"):
-        print(f"[tts] WARN non-US voice {voice!r}; ChronoShorts expects am_*")
-    speed = float(tts_cfg.get("speed", 1.05))
+        print(f"[tts] WARN non-US voice {voice!r}; brand expects am_* Kokoro fallback")
+    speed = float(tts_cfg.get("speed", 1.12))
 
-    # auto / elevenlabs: PAYG ElevenLabs when secret is set; else free Kokoro am_adam
+    # auto / elevenlabs: PAYG ElevenLabs (Will / Zack D style) when secret set; else Kokoro
     if provider in ("auto", "elevenlabs"):
         _run_elevenlabs_or_fallback(
             text, wav_path, voice, speed, tts_cfg, mode=provider

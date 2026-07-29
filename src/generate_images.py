@@ -21,72 +21,73 @@ _HOOK_CACHE: str | None = None
 
 # Positive anti-trash constraints (Flux ignores negatives — keep in prompt body).
 _ANTI_HAND_GAZE = (
-    "hands secondary never focal, no palm gazing, no examining own hands, "
-    "no awkward hand close-ups, eyes looking into the scene or at distant action"
+    "hands cropped out or hidden never focal, no palms no finger close-ups, "
+    "no looking at hands, composition cropped above wrists when people appear"
 )
 
 # Narrative-linked composition templates keyed to viral structure beats.
-# Each entry: (role_label, composition_directive)
+# Surprised faces ONLY on hook/twist when emotion is the point — elsewhere variety.
 SCENE_BEATS: list[tuple[str, str]] = [
     (
         "hook",
-        "wide establishing hero tableau visualizing the shock claim, "
-        "monumental scale or decisive contrast, environmental storytelling",
+        "bold cartoon mid-action shock beat matching the claim — shocked face "
+        "ONLY if the line is a human reaction, else ships maps night trench "
+        "bomb object or environment tableau, hands out of frame",
     ),
     (
         "evidence",
-        "wide establishing period environment with maps documents architecture "
-        "or dated landmarks proving the claim, atmospheric depth",
+        "cartoon wide environment: maps documents ships night sky architecture "
+        "or period landmarks proving the beat, no shocked-face spam",
     ),
     (
         "evidence",
-        "cause-and-effect beat: period props letters seals coins weapons or "
-        "architecture that matches the named proof, medium-wide framing",
+        "cartoon cause-and-effect props: letters seals coins weapons vehicles "
+        "or tools that match the proof, medium-wide, hands hidden",
     ),
     (
         "relevance",
-        "crowd silhouette army procession or public square showing stakes for "
-        "ordinary people, main subject in context not isolated palm-gazing",
+        "cartoon crowd silhouette army trench or public square showing stakes, "
+        "environment first, faces neutral not all surprised",
     ),
     (
         "evidence",
-        "interior study archive throne room or war room with period documents "
-        "and lantern Rembrandt light, objects carry the story",
+        "cartoon interior war room archive factory or camp with period objects "
+        "carrying the story, bold shapes flat shading",
     ),
     (
         "twist",
-        "turning-point tableau: visual paradox or knife-turn of the story, "
-        "dynamic medium-wide action or silhouette confrontation",
+        "cartoon turning-point punch: one surprised reaction face OK here OR "
+        "a clear visual paradox object/action — match the twist line, not face spam",
     ),
     (
         "twist",
-        "low-angle monumental architecture or battlefield aftermath that "
-        "escalates the irony, powerful environmental scale",
+        "cartoon low-angle battlefield aftermath night raid or monumental "
+        "environment escalating the irony, environmental scale over portraits",
     ),
     (
         "relevance",
-        "journey or travel through period landscape linking places named "
+        "cartoon journey landscape convoy balloon ship or road linking places "
         "in the narration, continuity of era and costume",
     ),
     (
         "payoff",
-        "aftermath or consequence scene with emotional gravity, wide or "
-        "silhouette framing, story resolved visually",
+        "cartoon aftermath consequence scene wide or silhouette, story resolved "
+        "visually, calm or iconic not forced shock-face",
     ),
     (
         "payoff",
-        "close environmental detail of a decisive period object only "
-        "(seal map broken chain crown document) — no hand close-ups",
+        "cartoon close environmental detail of a decisive period object only "
+        "(map seal balloon bomb foil strip document) — no hands in frame",
     ),
     (
         "payoff",
-        "final iconic silhouette or stance against epic skyline, loop-bait "
+        "cartoon final iconic silhouette against bold sky or skyline, loop-bait "
         "energy, strong composition tied to the claim",
     ),
     (
         "evidence",
-        "crowd or army context behind a clear central figure in period dress, "
-        "faces looking outward, documentary still",
+        "cartoon army convoy crowd or workshop context, central clear subject, "
+        "faces looking outward into action, documentary comic still",
     ),
 ]
 
@@ -114,8 +115,8 @@ def _load_style_prefix(cfg: dict[str, Any]) -> str:
         if capture and line.strip():
             lines.append(line.strip())
     _STYLE_CACHE = " ".join(lines) if lines else (
-        "semi-realistic painterly digital illustration, cinematic historical documentary still, "
-        "35mm Rembrandt Portra, shallow depth of field, no text in image, intact hands"
+        "stylized cartoon caricature illustration, bold simple shapes, flat cel shading, "
+        "NOT photoreal NOT oil painting, hands out of frame, no text in image"
     )
     return _STYLE_CACHE
 
@@ -148,7 +149,7 @@ def _load_negative(cfg: dict[str, Any]) -> str:
     root = cfg["_root"]
     path = root / cfg["media"].get("style_prompt_file", "prompts/image_style.txt")
     if not path.exists():
-        return "text, watermark, logo, anime, blurry, lowres, deformed hands"
+        return "text, watermark, logo, photoreal, oil painting, blurry, lowres, deformed hands, hand close-up"
     raw = path.read_text(encoding="utf-8")
     lines: list[str] = []
     capture = False
@@ -162,7 +163,7 @@ def _load_negative(cfg: dict[str, Any]) -> str:
         if capture and line.strip():
             lines.append(line.strip())
     return ", ".join(lines) if lines else (
-        "text, watermark, logo, anime, blurry, lowres, deformed hands"
+        "text, watermark, logo, photoreal, oil painting, blurry, lowres, deformed hands, hand close-up"
     )
 
 

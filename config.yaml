@@ -41,41 +41,41 @@ script:
 tts:
   # auto | elevenlabs | kokoro | kokoro_onnx
   # auto (recommended): ELEVENLABS_API_KEY / ELEVEN_API_KEY set → ElevenLabs multilingual_v2;
-  #                      no key → free Kokoro am_adam. ElevenLabs never required.
+  #                      no key → free Kokoro am_michael. ElevenLabs never required.
   # elevenlabs: same runtime (prefer EL + Kokoro fallback); auto is clearer in docs.
   # kokoro / kokoro_onnx: force free local TTS (ignore ElevenLabs secret).
   provider: auto
   fallback: kokoro
-  # LOCKED brand voice — ChronoShorts clear US male documentary narrator (Kokoro path)
+  # LOCKED brand voice — Zack D. Films–style young US male storyteller (Kokoro path)
   # Do not rotate per episode; A/B only via explicit config change
   voice_locked: true
-  voice: am_adam
-  # ~150–170 WPM feel without over-compressing 40–55s scripts
-  speed: 1.05
+  voice: am_michael
+  # Faster storytelling pace (~Zack D punchy Shorts feel)
+  speed: 1.12
   lang: en-us
-  kokoro_onnx_voice: am_adam
+  kokoro_onnx_voice: am_michael
   kokoro_onnx_model: "C:/kokoro-models/kokoro-v1.0.onnx"
   kokoro_onnx_voices: "C:/kokoro-models/voices-v1.0.bin"
   edge_voice: en-US-ChristopherNeural
-  edge_rate: "+8%"
+  edge_rate: "+12%"
   # PAYG path — key ONLY via GitHub secret / env (never paste in chat or commit)
   elevenlabs:
     # Secret: ELEVENLABS_API_KEY (alias ELEVEN_API_KEY). Multilingual v2 narration.
     model_id: eleven_multilingual_v2
-    # Brian (premade) — deep resonant American male; best stock match for
-    # documentary-urgency history Shorts (ref: youtube.com/shorts/kq7ByxGRBvs).
-    # Was Adam pNInz6obpgDQGcFmaJgB; Brian reads more narrator / less "chatty AI".
-    voice_id: "nPczCjzI2devNBz1zQrb"
-    voice_name: Brian
-    # Lower stability + higher style = punchier hooks / asides like the reference
-    stability: 0.32
-    similarity_boost: 0.80
-    style: 0.42
+    # Will (premade) — young-adult American male; conversational + fast storyteller.
+    # Closest stock match to Zack D. Films faceless Shorts (not deep documentary Brian/Adam).
+    # Alt A/B: Chris iP95p4xoKVk53GoZ742B (casual) | Josh TxGEqnHWrfWFTfGW9XjX (classic).
+    voice_id: "bIHbv24MWmeRgasZH58o"
+    voice_name: Will
+    # Low stability + higher style = urgent, punchy asides like Zack D hooks
+    stability: 0.28
+    similarity_boost: 0.78
+    style: 0.55
     use_speaker_boost: true
-    speed: 1.05
+    speed: 1.12
 
 media:
-  # ChronoShorts match: AI painterly stills (see STYLE_GUIDE_CHRONOSHORTS.md)
+  # Cartoon / caricature Shorts stills (see prompts/image_style.txt) — not photoreal
   # Cloud default: fal.ai Flux Schnell (~$0.003–0.006/img → ~$6–10/mo @ ~1000 imgs; cap $30)
   # wikimedia | ai_local | ai_api
   provider: ai_api

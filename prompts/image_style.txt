@@ -1,19 +1,17 @@
 STYLE PREFIX (always prepend; do not omit):
-semi-realistic painterly digital illustration locked medium, cinematic historical documentary still, shot on 35mm, Rembrandt lighting, Kodak Portra color response, shallow depth of field, rich atmospheric haze, muted earthy grade with warm midtones, period-accurate clothing architecture and props, intact anatomically correct hands kept secondary never the focal subject, hands at sides or holding period tools naturally if visible, faces looking outward into the scene or toward distant action never down at palms, wide or medium environmental framing preferred, cause-and-effect storytelling beat, no text letters numbers watermarks logos captions UI or signage in frame, vertical 9:16 composition, single clear narrative subject, concept-art quality textures, epic documentary mood
+stylized cartoon caricature illustration locked medium, bold simple shapes, flat-to-cel shading, thick clean outlines, limited color palette, NOT photoreal, NOT oil painting, NOT cinematic 35mm realism, NOT hyperdetailed skin pores, comic-book history storytelling still, period clothing and props simplified, vertical 9:16 composition, single clear narrative subject, no text letters numbers watermarks logos captions UI or signage in frame, hands cropped out of frame or hidden at sides never the subject, no fingers palms or hand close-ups anywhere in frame
 
-HOOK / HERO (first frame only — stronger composition):
-wide establishing or monumental medium-wide composition tied to the shock claim, strong leading lines, subject on rule-of-thirds, environmental storytelling that visualizes the claim, maps documents architecture silhouettes crowds or decisive historical moment preferred over face close-ups, avoid extreme face close-up, avoid anyone staring at or examining their own hands, intact hands only if secondary, no text in image
+HOOK / HERO (first frame only — shock beat):
+cartoon medium shot of the mid-action surprise beat, ONE expressive shocked face OK here if the claim is human reaction (wide eyes open mouth), OR a bold object/action tableau if the claim is about ships bombs maps night tricks — match the line, not face-spam, hands out of frame, no palm gazing, no text in image
 
 SCENE RULES:
-- Each still must match its script beat (hook / evidence / twist / payoff) — not a random historical man
-- Prefer: wide establishing shots, objects, maps, documents, architecture, silhouettes, crowd scenes, period props, cause-effect beats
-- Continuity: same era, same subject, same costume/setting language across the episode
-- Period-accurate clothing, architecture, and props only
-- Prefer medium/full / wide shots; reserve close-ups for objects or decisive action, never hand close-ups
-- Lighting: Rembrandt / torch-lantern warmth OR bright daylight with deep shadows
-- Keep faces recognizable for famous figures when the topic names them — eyes looking into scene or at other figures
-- HARD BAN (encode as positive avoidance): people staring at hands, examining palms, awkward hand close-ups, deformed hands as focal subject, generic confused man looking down at hands, empty contemplative palm-gazing
-- Flux has no reliable negative prompt — encode all avoidances as positive constraints above
+- Match each still to its script beat — ships, maps, night sky, trenches, balloons, tanks, documents, crowds, environments, objects — whatever the line needs
+- Surprised / shocked faces ONLY on hook or twist punches when the emotion IS the point — do NOT put shocked faces on every frame
+- Most frames: environments, action, objects, silhouettes, maps, vehicles — variety over face spam
+- Continuity: same era, same cartoon style, same costume/setting language across the episode
+- Prefer medium/full/wide shots; object close-ups OK; NEVER hand/palm/finger close-ups
+- HARD BAN: hand focus, looking at hands, examining palms, awkward fingers as subject, photoreal skin, oil-paint realism, documentary photo look
+- Flux has no reliable negative prompt — encode avoidances as positive constraints above
 
 NEGATIVE (legacy; Flux often ignores — keep STYLE PREFIX constraints primary):
-text, watermark, logo, anime, blurry, lowres, deformed hands, hand close-up, person staring at hands, examining palms, looking down at own hands, confused man staring at palms
+photoreal, photograph, 35mm, oil painting, hyperrealistic, text, watermark, logo, blurry, lowres, deformed hands, hand close-up, palm close-up, fingers as subject, person staring at hands, examining palms, looking down at own hands, shocked face on every frame, face spam

@@ -8,6 +8,16 @@ AUDIENCE:
 LANGUAGE (NON-NEGOTIABLE):
 - Write ONLY in English. Never use Turkish or any other language.
 - Titles, hooks, narration, and any CTA must be English.
+- SIMPLE ENGLISH only — CEFR B1–B2 maximum. Almost anyone must understand it.
+- Short sentences. Common words: know, fight, hide, ship, bomb, night, almost, never,
+  hear, run, drop, fake, real, enemy, soldier, war, plan, trick, save, die, fire.
+- Prefer everyday verbs and nouns. Avoid rare/academic words unless truly needed
+  (e.g. "radar" or "trench" OK when the story needs them).
+- BANNED tone words: nevertheless, subsequently, profound, geopolitical, ultimately,
+  historians note, in conclusion, paradigm, ramifications, unprecedented (overuse),
+  albeit, heretofore, aforementioned, thusly.
+- If a hard word appears, replace it with a simpler one (vanish→disappear / go away;
+  intercept→catch; diversion→trick; casualty→death / people killed).
 
 OUTPUT:
 - Output ONLY the spoken narration text. No title, no stage directions, no hashtags.
@@ -17,30 +27,41 @@ LENGTH (HARD):
 - Aim for the sweet spot so the finished Short lands ~45–55s (never pad with filler).
 - Too short (<115 words) fails the brief. Too long (>160) gets clamped/sped.
 
-STRUCTURE (MANDATORY — Fact → Twist → Payoff with cold-open claim):
-  1) CLAIM / HOOK (0–4s): First sentence = a SPECIFIC shocking claim.
-     Cold-open with a year, proper name, or hard number whenever possible.
-     Prefer concrete shock over vague curiosity. Frame-1 claim must be the fact itself.
-     Examples:
-     - "Did you know Oxford University is older than the Aztec Empire?"
-     - "In 1983, one Soviet officer refused to start World War III."
-     - "He sold firewood just to eat. Then an army surrendered to him."
-     - "Saddam Hussein once got U.S. intelligence support — then became Enemy Number One."
-     Do NOT start soft: "Before he…" / "In history…" / "Today we talk about…".
-     Do NOT open with the words "DID YOU KNOW?" alone as the whole hook — the claim must land.
-     Make the opener more specific/shocking than a generic curiosity tease.
-  2) EVIDENCE: Immediately name the person/empire/event + 2 sticky proofs (dates, money, betrayal, place).
-  3) RELEVANCE / FACT: Why this sticks for a US Shorts audience (irony, school-myth flip, stakes).
-  4) TWIST: The paradox or knife-turn — escalate, don't repeat the claim.
-  5) PAYOFF: Close with ONE of:
-     - Loop-bait soft ending ("And that's not even the wildest part." / "But wait — there's more.")
+GOAL (NON-NEGOTIABLE):
+- SURPRISE the viewer. Not a classroom lecture. Not "why this matters in history class."
+- Drop them mid-event. Make the twist land like a punchline, not a textbook summary.
+
+STRUCTURE (MANDATORY — Mid-action → Twist → Payoff):
+  1) COLD OPEN / HOOK (0–4s): Sentence 1 = already INSIDE the action or shock.
+     Prefer situation over biography. Mid-scene energy:
+     - "He heard whispers telling him to drop — then the trench exploded."
+     - "They rolled rubber tanks onto a hillside and waited for the enemy to panic."
+     - "A white flag went up. An enemy soldier walked into no man's land unarmed."
+     Do NOT start soft: "Before he…" / "In history…" / "Today we talk about…" /
+     "During World War II, historians note…" / "Let me explain…".
+     Do NOT open with a lecture thesis. The claim card = the mid-action shock.
+  2) PRESSURE: 2 sticky sensory details (what they see/hear/risk) — keep momentum.
+  3) TWIST: The paradox / reveal that flips the viewer's assumption. Shock > teach.
+  4) STING: One hard payoff line that locks the surprise.
+  5) PAYOFF closer — ONE of:
+     - Loop-bait ("And that's not even the wildest part." / "But wait — there's more.")
      - Soft comment CTA ("Comment the year you thought this happened.")
      - Soft follow ("Follow for more history that hits different.")
-     Prefer a closer that invites a rewatch/loop over a hard stop.
-     Use "Follow for more American history." only if the topic is clearly US-centric.
+
+NAMING RULES (CRITICAL):
+- Minimize proper nouns. Prefer "a soldier", "the pilot", "the enemy", "one side",
+  "the bosses", "a spy unit" over full names, ranks, and operation codenames.
+- At most 1–2 proper names in the whole script (campaign/place OK if sticky).
+- Never stack biography: birth → career → legacy. Situation → twist only.
+- If the topic card lists famous names, use them sparingly or not at all.
+
+WW2 / WAR SURPRISE MODE (when topic is WWII / war incident):
+- Cold-open mid-incident. Sparse naming. Twist for shock, not "here's why it mattered."
+- Ban documentary filler: "this taught us", "ultimately", "in conclusion", "historians agree".
+- Keep language B1–B2: clear, spoken, easy.
 
 RULES:
 - Stay historically grounded. Do not invent quotes or dates you are unsure of.
 - No emojis in the narration body.
 - Prefer curiosity that travels on Shorts/Reels/TikTok — not textbook lecture tone.
-- On-screen claim card text will match sentence 1 — keep that sentence the fact, not a teaser.
+- On-screen claim card text will match sentence 1 — keep that sentence the shock, not a teaser.
