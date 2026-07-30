@@ -29,18 +29,18 @@ Reference analysis (2026-07-26): channel Shorts grid + **2** downloaded Shorts
 
 ## 3. Voice
 
-| Trait | Observed | Kokoro mapping |
-|-------|----------|----------------|
-| Gender | Male | `am_*` voices |
+| Trait | Observed | Mapping |
+|-------|----------|---------|
+| Gender | Male | `am_*` / ElevenLabs male premades |
 | Accent | US English | `lang: en-us` |
-| Pitch | Mid-clear documentary (not ultra-gravel) | **`am_adam`** (clear US male narrator; closer than deep `am_fenrir`) |
-| Pacing | Punchy “Did you know…” storytelling | `speed: 1.05` |
-| Emotion | Curious, dramatic, compressed radio-doc | Soft compressor + presence shelf; lighter bass than fenrir stack |
+| Pitch | Young conversational storyteller (Zack D–like, not deep Adam doc) | **ElevenLabs Will** `bIHbv24MWmeRgasZH58o`; Kokoro fallback **`am_michael`** |
+| Pacing | Punchy TikTok/Shorts storytelling | `speed: 1.14` (EL style ~0.62) |
+| Emotion | Curious, urgent asides — not radio-doc gravel | Soft compressor + presence shelf |
 | Loudness | Very steady (LRA ≈ 1 LU on samples) | `loudnorm` in TTS post |
 
 **Post-EQ (ChronoShorts-tuned):** compressor → mild lowshelf → presence ~3.2 kHz → de-ess → loudnorm −16 LUFS.
 
-A/B alternatives: `am_michael`, `am_onyx`; deeper drama: `am_fenrir` @ 1.0.
+A/B alternatives: EL Chris / Josh; Kokoro `am_onyx`; deeper drama: `am_fenrir` @ 1.0.
 
 ## 4. Hook / title SEO patterns (topics stay user-expanded)
 

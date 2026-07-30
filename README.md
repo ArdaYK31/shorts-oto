@@ -60,7 +60,7 @@ Pipeline tetikleme: Queue/Series içinden `Generate` → `python src/run_pipelin
 
 | Parça | Araç |
 |-------|------|
-| TTS | `auto`: ElevenLabs multilingual_v2 if `ELEVENLABS_API_KEY`; else Kokoro **`am_adam`** @ 1.05 |
+| TTS | `auto`: ElevenLabs **Will** (`bIHbv24MWmeRgasZH58o`) @ 1.14 if `ELEVENLABS_API_KEY`; else Kokoro **`am_michael`** @ 1.14 |
 | Narration post | FFmpeg: compress → mild lowshelf → presence ~3.2kHz → de-ess → loudnorm |
 | Captions | Centered 1-word white+outline (ChronoShorts) via faster-whisper |
 | Beat-sync | Whisper/script beats → scene süreleri |

@@ -50,8 +50,8 @@ tts:
   # Do not rotate per episode; A/B only via explicit config change
   voice_locked: true
   voice: am_michael
-  # Faster storytelling pace (~Zack D punchy Shorts feel)
-  speed: 1.12
+  # Shorts pace: punchy faceless storytelling (TikTok/YT Shorts familiar)
+  speed: 1.14
   lang: en-us
   kokoro_onnx_voice: am_michael
   kokoro_onnx_model: "C:/kokoro-models/kokoro-v1.0.onnx"
@@ -70,9 +70,9 @@ tts:
     # Low stability + higher style = urgent, punchy asides like Zack D hooks
     stability: 0.28
     similarity_boost: 0.78
-    style: 0.55
+    style: 0.62
     use_speaker_boost: true
-    speed: 1.12
+    speed: 1.14
 
 media:
   # Cartoon / caricature Shorts stills (see prompts/image_style.txt) — not photoreal
