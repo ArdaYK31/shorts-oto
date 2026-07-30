@@ -621,7 +621,8 @@ def assemble(
 
     nv = float(mix_cfg.get("narration_volume", 1.0))
 
-    bv = max(0.05, min(float(mix_cfg.get("bgm_volume", 0.15)), 0.35))
+    # Cap allows louder war beds (~0.35–0.45) while still below narration
+    bv = max(0.05, min(float(mix_cfg.get("bgm_volume", 0.15)), 0.50))
 
     duck = bool(mix_cfg.get("bgm_duck", True))
 

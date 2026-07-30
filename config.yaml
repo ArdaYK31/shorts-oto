@@ -165,9 +165,9 @@ assemble:
 
 audio_mix:
   narration_volume: 1.0
-  # Ref Short ≈ voice ~9 dB over bed; keep BGM audible in pauses with ducking
-  bgm_volume: 0.20
-  bgm_file: "cinematic_ambient_underscore.mp3"
+  # Louder war bed under Will (Shorts) narration; sidechain duck keeps voice clear
+  bgm_volume: 0.40
+  bgm_file: "war_military_underscore.mp3"
   bgm_duck: true
 
 # Cinematic SFX stings timed to viral beats (hook / twist / payoff).
